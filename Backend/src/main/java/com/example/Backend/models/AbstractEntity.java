@@ -8,13 +8,9 @@ import java.util.Objects;
 @MappedSuperclass
 public abstract class AbstractEntity {
 
-    @TableGenerator(
-            name = "yourTableGenerator",
-            allocationSize = 1,
-            initialValue = 1)
     @Id
     @GeneratedValue(
-            strategy= GenerationType.TABLE,
+            strategy= GenerationType.IDENTITY,
             generator="yourTableGenerator")
         private int id;
 
