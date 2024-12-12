@@ -3,10 +3,9 @@ package com.example.Backend.models;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Entity
-public class FriendList extends AbstractEntity{
+public class FriendList extends AbstractClass{
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")  // This will reference the user who owns the friend list

@@ -1,0 +1,35 @@
+package com.example.Backend.models;
+
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.MappedSuperclass;
+import org.springframework.data.annotation.Id;
+
+import java.util.Objects;
+
+@MappedSuperclass
+public abstract class AbstractClass {
+
+    @Id
+    @GeneratedValue(
+            strategy= GenerationType.IDENTITY,
+            generator="yourTableGenerator")
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AbstractClass that = (AbstractClass) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+}
