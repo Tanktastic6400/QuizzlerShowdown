@@ -6,7 +6,7 @@ import java.util.Objects;
 
 
 @MappedSuperclass
-public abstract class AbstractEntity {
+public abstract class AbstractClass {
 
     @Id
     @GeneratedValue(
@@ -21,7 +21,7 @@ public abstract class AbstractEntity {
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
-            AbstractEntity that = (AbstractEntity) o;
+            AbstractClass that = (AbstractClass) o;
             return id == that.id;
         }
 
