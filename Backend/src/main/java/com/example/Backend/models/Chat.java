@@ -7,7 +7,7 @@ import jakarta.persistence.ManyToOne;
 
 
 @Entity
-public class Chat extends AbstractEntity {
+public class Chat extends AbstractClass {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
