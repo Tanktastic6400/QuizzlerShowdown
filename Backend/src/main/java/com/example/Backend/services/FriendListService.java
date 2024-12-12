@@ -22,18 +22,15 @@ public class FriendListService {
         return friendListRepository.findByUserId(userId);
     }
 
-
     public void sendFriendRequest(Long userId, Long friendId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         User friend = userRepository.findById(friendId).orElseThrow(() -> new RuntimeException("Friend not found"));
 
-        // Create the Friendship object
         FriendList friendlist = new FriendList();
         friendlist.setUser(user);   // Set the user (this should already be persisted)
         friendlist.setFriends(friend);  // Set the friend (this should also be persisted)
         friendlist.setStatus(FriendStatus.PENDING);
 
-        // Save the friendship
         friendListRepository.save(friendlist);
     }
 
