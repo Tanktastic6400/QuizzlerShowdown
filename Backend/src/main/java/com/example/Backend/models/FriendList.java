@@ -48,7 +48,7 @@ public class FriendList extends AbstractEntity{
     public void setFriends(User friend) {
         this.friend = friend;
     }
-    
+
     public FriendStatus getStatus() {
         return status;
     }
