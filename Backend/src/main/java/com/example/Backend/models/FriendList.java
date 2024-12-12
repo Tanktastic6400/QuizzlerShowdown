@@ -33,6 +33,9 @@ public class FriendList extends AbstractEntity{
         this.createdAt = createdAt;
     }
 
+    public FriendList() {
+    }
+
     public User getUser() {
         return user;
     }
