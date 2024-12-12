@@ -1,4 +1,8 @@
 package com.example.Backend.models;
 
-public class Message {
+import jakarta.persistence.Entity;
+
+@Entity
+public class Message extends AbstractClass {
+
 }
