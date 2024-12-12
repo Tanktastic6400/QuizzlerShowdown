@@ -21,7 +21,7 @@ public class FriendListService {
     public List<FriendList> getFriends(Long userId) {
         return friendListRepository.findByUserId(userId);
     }
-    
+
     public void sendFriendRequest(Long userId, Long friendId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         User friend = userRepository.findById(friendId).orElseThrow(() -> new RuntimeException("Friend not found"));
