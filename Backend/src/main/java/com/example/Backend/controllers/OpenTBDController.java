@@ -16,9 +16,10 @@ public OpenTBDController(ApiService apiService){
     this.apiService = apiService;
 }
 
+//I don't go blah blah blah
 @GetMapping("/trivia")
     public ApiResponse getTriviaQuestions(){
-    return apiService.fetchTriviaQuestions();
+    return apiService.fetchTriviaQuestions(15);
 }
 
 

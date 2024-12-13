@@ -14,8 +14,8 @@ public class ApiService {
         this.restTemplate = restTemplate;
     }
 
-    public ApiResponse fetchTriviaQuestions() {
-        String url = "https://opentdb.com/api.php?amount=10"; // Adjust parameters as needed
+    public ApiResponse fetchTriviaQuestions(int numQuestions) {
+        String url = "https://opentdb.com/api.php?amount= ${numQuestions}"; // Adjust parameters as needed
         return restTemplate.getForObject(url, ApiResponse.class);
     }
 }
