@@ -1,4 +1,7 @@
 package com.example.Backend.models.data;
 
-public interface ChatRepository {
+import com.example.Backend.models.Chat;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ChatRepository extends JpaRepository<Chat, Long> {
 }

@@ -1,7 +1,6 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Backend",
     "\\Backend\\src",
     "\\Backend\\src\\main",
     "\\Backend\\src\\main\\java",
@@ -10,7 +9,9 @@
     "\\Backend\\src\\main\\java\\com\\example\\Backend",
     "\\Frontend",
     "\\Frontend\\Frontend",
-    "\\Frontend\\Frontend\\src"
+    "\\Frontend\\Frontend\\src",
+    "\\Frontend\\Frontend\\src\\components"
   ],
+  "SelectedNode": "\\Frontend\\Frontend\\src\\components\\testrequest.jsx",
   "PreviewInSolutionExplorer": false
 }

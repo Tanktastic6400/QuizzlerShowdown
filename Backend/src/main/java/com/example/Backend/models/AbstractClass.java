@@ -11,9 +11,10 @@ public abstract class AbstractClass {
     @Id
     @GeneratedValue(
             strategy= GenerationType.IDENTITY)
-        private int id;
 
-        public int getId() {
+        private Long id;
+
+        public Long getId() {
             return id;
         }
 
@@ -21,7 +22,8 @@ public abstract class AbstractClass {
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
-            AbstractEntity that = (AbstractEntity) o;
+
+            AbstractClass that = (AbstractClass) o;
             return id == that.id;
         }
 
