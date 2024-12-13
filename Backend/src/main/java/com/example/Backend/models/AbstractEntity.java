@@ -10,8 +10,7 @@ public abstract class AbstractEntity {
 
     @Id
     @GeneratedValue(
-            strategy= GenerationType.IDENTITY,
-            generator="yourTableGenerator")
+            strategy= GenerationType.IDENTITY)
         private int id;
 
         public int getId() {
