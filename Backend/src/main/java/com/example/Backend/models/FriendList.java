@@ -5,7 +5,8 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class FriendList extends AbstractClass{
+public class FriendList extends AbstractClass {
+
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")  // This will reference the user who owns the friend list
@@ -30,6 +31,9 @@ public class FriendList extends AbstractClass{
         this.friend = friend;
         this.status = status;
         this.createdAt = createdAt;
+    }
+
+    public FriendList() {
     }
 
     public User getUser() {
