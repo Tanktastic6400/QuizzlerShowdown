@@ -3,7 +3,7 @@ package com.example.Backend.models;
 import jakarta.persistence.Entity;
 
 @Entity
-public class Review extends AbstractEntity {
+public class Review extends AbstractClass {
     private String reviewDescription;
 
     public Review(String reviewDescription) {

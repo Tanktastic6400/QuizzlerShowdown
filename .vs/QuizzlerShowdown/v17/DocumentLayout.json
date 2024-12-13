@@ -1,7 +1,16 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\dtsim\\Desktop\\QuizzlerShowdown\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\dtsim\\Desktop\\QuizzlerShowdown\\Frontend\\Frontend\\src\\components\\testrequest.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Frontend\\Frontend\\src\\components\\testrequest.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\dtsim\\Desktop\\QuizzlerShowdown\\Frontend\\Frontend\\src\\App.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Frontend\\Frontend\\src\\App.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -18,6 +27,32 @@
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "App.jsx",
+              "DocumentMoniker": "C:\\Users\\dtsim\\Desktop\\QuizzlerShowdown\\Frontend\\Frontend\\src\\App.jsx",
+              "RelativeDocumentMoniker": "Frontend\\Frontend\\src\\App.jsx",
+              "ToolTip": "C:\\Users\\dtsim\\Desktop\\QuizzlerShowdown\\Frontend\\Frontend\\src\\App.jsx",
+              "RelativeToolTip": "Frontend\\Frontend\\src\\App.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2024-12-10T01:12:05.376Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "testrequest.jsx",
+              "DocumentMoniker": "C:\\Users\\dtsim\\Desktop\\QuizzlerShowdown\\Frontend\\Frontend\\src\\components\\testrequest.jsx",
+              "RelativeDocumentMoniker": "Frontend\\Frontend\\src\\components\\testrequest.jsx",
+              "ToolTip": "C:\\Users\\dtsim\\Desktop\\QuizzlerShowdown\\Frontend\\Frontend\\src\\components\\testrequest.jsx*",
+              "RelativeToolTip": "Frontend\\Frontend\\src\\components\\testrequest.jsx*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2024-12-10T01:15:40.281Z",
+              "EditorCaption": ""
             }
           ]
         }
