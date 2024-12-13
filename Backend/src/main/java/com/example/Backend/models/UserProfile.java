@@ -12,6 +12,4 @@ public class UserProfile extends AbstractClass {
     private User user;
     private int score;
 
-
-
 }

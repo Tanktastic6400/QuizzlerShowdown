@@ -11,7 +11,7 @@ public class User extends AbstractClass {
     private String email;
     private String password;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "users")
     private UserProfile userProfile;
 
     public User(){}

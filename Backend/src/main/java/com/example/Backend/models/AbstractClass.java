@@ -1,15 +1,22 @@
 package com.example.Backend.models;
 
+
 import jakarta.persistence.*;
 
-import java.util.Objects;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.MappedSuperclass;
+import org.springframework.data.annotation.Id;
+
+import java.util.Objects;
 
 @MappedSuperclass
 public abstract class AbstractClass {
 
     @Id
     @GeneratedValue(
+
             strategy= GenerationType.IDENTITY)
 
         private Long id;
@@ -32,4 +39,5 @@ public abstract class AbstractClass {
             return Objects.hash(id);
         }
     }
+
 
