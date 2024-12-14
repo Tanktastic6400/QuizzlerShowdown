@@ -11,15 +11,20 @@ public class User extends AbstractClass {
     private String email;
     private String password;
 
-    @OneToOne(mappedBy = "users")
+    @OneToOne(mappedBy = "user")
     private UserProfile userProfile;
 
     public User(){}
 
     public User(String username, String email, String password) {
+        
         this.username = username;
         this.email = email;
         this.password = password;
+    }
+
+    public User(Long senderId) {
+        super();
     }
 
     public String getUsername() {

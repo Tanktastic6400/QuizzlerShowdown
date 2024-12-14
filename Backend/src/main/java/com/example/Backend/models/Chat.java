@@ -1,10 +1,7 @@
 package com.example.Backend.models;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
@@ -12,42 +9,43 @@ import java.time.LocalDateTime;
 @Entity
 public class Chat extends AbstractClass {
 
-    @ManyToOne
-    @JoinColumn(name = "user1_id", nullable = false)
-    private User user1;
+    private String chatid;
 
-    @ManyToOne
-    @JoinColumn(name = "user2_id", nullable = false)
-    private User user2;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "sender_id", nullable = false)
+    private User sender;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "receiver_id", nullable = false)
+    private User receiver;
 
     @Column(nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    public Chat(User user1, User user2, LocalDateTime createdAt) {
-
-        this.user1 = user1;
-        this.user2 = user2;
+    public Chat(User sender, User receiver, LocalDateTime createdAt, String chatid) {
+        this.sender = sender;
+        this.receiver = receiver;
         this.createdAt = createdAt;
+        this.chatid = chatid;
     }
 
     public Chat() {
     }
 
-
-    public User getUser1() {
-        return user1;
+    public User getSender() {
+        return sender;
     }
 
-    public void setUser1(User user1) {
-        this.user1 = user1;
+    public void setSender(User sender) {
+        this.sender = sender;
     }
 
-    public User getUser2() {
-        return user2;
+    public User getReceiver() {
+        return receiver;
     }
 
-    public void setUser2(User user2) {
-        this.user2 = user2;
+    public void setReceiver(User receiver) {
+        this.receiver = receiver;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -56,5 +54,13 @@ public class Chat extends AbstractClass {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getChatid() {
+        return chatid;
+    }
+
+    public void setChatid(String chatid) {
+        this.chatid = chatid;
     }
 }
