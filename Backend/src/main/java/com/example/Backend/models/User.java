@@ -1,8 +1,7 @@
 package com.example.Backend.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 @Table(name = "users")
@@ -11,8 +10,12 @@ public class User extends AbstractClass {
     private String email;
     private String password;
 
+
     @OneToOne(mappedBy = "user")
     private UserProfile userProfile;
+
+    //Added encoder
+    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public User(){}
 
@@ -20,7 +23,9 @@ public class User extends AbstractClass {
         
         this.username = username;
         this.email = email;
-        this.password = password;
+        //changed it so user's given password is encoded
+        //this.password = password;
+        this.password = encoder.encode(password);
     }
 
     public User(Long senderId) {
@@ -31,6 +36,7 @@ public class User extends AbstractClass {
         return username;
     }
 
+    //Do we need a setter for this? Want folks to be able to change their accounts username?
     public void setUsername(String username) {
         this.username = username;
     }
@@ -39,15 +45,15 @@ public class User extends AbstractClass {
         return email;
     }
 
+    //See comment about setUsername.
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    //Compares to see if hashes are the same.
+    public boolean checkMatchingPasswords(String password){
+        return encoder.matches(password, this.password);
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    //Deleted getter and setter for password. Don't want them.
 }

@@ -19,6 +19,7 @@ import java.util.List;
 @RequestMapping("/chat")
 public class ChatController {
 
+
     @Autowired
     private ChatService chatService;
 
@@ -63,4 +64,5 @@ public class ChatController {
         //return chatService.getMessages(user1Id, user2Id);
         return chatService.getChat(chatid);
     }
+
 }

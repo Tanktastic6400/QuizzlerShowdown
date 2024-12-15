@@ -1,8 +1,6 @@
 package com.example.Backend.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
 @Entity
 public class UserProfile extends AbstractClass {
@@ -10,6 +8,7 @@ public class UserProfile extends AbstractClass {
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
+
     private int score;
 
 }
