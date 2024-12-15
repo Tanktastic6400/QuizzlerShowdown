@@ -10,7 +10,7 @@ public class User extends AbstractClass {
     private String email;
     private String password;
 
-    //Changed it from "users", which is not the name of the variable over in UserProfile
+
     @OneToOne(mappedBy = "user")
     private UserProfile userProfile;
 
@@ -20,11 +20,16 @@ public class User extends AbstractClass {
     public User(){}
 
     public User(String username, String email, String password) {
+        
         this.username = username;
         this.email = email;
         //changed it so user's given password is encoded
         //this.password = password;
         this.password = encoder.encode(password);
+    }
+
+    public User(Long senderId) {
+        super();
     }
 
     public String getUsername() {
