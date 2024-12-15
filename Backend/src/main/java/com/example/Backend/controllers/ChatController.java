@@ -57,7 +57,7 @@ public class ChatController {
                     .body("Failed to send message: " + e.getMessage());
         }
     }
-    
+
     @GetMapping("/messages")
     public List<Message> getMessages(@RequestParam String chatid) {
         //return chatService.getMessages(user1Id, user2Id);
