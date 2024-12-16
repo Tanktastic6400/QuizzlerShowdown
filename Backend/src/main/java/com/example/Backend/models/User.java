@@ -10,7 +10,6 @@ public class User extends AbstractClass {
     private String email;
     private String password;
 
-
     @OneToOne(mappedBy = "user")
     private UserProfile userProfile;
 
