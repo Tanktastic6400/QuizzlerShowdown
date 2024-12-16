@@ -14,6 +14,12 @@ public class Chat extends AbstractClass {
     private User user;
     private String content;
 
+    public Chat() {}
+
+    public User getUser() {
+        return user;
+    }
+
     public String getContent() {
         return content;
     }

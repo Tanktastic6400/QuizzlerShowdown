@@ -1,13 +1,13 @@
 package com.example.Backend.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
 
 
 @Entity
 public class Message extends AbstractClass {
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 
 
     @ManyToOne
