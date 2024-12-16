@@ -1,8 +1,7 @@
-package com.example.Backend.service;
+package com.example.Backend.services;
 
 import com.example.Backend.configurations.ApiResponse;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 @Service
