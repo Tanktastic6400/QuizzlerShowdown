@@ -3,11 +3,11 @@ package com.example.Backend.models;
 
 import jakarta.persistence.*;
 
-
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.MappedSuperclass;
-import org.springframework.data.annotation.Id;
+
+
 
 import java.util.Objects;
 
