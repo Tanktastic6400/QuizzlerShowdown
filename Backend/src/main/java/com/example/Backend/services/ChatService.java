@@ -1,5 +1,6 @@
 package com.example.Backend.services;
-
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import com.example.Backend.models.Chat;
 import com.example.Backend.models.Message;
 import com.example.Backend.models.User;
@@ -55,10 +56,14 @@ public class ChatService {
         String chatId = getOrCreateChatId(senderId, recipientId);
         message.setSender(sender);
         message.setRecipient(receiver);
-        message.setChatid(chatId);
+        message.setChatId(chatId);
         message.setContent(content);
-        message.setTimestamp(System.currentTimeMillis());
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = now.format(formatter);
+        message.setTimestamp(formattedDate);
         messageRepository.save(message);
+        System.out.println("MESSAGE SHOULD SAVE TO REPO");
     }
 
     public List<Message> getMessages(Long userId1, Long userId2) {
@@ -66,6 +71,6 @@ public class ChatService {
     }
 
     public List<Message> getChat(String chatId) {
-        return messageRepository.findByChatid(chatId);
+        return messageRepository.findByChatId(chatId);
     }
 }

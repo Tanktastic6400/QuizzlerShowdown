@@ -7,12 +7,14 @@ import com.example.Backend.services.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import java.time.format.DateTimeFormatter;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -34,38 +36,43 @@ public class ChatController {
         }
         System.out.println("Chat ID: " + chatId);
         System.out.println("Received message: " + message.getContent());
-        message.setTimestamp(System.currentTimeMillis());
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = now.format(formatter);
+        message.setTimestamp(formattedDate);
+        message.setChatId(chatId);
+        messageRepository.save(message);
+        System.out.println(message.toString());
         return message;
     }
 
-    @PostMapping("/send")
-    public ResponseEntity<String> sendMessage(@RequestBody MessageRequestDTO messageRequest) {
-        System.out.println("Message sent from frontend.");
-        if (messageRequest == null ||
-                messageRequest.getSenderId() == null ||
-                messageRequest.getRecipientId() == null ||
-                messageRequest.getContent() == null ||
-                messageRequest.getContent().trim().isEmpty()) {
-            return ResponseEntity.badRequest().body("Invalid input parameters");
-        }
-
-        try {
-            chatService.sendMessage(
-                    messageRequest.getSenderId(),
-                    messageRequest.getRecipientId(),
-                    messageRequest.getContent()
-            );
-            return ResponseEntity.ok("Message sent successfully");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Failed to send message: " + e.getMessage());
-        }
-    }
+//    @PostMapping("/send")
+//    public ResponseEntity<String> sendMessage(@RequestBody MessageRequestDTO messageRequest) {
+//        System.out.println("Message sent from frontend.");
+//        if (messageRequest == null ||
+//                messageRequest.getSenderId() == null ||
+//                messageRequest.getRecipientId() == null ||
+//                messageRequest.getContent() == null ||
+//                messageRequest.getContent().trim().isEmpty()) {
+//            return ResponseEntity.badRequest().body("Invalid input parameters");
+//        }
+//
+//        try {
+//            chatService.sendMessage(
+//                    messageRequest.getSenderId(),
+//                    messageRequest.getRecipientId(),
+//                    messageRequest.getContent()
+//            );
+//            return ResponseEntity.ok("Message sent successfully");
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body("Failed to send message: " + e.getMessage());
+//        }
+//    }
 
     @GetMapping("/messages")
-    public List<Message> getMessages(@RequestParam String chatid) {
-        //return chatService.getMessages(user1Id, user2Id);
-        return chatService.getChat(chatid);
+    public List<Message> getMessages(@RequestParam String chatId) {
+        return chatService.getChat(chatId);
     }
 
 }

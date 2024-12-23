@@ -10,13 +10,13 @@ public class Chat extends AbstractClass {
 
     private String chatId;
 
-    public Chat() {}
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "sender_id", nullable = false)
     private User sender;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "receiver_id", nullable = false)
     private User receiver;
 
@@ -30,6 +30,7 @@ public class Chat extends AbstractClass {
         this.chatId = chatId;
     }
 
+    public Chat() {}
 
     public User getSender() {
         return sender;

@@ -41,7 +41,6 @@ const Chatbox = () => {
       };
     }, []);
   
-    // Function to send messages
     const sendMessage = () => {
       if (message.trim() !== "") {
         const messageObj = {
@@ -49,8 +48,6 @@ const Chatbox = () => {
           content: message.trim(),
         };
         console.log('Sending message:', messageObj);
-  
-        // Ensure stompClient is defined and connected
         if (stompClient.current && stompClient.current.send) {
           ///app/chat.sendMessage
           stompClient.current.send(`/app/chat.private.${chatId}`, {}, JSON.stringify(messageObj));
@@ -58,7 +55,7 @@ const Chatbox = () => {
           console.error("STOMP client is not initialized or connected.");
         }
         
-        setMessage(''); // Clear input after sending
+        setMessage('');
       }
     };
 
@@ -69,9 +66,9 @@ const Chatbox = () => {
     {messages.map((message) => (
       <div className="card-body" key={message.id}>
         <div>
-          {message.username}: {message.content}
+        Sent at:{message.timestamp} User:{message.username}: {message.content}
         </div>
-        {/* <div>Sent at: {message.createdAt}</div> */}
+        {/* <div></div> */}
       </div>
     ))}
   </Card.Body>
