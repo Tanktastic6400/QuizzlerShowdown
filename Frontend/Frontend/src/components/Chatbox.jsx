@@ -11,6 +11,14 @@ const Chatbox = () => {
     // Use useRef to store stompClient so it persists across renders
     const stompClient = useRef(null);
 
+    //this will be set by userids of sender and receiver
+    const getChatId = () => {
+
+      return "1234";
+    }
+
+    const chatId = getChatId();
+
     useEffect(() => {
       // Connect to the WebSocket server
       const socket = new SockJS('http://localhost:8080/ws');
@@ -18,7 +26,8 @@ const Chatbox = () => {
   
       stompClient.current.connect({}, () => {
         console.log('Connected to WebSocket');
-        stompClient.current.subscribe('/topic/messages', (message) => {
+        stompClient.current.subscribe(`/topic/private.${chatId}`, (message) => {
+          console.log(chatId);
           const receivedMessage = JSON.parse(message.body);
           console.log('Received message:', receivedMessage);
           setMessages((prevMessages) => [...prevMessages, receivedMessage]);
@@ -43,7 +52,8 @@ const Chatbox = () => {
   
         // Ensure stompClient is defined and connected
         if (stompClient.current && stompClient.current.send) {
-          stompClient.current.send('/app/chat.sendMessage', {}, JSON.stringify(messageObj));
+          ///app/chat.sendMessage
+          stompClient.current.send(`/app/chat.private.${chatId}`, {}, JSON.stringify(messageObj));
         } else {
           console.error("STOMP client is not initialized or connected.");
         }
@@ -53,30 +63,29 @@ const Chatbox = () => {
     };
 
     return (
-        <Card border="warning" style={{ width: '30rem' }}>
-        <Card.Header>Receiver Username</Card.Header>
+      <Card border="warning" style={{ width: '30rem' }}>
+  <Card.Header>Receiver Username</Card.Header>
+  <Card.Body>
+    {messages.map((message) => (
+      <div className="card-body" key={message.id}>
         <div>
-            <Card.Text>
-          <div>
-          {messages.map((message) => (
-            <div class="card-body" key={message.id}>
-              <p>{message.username}: {message.content}</p>
-              <p>Sent at: {message.createdAt}</p>
-            </div>
-          ))}
+          {message.username}: {message.content}
         </div>
-        </Card.Text>
-        <Card.Footer>
-          <input
-            type="text"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder="Type your message"
-          />
-          <button onClick={sendMessage}>Send</button>
-          </Card.Footer>
-          </div>
-        </Card>
+        {/* <div>Sent at: {message.createdAt}</div> */}
+      </div>
+    ))}
+  </Card.Body>
+  <Card.Footer>
+    <input
+      type="text"
+      value={message}
+      onChange={(e) => setMessage(e.target.value)}
+      placeholder="Type your message"
+    />
+    <button onClick={sendMessage}>Send</button>
+  </Card.Footer>
+</Card>
+
       );
     };
     

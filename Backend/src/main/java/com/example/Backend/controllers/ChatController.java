@@ -32,6 +32,8 @@ public class ChatController {
         if (!chatService.isValidChat(chatId)) {
             throw new IllegalArgumentException("Invalid chatId");
         }
+        System.out.println("Chat ID: " + chatId);
+        System.out.println("Received message: " + message.getContent());
         message.setTimestamp(System.currentTimeMillis());
         return message;
     }

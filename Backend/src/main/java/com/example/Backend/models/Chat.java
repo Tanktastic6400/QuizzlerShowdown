@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Entity
 public class Chat extends AbstractClass {
 
-    private String chatid;
+    private String chatId;
 
     public Chat() {}
 
@@ -23,11 +23,11 @@ public class Chat extends AbstractClass {
     @Column(nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    public Chat(User sender, User receiver, LocalDateTime createdAt, String chatid) {
+    public Chat(User sender, User receiver, LocalDateTime createdAt, String chatId) {
         this.sender = sender;
         this.receiver = receiver;
         this.createdAt = createdAt;
-        this.chatid = chatid;
+        this.chatId = chatId;
     }
 
 
@@ -55,11 +55,11 @@ public class Chat extends AbstractClass {
         this.createdAt = createdAt;
     }
 
-    public String getChatid() {
-        return chatid;
+    public String getChatId() {
+        return chatId;
     }
 
-    public void setChatid(String chatid) {
-        this.chatid = chatid;
+    public void setChatId(String chatId) {
+        this.chatId = chatId;
     }
 }

@@ -23,26 +23,26 @@ public class ChatService {
     @Autowired
     private UserRepository userRepository;
 
-    public boolean isValidChat(String chatid) {
-        return chatRepository.existsByChatid(chatid);
+    public boolean isValidChat(String chatId) {
+        return chatRepository.existsByChatId(chatId);
     }
 
     public String getOrCreateChatId(Long senderId, Long recipientId) {
-        String chatid = senderId < recipientId ? senderId + "-" + recipientId : recipientId + "-" + senderId;
+        String chatId = senderId < recipientId ? senderId + "-" + recipientId : recipientId + "-" + senderId;
 
         // Check if the chat already exists
-        if (!chatRepository.existsByChatid(chatid)) {
+        if (!chatRepository.existsByChatId(chatId)) {
             Chat chat = new Chat();
 
             chat.setSender(new User(senderId));
             chat.setReceiver(new User(recipientId));
 
-            chat.setChatid(chatid);
+            chat.setChatId(chatId);
 
             chatRepository.save(chat);
         }
 
-        return chatid;
+        return chatId;
     }
 
     public void sendMessage(Long senderId, Long recipientId, String content) {
@@ -65,7 +65,7 @@ public class ChatService {
         return messageRepository.findBySenderIdAndRecipientId(userId1, userId2);
     }
 
-    public List<Message> getChat(String chatid) {
-        return messageRepository.findByChatid(chatid);
+    public List<Message> getChat(String chatId) {
+        return messageRepository.findByChatid(chatId);
     }
 }
