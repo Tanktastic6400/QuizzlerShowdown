@@ -27,10 +27,8 @@ public class ChatService {
         return chatRepository.existsByChatid(chatid);
     }
 
-
     public String getOrCreateChatId(Long senderId, Long recipientId) {
         String chatid = senderId < recipientId ? senderId + "-" + recipientId : recipientId + "-" + senderId;
-
 
         // Check if the chat already exists
         if (!chatRepository.existsByChatid(chatid)) {
@@ -53,7 +51,6 @@ public class ChatService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
         User receiver = userRepository.findById(recipientId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-
 
         String chatId = getOrCreateChatId(senderId, recipientId);
         message.setSender(sender);

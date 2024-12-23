@@ -38,6 +38,7 @@ public class ChatController {
 
     @PostMapping("/send")
     public ResponseEntity<String> sendMessage(@RequestBody MessageRequestDTO messageRequest) {
+        System.out.println("Message sent from frontend.");
         if (messageRequest == null ||
                 messageRequest.getSenderId() == null ||
                 messageRequest.getRecipientId() == null ||
