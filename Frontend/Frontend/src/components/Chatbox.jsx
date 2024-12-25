@@ -1,15 +1,17 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
-import Card from "react-bootstrap/Card";
 import Toast from 'react-bootstrap/Toast';
-import ToastContainer from 'react-bootstrap/ToastContainer';
 import Button from 'react-bootstrap/Button';
+import ToastContainer from 'react-bootstrap/ToastContainer';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 const Chatbox = () => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
   const [showChat, setShowChat] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const toggleShowChat = () => setShowChat(!showChat);
 
@@ -22,6 +24,24 @@ const Chatbox = () => {
   };
 
   const chatId = getChatId();
+
+  const getMessages = async () => {
+    
+
+    try {
+      const response = await fetch(`http://localhost:8080/chat/messages?chatId=${chatId}`);
+      if (!response.ok) {
+          throw new Error(`Error fetching chat messages: ${response.statusText}`);
+      }
+      const data = await response.json();
+      setMessages(data);
+  } catch (err) {
+      setError(err.message);
+  } finally {
+      setLoading(false);
+  }
+  console.log(messages);
+  }
 
   useEffect(() => {
     // Connect to the WebSocket server
@@ -36,6 +56,7 @@ const Chatbox = () => {
         console.log("Received message:", receivedMessage);
         setMessages((prevMessages) => [...prevMessages, receivedMessage]);
       });
+      getMessages();
     });
 
     return () => {
@@ -70,10 +91,11 @@ const Chatbox = () => {
   return (
     <>
 
-      <Button onClick={toggleShowChat} className="mb-2">Chat</Button>
+      <ToastContainer position="bottom-end" className="p-3">
+      <Button onClick={toggleShowChat} className="mb-2">Username</Button>
         <Toast bg="warning" onClose={toggleShowChat} show={showChat} animation={false} position="bottom-end">
-          <Toast.Header>Receiver Username</Toast.Header>
-          <Toast.Body>
+          
+          <Toast.Body style={{ maxHeight: "150px", overflowY: "auto" }}>
           {messages.map((message) => (
           <div className="card-body" key={message.id}>
             <div>
@@ -91,7 +113,8 @@ const Chatbox = () => {
         />
         <button onClick={sendMessage}>Send</button>
         </Toast>
-    
+        </ToastContainer>
+        
   </>
   );
 };
