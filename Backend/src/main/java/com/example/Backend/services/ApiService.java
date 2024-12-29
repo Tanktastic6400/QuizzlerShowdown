@@ -16,7 +16,6 @@ public class ApiService {
     }
 
 
-
     public ApiResponse fetchTriviaQuestions(Integer amountOfQuestions, Integer valueOfCategory, String type, String difficulty){
         String baseUrl = "https://opentdb.com/api.php?";
         String url;
