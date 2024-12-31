@@ -2,40 +2,35 @@ package com.example.Backend.controllers;
 
 
 //import com.example.Backend.configurations.ApiResponse;
-import com.example.Backend.configurations.ApiResponse;
-import com.example.Backend.models.Question;
-import com.example.Backend.services.ApiService;
+import com.example.Backend.configurations.OpenTBDResponse;
+import com.example.Backend.services.OpenTBDService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
 @RestController
 public class OpenTBDController {
 
-private final ApiService apiService;
+private final OpenTBDService openTBDService;
 
-public OpenTBDController(ApiService apiService){
-    this.apiService = apiService;
+public OpenTBDController(OpenTBDService openTBDService){
+    this.openTBDService = openTBDService;
 }
 
 @GetMapping("/trivia")
-    public ApiResponse getTriviaQuestions(){
+    public OpenTBDResponse getTriviaQuestions(){
 
-    return apiService.fetchTriviaQuestions(5, 9, "boolean", null);
+    return createRandomQuiz(6);
 }
 
 
 
 
-public String createRandomQuiz(int amount){
-    ApiResponse response = apiService.fetchTriviaQuestions(amount,null,null,null);
+public OpenTBDResponse createRandomQuiz(int amount){
+    OpenTBDResponse response = openTBDService.fetchTriviaQuestions(amount,null,null,null);
 
-   List<ApiResponse.Question> tempString = response.getResults();
+   List<OpenTBDResponse.Question> tempString = response.getResults();
 
    //code before return statement is possibly junk code, this code returns the json object as a string.
 
@@ -59,7 +54,7 @@ public String createRandomQuiz(int amount){
 //    }
 
 
-    return tempString.get(0).toString();
+    return response;
 }
 
 

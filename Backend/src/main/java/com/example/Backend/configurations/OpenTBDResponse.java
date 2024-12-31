@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class ApiResponse {
+public class OpenTBDResponse {
 
     @JsonProperty("response_code")
     private int responseCode;

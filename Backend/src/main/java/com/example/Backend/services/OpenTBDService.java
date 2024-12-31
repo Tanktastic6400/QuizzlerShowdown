@@ -1,22 +1,22 @@
 package com.example.Backend.services;
 
-import com.example.Backend.configurations.ApiResponse;
+import com.example.Backend.configurations.OpenTBDResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Service
-public class ApiService {
+public class OpenTBDService {
 
     private final RestTemplate restTemplate;
 
-    public ApiService(RestTemplate restTemplate) {
+    public OpenTBDService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
 
-    public ApiResponse fetchTriviaQuestions(Integer amountOfQuestions, Integer valueOfCategory, String type, String difficulty){
+    public OpenTBDResponse fetchTriviaQuestions(Integer amountOfQuestions, Integer valueOfCategory, String type, String difficulty){
         String baseUrl = "https://opentdb.com/api.php?";
         String url;
         UriComponentsBuilder urlBuilder = UriComponentsBuilder.fromUriString(baseUrl);
@@ -38,13 +38,14 @@ public class ApiService {
         }
 
         url = urlBuilder.toUriString();
+        System.out.println(url);
 
-        return restTemplate.getForObject(url,ApiResponse.class);
+        return restTemplate.getForObject(url, OpenTBDResponse.class);
     }
 
 
 
-    private String convertResponseToString(ApiResponse response){
+    private String convertResponseToString(OpenTBDResponse response){
 
         ObjectMapper objectMapper= new ObjectMapper();
 
