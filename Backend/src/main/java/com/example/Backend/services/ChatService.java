@@ -1,5 +1,6 @@
 package com.example.Backend.services;
-
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import com.example.Backend.models.Chat;
 import com.example.Backend.models.Message;
 import com.example.Backend.models.User;
@@ -23,28 +24,26 @@ public class ChatService {
     @Autowired
     private UserRepository userRepository;
 
-    public boolean isValidChat(String chatid) {
-        return chatRepository.existsByChatid(chatid);
+    public boolean isValidChat(String chatId) {
+        return chatRepository.existsByChatId(chatId);
     }
 
-
     public String getOrCreateChatId(Long senderId, Long recipientId) {
-        String chatid = senderId < recipientId ? senderId + "-" + recipientId : recipientId + "-" + senderId;
-
+        String chatId = senderId < recipientId ? senderId + "-" + recipientId : recipientId + "-" + senderId;
 
         // Check if the chat already exists
-        if (!chatRepository.existsByChatid(chatid)) {
+        if (!chatRepository.existsByChatId(chatId)) {
             Chat chat = new Chat();
 
             chat.setSender(new User(senderId));
             chat.setReceiver(new User(recipientId));
 
-            chat.setChatid(chatid);
+            chat.setChatId(chatId);
 
             chatRepository.save(chat);
         }
 
-        return chatid;
+        return chatId;
     }
 
     public void sendMessage(Long senderId, Long recipientId, String content) {
@@ -54,21 +53,24 @@ public class ChatService {
         User receiver = userRepository.findById(recipientId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-
         String chatId = getOrCreateChatId(senderId, recipientId);
         message.setSender(sender);
         message.setRecipient(receiver);
-        message.setChatid(chatId);
+        message.setChatId(chatId);
         message.setContent(content);
-        message.setTimestamp(System.currentTimeMillis());
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = now.format(formatter);
+        message.setTimestamp(formattedDate);
         messageRepository.save(message);
+        System.out.println("MESSAGE SHOULD SAVE TO REPO");
     }
 
     public List<Message> getMessages(Long userId1, Long userId2) {
         return messageRepository.findBySenderIdAndRecipientId(userId1, userId2);
     }
 
-    public List<Message> getChat(String chatid) {
-        return messageRepository.findByChatid(chatid);
+    public List<Message> getChat(String chatId) {
+        return messageRepository.findByChatId(chatId);
     }
 }
