@@ -5,6 +5,7 @@ import './App.css'
 import MainPage from './pages/MainPage'
 import ReviewPage from './pages/ReviewPage'
 import Chatbox from './components/Chatbox';
+import FriendList from './components/FriendList';
 
 function App() {
   
@@ -15,6 +16,7 @@ function App() {
       <Route path="/reviews" element={<ReviewPage />} />
     </Routes>
     <Chatbox />
+    <FriendList />
   </BrowserRouter>
   )
 }

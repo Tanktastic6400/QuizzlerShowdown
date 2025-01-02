@@ -5,6 +5,11 @@ import Toast from 'react-bootstrap/Toast';
 import Button from 'react-bootstrap/Button';
 import ToastContainer from 'react-bootstrap/ToastContainer';
 import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import DropdownHeader from 'react-bootstrap/DropdownHeader'
+import ToastHeader from "react-bootstrap/esm/ToastHeader";
+import DropdownItem from "react-bootstrap/esm/DropdownItem";
+import DropdownDivider from "react-bootstrap/esm/DropdownDivider";
 
 const Chatbox = () => {
   const [messages, setMessages] = useState([]);
@@ -26,8 +31,6 @@ const Chatbox = () => {
   const chatId = getChatId();
 
   const getMessages = async () => {
-    
-
     try {
       const response = await fetch(`http://localhost:8080/chat/messages?chatId=${chatId}`);
       if (!response.ok) {
@@ -69,12 +72,12 @@ const Chatbox = () => {
   const sendMessage = () => {
     if (message.trim() !== "") {
       const messageObj = {
-        sender: 1, // Replace with dynamic user data
+        sender: 1,
+        recipient: 2, // Replace with dynamic user data
         content: message.trim(),
       };
       console.log("Sending message:", messageObj);
       if (stompClient.current && stompClient.current.send) {
-        ///app/chat.sendMessage
         stompClient.current.send(
           `/app/chat.private.${chatId}`,
           {},
@@ -83,18 +86,40 @@ const Chatbox = () => {
       } else {
         console.error("STOMP client is not initialized or connected.");
       }
-
       setMessage("");
     }
   };
 
   return (
     <>
-
-      <ToastContainer position="bottom-end" className="p-3">
-      <Button onClick={toggleShowChat} className="mb-2">Username</Button>
-        <Toast bg="warning" onClose={toggleShowChat} show={showChat} animation={false} position="bottom-end">
-          
+      <Dropdown>
+        <DropdownButton drop="up-centered" variant="warning" title="Messages">
+          <Dropdown.Item>
+            <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+            {messages.map((message) => (
+          <div className="card-body" key={message.id}>
+            <div>
+              Sent at:{message.timestamp} User:{message.username}:{" "}
+              {message.content}
+            </div>
+          </div>
+        ))}
+        </div>
+        </Dropdown.Item>
+        <DropdownDivider />
+        <input
+          type="text"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          placeholder="Type your message"
+        />
+        <button onClick={sendMessage}>Send</button>
+        </DropdownButton>
+      </Dropdown>
+      
+{/* <Button onClick={toggleShowChat} className="mb-2">Username</Button>
+        <Toast bg="secondary" onClose={toggleShowChat} show={showChat} animation={false} position="bottom-end">
+          <ToastHeader>Header</ToastHeader>
           <Toast.Body style={{ maxHeight: "150px", overflowY: "auto" }}>
           {messages.map((message) => (
           <div className="card-body" key={message.id}>
@@ -112,9 +137,7 @@ const Chatbox = () => {
           placeholder="Type your message"
         />
         <button onClick={sendMessage}>Send</button>
-        </Toast>
-        </ToastContainer>
-        
+        </Toast> */}
   </>
   );
 };
