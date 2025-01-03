@@ -1,50 +1,48 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-function RegisterForm(props){
+function LoginForm(props){
 
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [confirmedPassword, setConfirmedPassword] = useState("");
+    //const [error, setError] = useState("");
 
     const navigate = useNavigate();
 
     function handleSubmit(e){
         e.preventDefault();
 
-        const registerFormData = {
+        const LoginFormData = {
             "username": username,
             "password": password,
-            "email": email,
-            "passwordVerification": confirmedPassword
+            "email": email
         }
 
         const fetchSpecifications = {
             method: "POST",
+            credentials: "include", // Ensure session cookies are sent
             headers: { "Content-Type": "application/json"},
-            body: JSON.stringify(registerFormData)
+            body: JSON.stringify(LoginFormData)
         }
 
-        fetch("http://localhost:8080/register", fetchSpecifications
-
+        fetch("http://localhost:8080/login", fetchSpecifications
             //FINISH UP HERE!!!
         ).then(function (response) {
             if (!response.ok) {
                 setUsername("");
                 setEmail("");
                 setPassword("");
-                setConfirmedPassword("");
-                throw new Error("Could not submit registration information");
+                throw new Error("Could not log in");
             }
-            alert("Form submitted")
+            alert("Succesfully logged in.")
             setUsername("");
             setEmail("");
             setPassword("");
-            setConfirmedPassword("");
-            navigate("/login");
+            navigate("/");
             return response
-        })  
+        })
+
 
     }
 
@@ -67,16 +65,11 @@ function RegisterForm(props){
             value={password}
             onChange={function(e) { setPassword(e.target.value); }}
             placeholder ="Password"
+            required //Added for obvious reasons
             />
-             <input
-            type="password"
-            value={confirmedPassword}
-            onChange={function(e) { setConfirmedPassword(e.target.value); }}
-            placeholder ="Confirm Password"
-            />
-            <button type="submit">Register User</button>
+            <button type="submit">Login</button>
         </form>
     );
 }
 
-export default RegisterForm
+export default LoginForm

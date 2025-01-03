@@ -8,9 +8,15 @@ import com.example.Backend.models.data.UserRepository;
 import com.example.Backend.services.AuthenticationService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
+//@RequestMapping("user_service")
+                                           //74?
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class AuthenticationController {
 
     @Autowired
@@ -19,25 +25,29 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationService authenticationService;
 
-    //private static final String userSessionKey = "user";
-
-    //private static void setUserInSession(HttpSession session, User user) {
-    //    session.setAttribute(userSessionKey, user.getId());
-    //}
-
-    @PostMapping("login")
-    public void attemptLogin(@RequestBody LoginFormDTO request){
+    @PostMapping("/login")
+    public ResponseEntity<String> attemptLogin(@RequestBody LoginFormDTO request, HttpSession session){
         String typedName = request.getUsername();
         String typedPassword = request.getPassword();
-        authenticationService.loginUser(typedName, typedPassword);
+        if(authenticationService.loginUser(typedName, typedPassword, session)){
+            return ResponseEntity.ok("Sucessfully logged in");
+        }
+        //setUserInSession(request.getSession(), theUser);
+        return ResponseEntity.status(401).body("Incorrect username or password");
     }
 
     @PostMapping("/register")
-    public void attemptRegistration(@RequestBody RegisterFormDTO request){
+    public ResponseEntity<String> attemptRegistration(@RequestBody RegisterFormDTO request){
         User newUser = new User(request.getUsername(), request.getEmail(), request.getPassword());
         String passwordCheck = request.getPasswordVerification();
         authenticationService.registerUser(newUser, passwordCheck);
-        //setUserInSession(request.getSession(), newUser);
+        return ResponseEntity.ok("Sucessfully registered");
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> logoutUser(HttpSession session) {
+        session.invalidate();
+        return ResponseEntity.ok("Successfully logged out");
     }
 
 
