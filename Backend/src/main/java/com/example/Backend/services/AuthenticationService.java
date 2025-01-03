@@ -21,11 +21,15 @@ public class AuthenticationService {
         if(!attemptedUser.checkMatchingPasswords(typedPassword)){
             throw new RuntimeException("Passwords do not match");
         }
+
+
     }
 
     public void registerUser(User newUser, String passwordVerification){
-        User oldUser = userRepository.findByUsername(newUser.getUsername());
-        if(oldUser != null){
+        User oldUserName = userRepository.findByUsername(newUser.getUsername());
+        User oldUserEmail = userRepository.findByEmail(newUser.getEmail());
+
+        if(oldUserName != null || oldUserEmail != null){
             throw new RuntimeException("User already exists");
         }
 

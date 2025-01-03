@@ -1,48 +1,41 @@
 import React, { useState } from "react";
 
-function RegisterForm(props){
+function LoginForm(props){
 
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [confirmedPassword, setConfirmedPassword] = useState("");
 
     function handleSubmit(e){
         e.preventDefault();
 
-        const registerFormData = {
+        const LoginFormData = {
             "username": username,
             "password": password,
-            "email": email,
-            "passwordVerification": confirmedPassword
+            "email": email
         }
 
         const fetchSpecifications = {
             method: "POST",
             headers: { "Content-Type": "application/json"},
-            body: JSON.stringify(registerFormData)
+            body: JSON.stringify(LoginForm)
         }
 
-        fetch("http://localhost:8080/register", fetchSpecifications
-
+        fetch("http://localhost:8080/login", fetchSpecifications
             //FINISH UP HERE!!!
         ).then(function (response) {
             if (!response.ok) {
-                throw new Error("Could not submit registration information");
+                throw new Error("Could not log in");
             }
             return response.json();
         })  
-    
-
-        //FIGURE OUT PAST HERE, AND WHAT A RESPONSE ENTITY IS
 
         //FILLER
-        alert("Form submitted")
+        alert("Login submitted")
 
         setUsername("");
         setEmail("");
         setPassword("");
-        setConfirmedPassword("");
 
     }
 
@@ -66,15 +59,9 @@ function RegisterForm(props){
             onChange={function(e) { setPassword(e.target.value); }}
             placeholder ="Password"
             />
-             <input
-            type="password"
-            value={confirmedPassword}
-            onChange={function(e) { setConfirmedPassword(e.target.value); }}
-            placeholder ="Confirm Password"
-            />
-            <button type="submit">Register User</button>
+            <button type="submit">Login</button>
         </form>
     );
 }
 
-export default RegisterForm
+export default LoginForm

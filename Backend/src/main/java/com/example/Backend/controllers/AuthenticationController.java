@@ -25,7 +25,7 @@ public class AuthenticationController {
     //    session.setAttribute(userSessionKey, user.getId());
     //}
 
-    @PostMapping("login")
+    @PostMapping("/login")
     public void attemptLogin(@RequestBody LoginFormDTO request){
         String typedName = request.getUsername();
         String typedPassword = request.getPassword();
