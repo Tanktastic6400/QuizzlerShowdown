@@ -4,9 +4,7 @@ package com.example.Backend.controllers;
 //import com.example.Backend.configurations.ApiResponse;
 import com.example.Backend.configurations.OpenTBDResponse;
 import com.example.Backend.services.OpenTBDService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,23 +12,50 @@ import java.util.List;
 public class OpenTBDController {
 
 private final OpenTBDService openTBDService;
+//private Integer amount;
+//private Integer category;
+//private String type;
+//private String difficulty;
 
 public OpenTBDController(OpenTBDService openTBDService){
     this.openTBDService = openTBDService;
 }
+@RequestMapping
+public OpenTBDResponse getQuestions(@RequestParam Integer amount, @RequestParam Integer category, @RequestParam String type, @RequestParam String difficulty){
 
-@GetMapping("/questions")
-    public OpenTBDResponse getTriviaQuestions(){
-
-    return createRandomQuiz(6);
+    return createRandomQuiz(amount, category,type,difficulty);
 }
 
-public OpenTBDResponse createRandomQuiz(int amount){
-    OpenTBDResponse response = openTBDService.fetchTriviaQuestions(amount,null,null,null);
+//@GetMapping("/questions")
+//    public OpenTBDResponse getTriviaQuestions(){
+//
+//    return createRandomQuiz(amount, category,type,difficulty);
+//}
 
-   List<OpenTBDResponse.Question> tempString = response.getResults();
+//@PostMapping("/questions")
+//    public void setQuestions(@RequestParam Integer amount, @RequestParam Integer valueOfCategory, @RequestParam String type, @RequestParam String difficulty){
+//    this.amount = amount;
+//    this.category = valueOfCategory;
+//    this.type = type;
+//    this.difficulty=difficulty;
+//
+//}
 
-   //code before return statement is possibly junk code, this code returns the json object as a string.
+private OpenTBDResponse createRandomQuiz(Integer amount, Integer category, String type, String difficulty){
+
+    return openTBDService.fetchTriviaQuestions(amount,category,type,difficulty);
+}
+
+//-----------------------------------------------------------Abandon all hope yee who glance beyond this line, for the coding graveyard is not for the faint of heart ---------------------------------------------------------------//
+
+/* reference of returned json object
+
+* [results, type, multiple, difficulty, medium, category, Entertainment: Video Games, question, In the game Tom Clancy&#039;s Rainbow 6 Siege, what organization is Valkyrie from?, correct_answer, Navy Seals, incorrect_answers, S.A.S, G.I.G.N, F.B.I,
+* type, multiple, difficulty, easy, category, General Knowledge, question, What is the shape of the toy invented by Hungarian professor Ernő Rubik?, correct_answer, Cube, incorrect_answers, Sphere, Cylinder, Pyramid, response_code]
+end
+* */
+
+    //code before return statement is possibly junk code, this code returns the json object as a string.
 
 //    Pattern pattern = Pattern.compile("\"([^\"]*)\"");
 //    Matcher matcher = pattern.matcher(tempString);
@@ -50,18 +75,6 @@ public OpenTBDResponse createRandomQuiz(int amount){
 
 
 //    }
-
-
-    return response;
-}
-
-
-/* reference of returned json object
-
-* [results, type, multiple, difficulty, medium, category, Entertainment: Video Games, question, In the game Tom Clancy&#039;s Rainbow 6 Siege, what organization is Valkyrie from?, correct_answer, Navy Seals, incorrect_answers, S.A.S, G.I.G.N, F.B.I,
-* type, multiple, difficulty, easy, category, General Knowledge, question, What is the shape of the toy invented by Hungarian professor Ernő Rubik?, correct_answer, Cube, incorrect_answers, Sphere, Cylinder, Pyramid, response_code]
-end
-* */
 
 
 

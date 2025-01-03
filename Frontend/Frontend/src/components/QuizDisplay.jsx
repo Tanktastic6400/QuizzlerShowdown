@@ -1,48 +1,65 @@
 import "./QuizDisplay.css"
+import React, { useState, useEffect } from 'react';
 
 import axios from "axios";
 
 function QuizDisplay() {
 
-    const testQuestion =
-    {
-        "results": [
-            {
-                "type": "boolean",
-                "difficulty": "easy",
-                "category": "General Knowledge",
-                "question": "Pluto is a planet.",
-                "correct_answer": "False",
-                "incorrect_answers": [
-                    "True"
-                ]
+    // const testQuestion =
+    // {
+    //     "results": [
+    //         {
+    //             "type": "boolean",
+    //             "difficulty": "easy",
+    //             "category": "General Knowledge",
+    //             "question": "Pluto is a planet.",
+    //             "correct_answer": "False",
+    //             "incorrect_answers": [
+    //                 "True"
+    //             ]
 
-            },
-            {
-                "type": "boolean",
-                "difficulty": "hard",
-                "category": "General Knowledge",
-                "question": "In Scandinavian languages, the letter &Aring; means river.",
-                "correct_answer": "True",
-                "incorrect_answers": [
-                    "False"
-                ]
-            },
-            {
-                "type": "multiple",
-                "difficulty": "hard",
-                "category": "Entertainment: Video Games",
-                "question": "In &quot;Call Of Duty: Zombies&quot;, what does the game traditionally reward you for completing a boss round?",
-                "correct_answer": "Max Ammo",
-                "incorrect_answers": [
-                    "A Pack-A-Punched gun",
-                    "Death Machine",
-                    "Monkey Bombs"
-                ]
-            }
+    //         },
+    //         {
+    //             "type": "boolean",
+    //             "difficulty": "hard",
+    //             "category": "General Knowledge",
+    //             "question": "In Scandinavian languages, the letter &Aring; means river.",
+    //             "correct_answer": "True",
+    //             "incorrect_answers": [
+    //                 "False"
+    //             ]
+    //         },
+    //         {
+    //             "type": "multiple",
+    //             "difficulty": "hard",
+    //             "category": "Entertainment: Video Games",
+    //             "question": "In &quot;Call Of Duty: Zombies&quot;, what does the game traditionally reward you for completing a boss round?",
+    //             "correct_answer": "Max Ammo",
+    //             "incorrect_answers": [
+    //                 "A Pack-A-Punched gun",
+    //                 "Death Machine",
+    //                 "Monkey Bombs"
+    //             ]
+    //         }
 
-        ]
-    }
+    //     ]
+    // }
+
+    const [questionData, setQuestionsData] = useState(null);
+
+    useEffect(() =>{
+
+    axios.get('http://localhost:8080/questions')
+    .then(response => {
+        setQuestionsData(response.data);
+    })
+    .catch(error => {
+        console.error("There was an error when getting questions from 'http://localhost:8080/questions'");
+    });
+
+}, []);
+
+
 
     const mixAnswers = (questions) => {
         let answers = [...questions.incorrect_answers, questions.correct_answer];
@@ -61,7 +78,7 @@ function QuizDisplay() {
             <table border="1">
                 <thead>
                     <tr style={{}}>
-                        <th style={{}}>Type</th>
+                        <th>Question number</th>
                         <th>Difficulty</th>
                         <th>Category</th>
                         <th>Question</th>
@@ -70,9 +87,9 @@ function QuizDisplay() {
                     </tr>
                 </thead>
                 <tbody>
-                    {testQuestion.results.map((question, index) => (
+                    {questionData && questionData.results.map((question, index) => (
                         <tr key={index}>
-                            <td class="questionStats">{question.type}</td>
+                            <td class="questionStats">Number: {index +1}</td>
                             <td class="questionStats">{question.difficulty}</td>
                             <td class="questionStats">{question.category}</td>
                             <td class="questionStats" dangerouslySetInnerHTML={{ __html: question.question }} />
@@ -82,7 +99,7 @@ function QuizDisplay() {
                                 // </button>
                                 <div style={{display: "flex"}}>
                                     <input type="radio" key={index} id={index} class="answerRadio"></input>
-                                    <label for={index} class="answerLabel">{answers}</label>
+                                    <label htmlFor={index} class="answerLabel" dangerouslySetInnerHTML={{__html: answers}}/>
                                 </div>
                             ))}</td>
 
