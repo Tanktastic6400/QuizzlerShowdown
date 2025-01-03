@@ -38,8 +38,7 @@ public class OpenTBDService {
         }
 
         url = urlBuilder.toUriString();
-        System.out.println(url);
-
+        
         return restTemplate.getForObject(url, OpenTBDResponse.class);
     }
 

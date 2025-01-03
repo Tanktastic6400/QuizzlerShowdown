@@ -11,11 +11,6 @@ public class BackendApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BackendApplication.class, args);
-		OpenTBDController questions = new OpenTBDController(new OpenTBDService(new RestTemplate()));
-
-		System.out.println();
-		System.out.println(questions.createRandomQuiz(2));
-		System.out.println("end");
 
 
 

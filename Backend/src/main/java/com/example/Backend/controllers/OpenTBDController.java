@@ -5,6 +5,7 @@ package com.example.Backend.controllers;
 import com.example.Backend.configurations.OpenTBDResponse;
 import com.example.Backend.services.OpenTBDService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -18,14 +19,11 @@ public OpenTBDController(OpenTBDService openTBDService){
     this.openTBDService = openTBDService;
 }
 
-@GetMapping("/trivia")
+@GetMapping("/questions")
     public OpenTBDResponse getTriviaQuestions(){
 
     return createRandomQuiz(6);
 }
-
-
-
 
 public OpenTBDResponse createRandomQuiz(int amount){
     OpenTBDResponse response = openTBDService.fetchTriviaQuestions(amount,null,null,null);
