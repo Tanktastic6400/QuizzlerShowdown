@@ -116,28 +116,6 @@ const Chatbox = () => {
         <button onClick={sendMessage}>Send</button>
         </DropdownButton>
       </Dropdown>
-      
-{/* <Button onClick={toggleShowChat} className="mb-2">Username</Button>
-        <Toast bg="secondary" onClose={toggleShowChat} show={showChat} animation={false} position="bottom-end">
-          <ToastHeader>Header</ToastHeader>
-          <Toast.Body style={{ maxHeight: "150px", overflowY: "auto" }}>
-          {messages.map((message) => (
-          <div className="card-body" key={message.id}>
-            <div>
-              Sent at:{message.timestamp} User:{message.username}:{" "}
-              {message.content}
-            </div>
-          </div>
-        ))}
-          </Toast.Body>
-          <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="Type your message"
-        />
-        <button onClick={sendMessage}>Send</button>
-        </Toast> */}
   </>
   );
 };
