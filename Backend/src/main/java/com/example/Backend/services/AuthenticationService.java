@@ -53,19 +53,22 @@ public class AuthenticationService {
         return true;
     }
 
-    public void registerUser(User newUser, String passwordVerification){
+    public boolean registerUser(User newUser, String passwordVerification){
         User oldUserName = userRepository.findByUsername(newUser.getUsername());
         User oldUserEmail = userRepository.findByEmail(newUser.getEmail());
 
         if(oldUserName != null || oldUserEmail != null){
-            throw new RuntimeException("User already exists");
+            return false;
+            //throw new RuntimeException("User already exists");
         }
 
         if(!newUser.checkMatchingPasswords(passwordVerification)){
-            throw new RuntimeException("Passwords do not match");
+            return false;
+            //throw new RuntimeException("Passwords do not match");
         }
 
         userRepository.save(newUser);
+        return true;
     }
 
 }

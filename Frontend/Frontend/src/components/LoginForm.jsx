@@ -21,11 +21,13 @@ function LoginForm(props){
 
         const fetchSpecifications = {
             method: "POST",
-            credentials: "include", // Ensure session cookies are sent
+            credentials: "include", //Needed for cookies
             headers: { "Content-Type": "application/json"},
-            body: JSON.stringify(LoginFormData)
+            body: JSON.stringify(LoginFormData),
         }
 
+        //"http://localhost:8080/login"
+        //"http://localhost:8080/authenticationservice/login"
         fetch("http://localhost:8080/login", fetchSpecifications
             //FINISH UP HERE!!!
         ).then(function (response) {

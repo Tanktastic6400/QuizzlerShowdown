@@ -11,11 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @RestController
-//@RequestMapping("user_service")
-                                           //74?
+//@RequestMapping("/authenticationservice") //74?
 @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class AuthenticationController {
 
@@ -40,12 +37,15 @@ public class AuthenticationController {
     public ResponseEntity<String> attemptRegistration(@RequestBody RegisterFormDTO request){
         User newUser = new User(request.getUsername(), request.getEmail(), request.getPassword());
         String passwordCheck = request.getPasswordVerification();
-        authenticationService.registerUser(newUser, passwordCheck);
-        return ResponseEntity.ok("Sucessfully registered");
+        if(authenticationService.registerUser(newUser, passwordCheck)) {
+            return ResponseEntity.ok("Sucessfully registered");
+        }
+        return ResponseEntity.status(401).body("Incorrect registration information");
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<String> logoutUser(HttpSession session) {
+    public ResponseEntity<String> attemptLogout(HttpSession session) {
+        System.out.println("GOT IN HERE");
         session.invalidate();
         return ResponseEntity.ok("Successfully logged out");
     }
