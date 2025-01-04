@@ -26,7 +26,9 @@ function RegisterForm(props){
             body: JSON.stringify(registerFormData)
         }
 
-        fetch("http://localhost:8080/register", fetchSpecifications
+        //"http://localhost:8080/register"
+        //"http://localhost:8080/authenticationservice/register"
+        fetch("http://localhost:8080/authenticationservice/register", fetchSpecifications
 
             //FINISH UP HERE!!!
         ).then(function (response) {

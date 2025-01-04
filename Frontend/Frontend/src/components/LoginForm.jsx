@@ -28,7 +28,7 @@ function LoginForm(props){
 
         //"http://localhost:8080/login"
         //"http://localhost:8080/authenticationservice/login"
-        fetch("http://localhost:8080/login", fetchSpecifications
+        fetch("http://localhost:8080/authenticationservice/login", fetchSpecifications
             //FINISH UP HERE!!!
         ).then(function (response) {
             if (!response.ok) {
