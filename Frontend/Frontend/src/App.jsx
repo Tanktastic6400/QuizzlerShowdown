@@ -26,10 +26,10 @@ function App() {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/quizdisplay" element={<QuizDisplay/>} />
+      <Route path="/quizselector" element={<QuizSelector/>} />
     </Routes>
     <Chatbox />
     <FriendList />
-    <QuizSelector/>
   </BrowserRouter>
   )
 }
