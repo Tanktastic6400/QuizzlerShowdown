@@ -27,8 +27,8 @@ public class FriendListService {
         User friend = userRepository.findById(friendId).orElseThrow(() -> new RuntimeException("Friend not found"));
 
         FriendList friendlist = new FriendList();
-        friendlist.setUser(user);   // Set the user (this should already be persisted)
-        friendlist.setFriends(friend);  // Set the friend (this should also be persisted)
+        friendlist.setUser(user);
+        friendlist.setFriends(friend);
         friendlist.setStatus(FriendStatus.PENDING);
 
         friendListRepository.save(friendlist);
