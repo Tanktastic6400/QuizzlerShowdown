@@ -25,6 +25,7 @@ function App() {
       <Route path="/reviews" element={<ReviewPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/quizDisplay" element={<QuizDisplay/>}/>
     </Routes>
     <Chatbox />
     <FriendList />
