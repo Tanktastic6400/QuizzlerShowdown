@@ -8,28 +8,29 @@ import java.time.LocalDateTime;
 @Entity
 public class Chat extends AbstractClass {
 
-    private String chatid;
+    private String chatId;
 
-    public Chat() {}
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "sender_id", nullable = false)
     private User sender;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "receiver_id", nullable = false)
     private User receiver;
 
     @Column(nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    public Chat(User sender, User receiver, LocalDateTime createdAt, String chatid) {
+    public Chat(User sender, User receiver, LocalDateTime createdAt, String chatId) {
         this.sender = sender;
         this.receiver = receiver;
         this.createdAt = createdAt;
-        this.chatid = chatid;
+        this.chatId = chatId;
     }
 
+    public Chat() {}
 
     public User getSender() {
         return sender;
@@ -55,11 +56,11 @@ public class Chat extends AbstractClass {
         this.createdAt = createdAt;
     }
 
-    public String getChatid() {
-        return chatid;
+    public String getChatId() {
+        return chatId;
     }
 
-    public void setChatid(String chatid) {
-        this.chatid = chatid;
+    public void setChatId(String chatId) {
+        this.chatId = chatId;
     }
 }
