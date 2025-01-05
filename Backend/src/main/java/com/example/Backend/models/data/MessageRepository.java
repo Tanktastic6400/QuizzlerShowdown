@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface MessageRepository extends JpaRepository<Message, Long> {
     List<Message> findBySenderIdAndRecipientId(Long senderId, Long recipientId);
-    List<Message> findByChatid(String chatid);
+    List<Message> findByChatId(String chatId);
 }

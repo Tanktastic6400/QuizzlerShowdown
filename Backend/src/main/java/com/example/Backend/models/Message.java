@@ -21,27 +21,27 @@ public class Message extends AbstractClass {
     private String content;
 
     @Column(nullable = false)
-    private Long timestamp;
+    private String timestamp;
 
-    private String chatid;
+    private String chatId;
 
-    public Message(User sender, User recipient, String content, Long timestamp, String chatid) {
+    public Message(User sender, User recipient, String content, String timestamp, String chatId) {
         this.sender = sender;
         this.recipient = recipient;
         this.content = content;
         this.timestamp = timestamp;
-        this.chatid = chatid;
+        this.chatId = chatId;
     }
 
     public Message() {
     }
 
-    public String getChatid() {
-        return chatid;
+    public String getChatId() {
+        return chatId;
     }
 
-    public void setChatid(String chatid) {
-        this.chatid = chatid;
+    public void setChatId(String chatId) {
+        this.chatId = chatId;
     }
 
     public User getSender() {
@@ -68,11 +68,22 @@ public class Message extends AbstractClass {
         this.content = content;
     }
 
-    public Long getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Long timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "sender=" + sender +
+                ", recipient=" + recipient +
+                ", content='" + content + '\'' +
+                ", timestamp=" + timestamp +
+                ", chatId='" + chatId + '\'' +
+                '}';
     }
 }
