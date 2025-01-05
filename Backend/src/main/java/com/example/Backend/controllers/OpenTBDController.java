@@ -1,12 +1,17 @@
 package com.example.Backend.controllers;
 
 
+
 //import com.example.Backend.configurations.ApiResponse;
 import com.example.Backend.configurations.OpenTBDResponse;
 import com.example.Backend.services.OpenTBDService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 
 @RestController
 public class OpenTBDController {
@@ -28,14 +33,16 @@ public OpenTBDController(OpenTBDService openTBDService){
     return createRandomQuiz(amount, category,type,difficulty);
 }
 
+
 @PostMapping("/questions")
     public void setQuestions(@RequestParam Integer amount, @RequestParam Integer valueOfCategory, @RequestParam String type, @RequestParam String difficulty){
     this.amount = amount;
     this.category = valueOfCategory;
     this.type = type;
     this.difficulty=difficulty;
-
 }
+
+
 
 private OpenTBDResponse createRandomQuiz(Integer amount, Integer category, String type, String difficulty){
 

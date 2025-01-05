@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 @Entity
 public class FriendList extends AbstractClass {
 
+
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")  // This will reference the user who owns the friend list
     private User user;

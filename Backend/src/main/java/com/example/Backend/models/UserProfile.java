@@ -1,17 +1,45 @@
 package com.example.Backend.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
+@Table(name = "user_profiles")
 public class UserProfile extends AbstractClass {
 
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
+
     private int score;
 
+    @OneToMany(mappedBy = "userProfile")
+    private List<AnsweredQuestion> answeredQuestions;
 
+    public UserProfile() {}
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public List<AnsweredQuestion> getAnsweredQuestions() {
+        return answeredQuestions;
+    }
+
+    public void setAnsweredQuestions(List<AnsweredQuestion> answeredQuestions) {
+        this.answeredQuestions = answeredQuestions;
+    }
 }
