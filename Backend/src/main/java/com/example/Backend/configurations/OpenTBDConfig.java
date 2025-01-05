@@ -13,5 +13,4 @@ public class OpenTBDConfig {
         return new RestTemplate();
     }
 
-
 }
