@@ -45,9 +45,26 @@ public class AuthenticationController {
 
     @PostMapping("/logout")
     public ResponseEntity<String> attemptLogout(HttpSession session) {
-        System.out.println("GOT IN HERE");
+        //System.out.println("GOT IN HERE");
         session.invalidate();
         return ResponseEntity.ok("Successfully logged out");
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<String> getUserInfo(HttpSession session){
+
+        //System.out.println("GOT IN HERE");
+
+        User currentUser= authenticationService.getUserFromSession(session);
+
+        if(currentUser == null){
+            System.out.println("GOT INSIDE CURRENT USER IS NULL");
+            return ResponseEntity.status(401).body("No user logged in");
+        }
+        //System.out.println("GOT TO RETURN");
+        String currentUsername = currentUser.getUsername();
+        System.out.println(currentUsername);
+        return ResponseEntity.ok(currentUsername);
     }
 
 
