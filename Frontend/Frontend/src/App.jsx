@@ -19,12 +19,6 @@ import FriendList from './components/FriendList';
 function App() {
   
   return (
-
-    <>
-        <QuizSelector/>
-        <QuizDisplay/>
-    </>
-
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<MainPage />} />
@@ -34,6 +28,8 @@ function App() {
     </Routes>
     <Chatbox />
     <FriendList />
+    <QuizSelector/>
+    <QuizDisplay/>
   </BrowserRouter>
 
   )
