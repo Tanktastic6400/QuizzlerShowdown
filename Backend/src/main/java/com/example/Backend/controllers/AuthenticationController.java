@@ -52,7 +52,7 @@ public class AuthenticationController {
     }
 
     @GetMapping("/userinfo")
-    public ResponseEntity<String> getUserInfo(HttpSession session){
+    public ResponseEntity<UserInfoDTO> getUserInfo(HttpSession session){
 
         //System.out.println("GOT IN HERE");
 
@@ -62,7 +62,8 @@ public class AuthenticationController {
 
         if(currentUser == null){
             System.out.println("GOT INSIDE CURRENT USER IS NULL");
-            return ResponseEntity.status(401).body("No user logged in");
+            //Return the empty DTO, but since the error code is 401 it won't never be used?
+            return ResponseEntity.status(401).body(userInfo);
         }
         //System.out.println("GOT TO RETURN");
         String currentUsername = currentUser.getUsername();
@@ -74,7 +75,7 @@ public class AuthenticationController {
         System.out.println(currentUsername);
         System.out.println(userInfo.getUsername());
 
-        return ResponseEntity.ok(currentUsername);
+        return ResponseEntity.ok(userInfo);
     }
 
 

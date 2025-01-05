@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 function UserBar (props){
 
-    const [user, setUser] = useState(null);
+    const [loggedInUser, setUser] = useState(null);
     const [username, setUsername] = useState("Get Username");
 
     function getUserInfo(e){
@@ -23,11 +23,14 @@ function UserBar (props){
              alert("A user exists");
              //const data = response.text();
              //alert("Why?");
-             return response.text();
+             return response.json();
              })
-            .then(function (userMessage){
-                setUsername(userMessage)
-                alert("User Name is "+userMessage);
+            .then(function (receivedUserInfo){
+                const userInfo = receivedUserInfo;
+                setUser(userInfo);
+                const current_username = userInfo.username;
+                setUsername(current_username);
+                alert("User Name is "+current_username);
                 });
          }
 
