@@ -12,34 +12,30 @@ import java.util.List;
 public class OpenTBDController {
 
 private final OpenTBDService openTBDService;
-//private Integer amount;
-//private Integer category;
-//private String type;
-//private String difficulty;
+private Integer amount;
+private Integer category;
+private String type;
+private String difficulty;
 
 public OpenTBDController(OpenTBDService openTBDService){
     this.openTBDService = openTBDService;
 }
-@RequestMapping
-public OpenTBDResponse getQuestions(@RequestParam Integer amount, @RequestParam Integer category, @RequestParam String type, @RequestParam String difficulty){
+
+
+@GetMapping("/questions")
+    public OpenTBDResponse getTriviaQuestions(){
 
     return createRandomQuiz(amount, category,type,difficulty);
 }
 
-//@GetMapping("/questions")
-//    public OpenTBDResponse getTriviaQuestions(){
-//
-//    return createRandomQuiz(amount, category,type,difficulty);
-//}
+@PostMapping("/questions")
+    public void setQuestions(@RequestParam Integer amount, @RequestParam Integer valueOfCategory, @RequestParam String type, @RequestParam String difficulty){
+    this.amount = amount;
+    this.category = valueOfCategory;
+    this.type = type;
+    this.difficulty=difficulty;
 
-//@PostMapping("/questions")
-//    public void setQuestions(@RequestParam Integer amount, @RequestParam Integer valueOfCategory, @RequestParam String type, @RequestParam String difficulty){
-//    this.amount = amount;
-//    this.category = valueOfCategory;
-//    this.type = type;
-//    this.difficulty=difficulty;
-//
-//}
+}
 
 private OpenTBDResponse createRandomQuiz(Integer amount, Integer category, String type, String difficulty){
 

@@ -5,45 +5,7 @@ import axios from "axios";
 
 function QuizDisplay() {
 
-    // const testQuestion =
-    // {
-    //     "results": [
-    //         {
-    //             "type": "boolean",
-    //             "difficulty": "easy",
-    //             "category": "General Knowledge",
-    //             "question": "Pluto is a planet.",
-    //             "correct_answer": "False",
-    //             "incorrect_answers": [
-    //                 "True"
-    //             ]
-
-    //         },
-    //         {
-    //             "type": "boolean",
-    //             "difficulty": "hard",
-    //             "category": "General Knowledge",
-    //             "question": "In Scandinavian languages, the letter &Aring; means river.",
-    //             "correct_answer": "True",
-    //             "incorrect_answers": [
-    //                 "False"
-    //             ]
-    //         },
-    //         {
-    //             "type": "multiple",
-    //             "difficulty": "hard",
-    //             "category": "Entertainment: Video Games",
-    //             "question": "In &quot;Call Of Duty: Zombies&quot;, what does the game traditionally reward you for completing a boss round?",
-    //             "correct_answer": "Max Ammo",
-    //             "incorrect_answers": [
-    //                 "A Pack-A-Punched gun",
-    //                 "Death Machine",
-    //                 "Monkey Bombs"
-    //             ]
-    //         }
-
-    //     ]
-    // }
+   
 
     const [questionData, setQuestionsData] = useState(null);
 
@@ -117,3 +79,43 @@ function QuizDisplay() {
 }
 
 export default QuizDisplay;
+
+ // const testQuestion =
+    // {
+    //     "results": [
+    //         {
+    //             "type": "boolean",
+    //             "difficulty": "easy",
+    //             "category": "General Knowledge",
+    //             "question": "Pluto is a planet.",
+    //             "correct_answer": "False",
+    //             "incorrect_answers": [
+    //                 "True"
+    //             ]
+
+    //         },
+    //         {
+    //             "type": "boolean",
+    //             "difficulty": "hard",
+    //             "category": "General Knowledge",
+    //             "question": "In Scandinavian languages, the letter &Aring; means river.",
+    //             "correct_answer": "True",
+    //             "incorrect_answers": [
+    //                 "False"
+    //             ]
+    //         },
+    //         {
+    //             "type": "multiple",
+    //             "difficulty": "hard",
+    //             "category": "Entertainment: Video Games",
+    //             "question": "In &quot;Call Of Duty: Zombies&quot;, what does the game traditionally reward you for completing a boss round?",
+    //             "correct_answer": "Max Ammo",
+    //             "incorrect_answers": [
+    //                 "A Pack-A-Punched gun",
+    //                 "Death Machine",
+    //                 "Monkey Bombs"
+    //             ]
+    //         }
+
+    //     ]
+    // }

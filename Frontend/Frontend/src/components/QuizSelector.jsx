@@ -81,8 +81,8 @@ function QuizSelector() {
                 <option value="medium">Medium</option>
                 <option value="hard">Hard</option>
             </select>
-
-            <input id="submit" type="submit" onSubmit={handleSubmit}/>
+            <button id="submit" onClick={handleSubmit}></button>
+            {/* <input id="submit" type="submit" onSubmit={handleSubmit}/> */}
 
         </div>
     );
