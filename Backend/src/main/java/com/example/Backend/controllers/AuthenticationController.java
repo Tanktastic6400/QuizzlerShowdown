@@ -3,6 +3,7 @@ package com.example.Backend.controllers;
 
 import com.example.Backend.DTO.LoginFormDTO;
 import com.example.Backend.DTO.RegisterFormDTO;
+import com.example.Backend.DTO.UserInfoDTO;
 import com.example.Backend.models.User;
 import com.example.Backend.models.data.UserRepository;
 import com.example.Backend.services.AuthenticationService;
@@ -50,12 +51,14 @@ public class AuthenticationController {
         return ResponseEntity.ok("Successfully logged out");
     }
 
-    @GetMapping("/test")
+    @GetMapping("/userinfo")
     public ResponseEntity<String> getUserInfo(HttpSession session){
 
         //System.out.println("GOT IN HERE");
 
         User currentUser= authenticationService.getUserFromSession(session);
+
+        UserInfoDTO userInfo = new UserInfoDTO();
 
         if(currentUser == null){
             System.out.println("GOT INSIDE CURRENT USER IS NULL");
@@ -63,7 +66,14 @@ public class AuthenticationController {
         }
         //System.out.println("GOT TO RETURN");
         String currentUsername = currentUser.getUsername();
+
+        userInfo.setId(currentUser.getId());
+        userInfo.setUsername(currentUser.getUsername());
+        userInfo.setEmail(currentUser.getEmail());
+
         System.out.println(currentUsername);
+        System.out.println(userInfo.getUsername());
+
         return ResponseEntity.ok(currentUsername);
     }
 

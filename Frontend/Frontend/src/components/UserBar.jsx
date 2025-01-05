@@ -15,7 +15,7 @@ function UserBar (props){
              credentials: "include",
              }
 
-         fetch("http://localhost:8080/authenticationservice/test", fetchSpecifications)
+         fetch("http://localhost:8080/authenticationservice/userinfo", fetchSpecifications)
          .then(function (response){
             if (!response.ok) {
                 throw new Error("No current user");
