@@ -1,3 +1,9 @@
+
+import { useState } from 'react'
+import './App.css'
+import QuizDisplay from './components/QuizDisplay'
+import QuizSelector from './components/QuizSelector'
+
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,9 +15,16 @@ import LoginPage from './pages/LoginPage';
 import Chatbox from './components/Chatbox';
 import FriendList from './components/FriendList';
 
+
 function App() {
   
   return (
+
+    <>
+        <QuizSelector/>
+        <QuizDisplay/>
+    </>
+
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<MainPage />} />
@@ -22,6 +35,7 @@ function App() {
     <Chatbox />
     <FriendList />
   </BrowserRouter>
+
   )
 }
 
