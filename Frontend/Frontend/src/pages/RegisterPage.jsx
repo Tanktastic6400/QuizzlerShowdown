@@ -1,7 +1,6 @@
-//import React from "react";
+// import React from "react";
 import React, { useState } from "react";
 import RegisterForm from "../components/RegisterForm";
-
 
 function RegisterPage () {
     return (
