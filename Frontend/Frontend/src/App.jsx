@@ -1,13 +1,13 @@
 
 import { useState } from 'react'
-import './App.css'
+import './styles/App.css'
 import QuizDisplay from './components/QuizDisplay'
 import QuizSelector from './components/QuizSelector'
 
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css'
+// import './App.css'
 import MainPage from './pages/MainPage'
 import ReviewPage from './pages/ReviewPage'
 import RegisterPage from './pages/RegisterPage'
@@ -19,7 +19,7 @@ import FriendList from './components/FriendList';
 function App() {
   
   return (
-    <BrowserRouter>
+    <>
     <Routes>
       <Route path="/" element={<MainPage />} />
       <Route path="/reviews" element={<ReviewPage />} />
@@ -30,7 +30,7 @@ function App() {
     </Routes>
     <Chatbox />
     <FriendList />
-  </BrowserRouter>
+    </>
   )
 }
 
