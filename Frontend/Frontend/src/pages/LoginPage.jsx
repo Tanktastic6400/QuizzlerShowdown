@@ -10,7 +10,7 @@ function LoginPage () {
             <UserBar/>
             <h1>Login</h1>
             <LoginForm/>
-            <LogoutButton/>
+            {/*<LogoutButton/>*/}
         </div>
     );
 }

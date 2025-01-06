@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+import LogoutButton from "../components/LogoutButton";
+
 function UserBar (props){
 
     const [loggedInUser, setUser] = useState(null);
@@ -21,8 +23,6 @@ function UserBar (props){
                 throw new Error("No current user");
               }
              alert("A user exists");
-             //const data = response.text();
-             //alert("Why?");
              return response.json();
              })
             .then(function (receivedUserInfo){
@@ -37,9 +37,26 @@ function UserBar (props){
 
     return(
 
-         <button onClick={getUserInfo}>
-                  {username}
+         <div>
+             <nav className="menu">
+               <ul>
+                 <li><a href="/">Home</a></li>
+                 <li><a href="/reviews">Reviews</a></li>
+                 <li><a href="/register">Register</a></li>
+                 {loggedInUser ? (
+                     <div>
+                        <li>{username}</li>
+                        <li><LogoutButton/></li>
+                     </div>
+                 ) : (
+                     <li><a href="/login">Login</a></li>
+                 )}
+               </ul>
+             </nav>
+            <button onClick={getUserInfo}>
+                {username}
              </button>
+         </div>
     )
 }
 
