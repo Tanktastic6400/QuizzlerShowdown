@@ -1,26 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-const ReviewList = () => {
-    const [reviews, setReviews] = useState([]);
-
-    useEffect(() => {
-        const fetchReviews = async () => {
-            try {
-                const response = await fetch("http://localhost:8080/api/reviews");
-                if (!response.ok) throw new Error("Failed to fetch reviews");
-                const data = await response.json();
-                setReviews(data);
-            } catch (error) {
-                console.error("Error fetching reviews:", error);
-            }
-        };
-
-        fetchReviews();
-    }, []);
-
+const ReviewList = ({reviews}) => {
     return (
         <div>
-            <h2>All Reviews</h2>
             <ul>
                 {reviews.map((review) => (
                     <li key={review.id}>
