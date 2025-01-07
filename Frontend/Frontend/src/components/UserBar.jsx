@@ -44,10 +44,10 @@ function UserBar (props){
                  <li><a href="/">Home</a></li>
                  <li><a href="/reviews">Reviews</a></li>
                  <li><a href="/register">Register</a></li>
-                 {props.user ? (
+                 {props.loggedInUser ? (
                      <div>
-                        <li>{props.user.username}</li>
-                        <li><LogoutButton/></li>
+                        <li>{props.loggedInUser.username}</li>
+                        <li><LogoutButton></li>
                      </div>
                  ) : (
                      <li><a href="/login">Login</a></li>

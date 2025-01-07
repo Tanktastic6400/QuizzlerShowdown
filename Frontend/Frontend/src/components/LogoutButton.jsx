@@ -19,6 +19,7 @@ function LogoutButton(props){
                throw new Error("Could not log out");
            }
            alert("Successfully logged out");
+           //props.getUserInfo();
            navigate("/");
            return response;
        })
