@@ -7,7 +7,7 @@ function LoginPage () {
 
     return (
         <div>
-            <UserBar/>
+            {/*}<UserBar/*/}>
             <h1>Login</h1>
             <LoginForm/>
             {/*<LogoutButton/>*/}

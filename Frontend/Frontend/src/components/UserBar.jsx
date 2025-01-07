@@ -5,12 +5,12 @@ import LogoutButton from "../components/LogoutButton";
 
 function UserBar (props){
 
-    const [loggedInUser, setUser] = useState(null);
+    /*const [loggedInUser, setUser] = useState(null);
     const [username, setUsername] = useState("Get Username");
 
-    function getUserInfo(e){
+    function getUserInfo(){
 
-        e.preventDefault();
+        //e.preventDefault();
 
          const fetchSpecifications = {
              method: "GET",
@@ -21,8 +21,9 @@ function UserBar (props){
          .then(function (response){
             if (!response.ok) {
                 throw new Error("No current user");
+                setUser(null);
               }
-             alert("A user exists");
+             //alert("A user exists");
              return response.json();
              })
             .then(function (receivedUserInfo){
@@ -30,9 +31,9 @@ function UserBar (props){
                 setUser(userInfo);
                 const current_username = userInfo.username;
                 setUsername(current_username);
-                alert("User Name is "+current_username);
+                //alert("User Name is "+current_username);
                 });
-         }
+         }*/
 
 
     return(
@@ -43,9 +44,9 @@ function UserBar (props){
                  <li><a href="/">Home</a></li>
                  <li><a href="/reviews">Reviews</a></li>
                  <li><a href="/register">Register</a></li>
-                 {loggedInUser ? (
+                 {props.user ? (
                      <div>
-                        <li>{username}</li>
+                        <li>{props.user.username}</li>
                         <li><LogoutButton/></li>
                      </div>
                  ) : (
@@ -53,9 +54,9 @@ function UserBar (props){
                  )}
                </ul>
              </nav>
-            <button onClick={getUserInfo}>
+            {/*<button onClick={getUserInfo}>
                 {username}
-             </button>
+             </button>*/}
          </div>
     )
 }
