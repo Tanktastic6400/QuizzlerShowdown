@@ -47,7 +47,7 @@ function UserBar (props){
                  {props.loggedInUser ? (
                      <div>
                         <li>{props.loggedInUser.username}</li>
-                        <li><LogoutButton></li>
+                        <li><LogoutButton/></li>
                      </div>
                  ) : (
                      <li><a href="/login">Login</a></li>
