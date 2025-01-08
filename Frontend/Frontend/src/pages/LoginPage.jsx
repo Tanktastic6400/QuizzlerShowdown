@@ -3,13 +3,13 @@ import LoginForm from "../components/LoginForm";
 import LogoutButton from "../components/LogoutButton";
 import UserBar from "../components/UserBar";
 
-function LoginPage () {
+function LoginPage ( {getUserInfo} ) {
 
     return (
         <div>
             {/*}<UserBar/*/}>
             <h1>Login</h1>
-            <LoginForm/>
+            <LoginForm getUserInfo ={getUserInfo}/>
             {/*<LogoutButton/>*/}
         </div>
     );

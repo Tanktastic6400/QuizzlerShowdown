@@ -59,7 +59,7 @@ function App() {
       <Route path="/" element={<MainPage />} />
       <Route path="/reviews" element={<ReviewPage />} />
       <Route path="/register" element={<RegisterPage />} />
-      <Route path="/login" element={<LoginPage />} />
+      <Route path="/login" element={<LoginPage getUserInfo={getUserInfo} />} />
     </Routes>
     <UserBar loggedInUser={loggedInUser}/>
     {/*}<Chatbox />

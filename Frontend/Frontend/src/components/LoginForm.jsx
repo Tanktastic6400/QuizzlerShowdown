@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-function LoginForm(props){
+function LoginForm( {getUserInfo} ){
 
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
@@ -38,6 +38,7 @@ function LoginForm(props){
                 throw new Error("Could not log in");
             }
             alert("Succesfully logged in.")
+            getUserInfo();
             setUsername("");
             setEmail("");
             setPassword("");
