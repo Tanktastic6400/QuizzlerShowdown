@@ -21,7 +21,7 @@ function ReviewPage() {
         <div>
             <h2>All Reviews</h2>
             <ReviewList reviews={reviews} />
-            <h2>Leave Your Review</h2>
+            <h2>Leave Your Review:</h2>
             <ReviewForm onReviewSubmitted={handleReviewSubmitted} />
         </div>
     );
