@@ -19,14 +19,24 @@ public class AuthenticationService {
 
     public User getUserFromSession(HttpSession session) {
 
+        System.out.println("INSIDE GET USER FROM SESSIONS");
+
         Long userId = (Long) session.getAttribute(userSessionKey);
+
+        System.out.println(userId);
+
         if (userId == null) {
+            System.out.println("INSIDE NULL USER ID");
             return null;
         }
         Optional<User> user = userRepository.findById(Long.valueOf(userId));
         if (user.isEmpty()) {
+            System.out.println("INSIDE NO USER ID FOUND");
             return null;
         }
+        //return user.get();
+        System.out.println("AT GET USER FROM SESSION RETURN");
+        System.out.println(user.get());
         return user.get();
     }
 
@@ -46,10 +56,10 @@ public class AuthenticationService {
             //throw new RuntimeException("Passwords do not match");
         }
 
-        //System.out.println(attemptedUser.getUsername());
+        System.out.println(attemptedUser.getUsername());
         setUserInSession(session, attemptedUser);
         //session.invalidate(); //This is just for testing
-        //System.out.println(getUserFromSession(session).getUsername());
+        System.out.println(getUserFromSession(session).getUsername());
         return true;
     }
 

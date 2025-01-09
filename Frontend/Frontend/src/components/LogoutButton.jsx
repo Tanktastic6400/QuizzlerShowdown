@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-function LogoutButton(props){
+function LogoutButton( {getUserInfo} ){
 
   const navigate = useNavigate();
 
@@ -19,6 +19,7 @@ function LogoutButton(props){
                throw new Error("Could not log out");
            }
            alert("Successfully logged out");
+           getUserInfo();
            navigate("/");
            return response;
        })

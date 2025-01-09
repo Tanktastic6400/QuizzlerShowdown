@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-function LoginForm(props){
+function LoginForm( {getUserInfo} ){
 
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    //const [error, setError] = useState("");
 
     const navigate = useNavigate();
 
@@ -26,10 +25,7 @@ function LoginForm(props){
             body: JSON.stringify(LoginFormData),
         }
 
-        //"http://localhost:8080/login"
-        //"http://localhost:8080/authenticationservice/login"
         fetch("http://localhost:8080/authenticationservice/login", fetchSpecifications
-            //FINISH UP HERE!!!
         ).then(function (response) {
             if (!response.ok) {
                 setUsername("");
@@ -37,7 +33,7 @@ function LoginForm(props){
                 setPassword("");
                 throw new Error("Could not log in");
             }
-            alert("Succesfully logged in.")
+            getUserInfo();
             setUsername("");
             setEmail("");
             setPassword("");
