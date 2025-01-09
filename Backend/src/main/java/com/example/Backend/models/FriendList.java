@@ -7,17 +7,12 @@ import java.time.LocalDateTime;
 @Entity
 public class FriendList extends AbstractClass {
 
-
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "user_id")  // This will reference the user who owns the friend list
+    @JoinColumn(name = "user_id", nullable = false) // References the user who owns the friend list
     private User user;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinTable(
-            name = "friendship",  // This will be the join table
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "friend_id")
-    )
+    @JoinColumn(name = "friend_id", nullable = false) // This will create the friend_id column
     private User friend;
 
     @Enumerated(EnumType.STRING)

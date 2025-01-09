@@ -1,13 +1,13 @@
 
+
 import { useState, useEffect } from 'react'
 import './App.css'
+import './styles/App.css'
 import QuizDisplay from './components/QuizDisplay'
 import QuizSelector from './components/QuizSelector'
-
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css'
 import MainPage from './pages/MainPage'
 import ReviewPage from './pages/ReviewPage'
 import RegisterPage from './pages/RegisterPage'
@@ -50,20 +50,23 @@ function App() {
     }, []);
   
   return (
+    
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<MainPage />} />
       <Route path="/reviews" element={<ReviewPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage getUserInfo={getUserInfo} />} />
+      <Route path="/quizdisplay" element={<QuizDisplay/>} />
+      <Route path="/quizselector" element={<QuizSelector/>} />
     </Routes>
     <UserBar loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>
     {/*}<Chatbox />
     <FriendList />
     <QuizSelector/>
     <QuizDisplay/>*/}
-  </BrowserRouter>
-
+    </BrowserRouter>
+    
   )
 }
 

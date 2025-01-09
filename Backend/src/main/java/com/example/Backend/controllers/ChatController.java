@@ -1,21 +1,16 @@
 package com.example.Backend.controllers;
-
-import com.example.Backend.DTO.MessageRequestDTO;
 import com.example.Backend.models.Message;
 import com.example.Backend.models.User;
 import com.example.Backend.models.data.MessageRepository;
 import com.example.Backend.models.data.UserRepository;
 import com.example.Backend.services.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import java.time.format.DateTimeFormatter;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +18,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/chat")
 public class ChatController {
-
 
     @Autowired
     private ChatService chatService;
@@ -50,8 +44,6 @@ public class ChatController {
         String formattedDate = now.format(formatter);
         message.setTimestamp(formattedDate);
         message.setChatId(chatId);
-//        message.setSender(user1);
-//        message.setRecipient(user2);
         messageRepository.save(message);
         System.out.println(message.toString());
         return message;

@@ -15,7 +15,6 @@ public class OpenTBDService {
         this.restTemplate = restTemplate;
     }
 
-
     public OpenTBDResponse fetchTriviaQuestions(Integer amountOfQuestions, Integer valueOfCategory, String type, String difficulty){
         String baseUrl = "https://opentdb.com/api.php?";
         String url;
@@ -43,8 +42,6 @@ public class OpenTBDService {
         return restTemplate.getForObject(url, OpenTBDResponse.class);
     }
 
-
-
     private String convertResponseToString(OpenTBDResponse response){
 
         ObjectMapper objectMapper= new ObjectMapper();
@@ -55,6 +52,4 @@ public class OpenTBDService {
             throw new RuntimeException("Failed to convert ApiResponse to String", e);
         }
     }
-
-
 }
