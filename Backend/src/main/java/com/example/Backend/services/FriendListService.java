@@ -39,4 +39,18 @@ public class FriendListService {
         friendlist.setStatus(status);
         friendListRepository.save(friendlist);
     }
+
+//    public void findUser(String username) {
+//        System.out.println("Searching for a user to add to friend list " + username);
+//        User searchedUser = userRepository.findByUsername(username);
+//        if(searchedUser == null){
+//            System.out.println("Unable to find " + username);
+//        } else {
+//            System.out.println("The userId for " + username + " " + "is: " + searchedUser.getId());
+//        }
+//    }
+
+    public List<User> findUser(String username) {
+        return userRepository.findByUsernameContaining(username); // Adjust repository method as needed
+    }
 }

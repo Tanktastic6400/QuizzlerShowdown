@@ -3,13 +3,17 @@ import Dropdown from "react-bootstrap/Dropdown";
 import DropdownDivider from "react-bootstrap/esm/DropdownDivider";
 import DropdownButton from "react-bootstrap/DropdownButton";
 
-const FriendList = () => {
+const FriendList = ({loggedInUser}) => {
   const [friendList, setFriendList] = useState([]);
   const [friendStatus, setFriendStatus] = useState("");
+  const [foundUser, setFoundUser] = useState({});
+ 
+
 
   useEffect(() => {
+    console.log("From the friends list " + loggedInUser.id);
     // get friends list here.
-    fetch("http://localhost:8080/friendlist/1?userId=1")
+    fetch(`http://localhost:8080/friendlist/${loggedInUser.id}?userId=${loggedInUser.id}`)
       .then((response) => response.json())
       .then((data) => {
         setFriendList(data);
@@ -19,6 +23,25 @@ const FriendList = () => {
   useEffect(() => {
     console.log(friendList); // Logs the updated friendList
   }, [friendList]);
+
+
+  const handleSearch = async (e) => {
+    e.preventDefault()
+    
+    const userToSearch = e.target.usernameValue.value.trim();
+    
+    try {
+      const response = await fetch(`http://localhost:8080/friendlist/findfriends?username=${userToSearch}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const data = await response.json();
+      
+      console.log(data[0].username);
+    } catch (error) {
+      console.error("Error fetching friends:", error);
+    }
+    }
 
   const handleAccept = async (e) => {
     try {
@@ -77,6 +100,11 @@ const FriendList = () => {
           </Dropdown.Item>
         ))}
         <DropdownDivider />
+        <form onSubmit={handleSearch}>
+  <input type="text" name="usernameValue" placeholder="Search friends" />
+  <button type="submit">Search</button>
+</form>
+
       </DropdownButton>
     </Dropdown>
   );
