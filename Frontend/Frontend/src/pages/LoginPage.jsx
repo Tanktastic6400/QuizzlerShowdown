@@ -7,10 +7,8 @@ function LoginPage ( {getUserInfo} ) {
 
     return (
         <div>
-            {/*}<UserBar/*/}>
             <h1>Login</h1>
             <LoginForm getUserInfo ={getUserInfo}/>
-            {/*<LogoutButton/>*/}
         </div>
     );
 }

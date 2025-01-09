@@ -6,7 +6,6 @@ function LoginForm( {getUserInfo} ){
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    //const [error, setError] = useState("");
 
     const navigate = useNavigate();
 
@@ -26,10 +25,7 @@ function LoginForm( {getUserInfo} ){
             body: JSON.stringify(LoginFormData),
         }
 
-        //"http://localhost:8080/login"
-        //"http://localhost:8080/authenticationservice/login"
         fetch("http://localhost:8080/authenticationservice/login", fetchSpecifications
-            //FINISH UP HERE!!!
         ).then(function (response) {
             if (!response.ok) {
                 setUsername("");
@@ -37,7 +33,6 @@ function LoginForm( {getUserInfo} ){
                 setPassword("");
                 throw new Error("Could not log in");
             }
-            alert("Succesfully logged in.")
             getUserInfo();
             setUsername("");
             setEmail("");

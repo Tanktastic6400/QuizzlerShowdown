@@ -24,8 +24,6 @@ function App() {
 
         function getUserInfo(){
 
-            //e.preventDefault();
-
              const fetchSpecifications = {
                  method: "GET",
                  credentials: "include",
@@ -34,10 +32,9 @@ function App() {
              fetch("http://localhost:8080/authenticationservice/userinfo", fetchSpecifications)
              .then(function (response){
                 if (!response.ok) {
-                    throw new Error("No current user");
                     setUser(null);
+                    throw new Error("No current user");
                   }
-                 //alert("A user exists");
                  return response.json();
                  })
                 .then(function (receivedUserInfo){
@@ -45,7 +42,6 @@ function App() {
                     setUser(userInfo);
                     const current_username = userInfo.username;
                     setUsername(current_username);
-                    //alert("User Name is "+current_username);
                     });
              }
 
@@ -61,7 +57,7 @@ function App() {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage getUserInfo={getUserInfo} />} />
     </Routes>
-    <UserBar loggedInUser={loggedInUser}/>
+    <UserBar loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>
     {/*}<Chatbox />
     <FriendList />
     <QuizSelector/>
