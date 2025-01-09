@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 
 import LogoutButton from "../components/LogoutButton";
 
@@ -8,24 +11,25 @@ function UserBar ( {loggedInUser, getUserInfo} ){
 
 
     return(
-
-         <div>
-             <nav className="menu">
-               <ul>
-                 <li><a href="/">Home</a></li>
-                 <li><a href="/reviews">Reviews</a></li>
-                 <li><a href="/register">Register</a></li>
-                 {loggedInUser ? (
+        <>
+        <Navbar bg="warning" data-bs-theme="light" fixed="top">
+        <Container>
+        <nav className="menu">
+        <Nav.Link href="/">Home</Nav.Link>
+        <Nav.Link href="/reviews">Reviews</Nav.Link>
+        <Nav.Link href="/register">Register</Nav.Link>
+        </nav>
+        {loggedInUser ? (
                      <div>
-                        <li>{loggedInUser.username}</li>
-                        <li><LogoutButton getUserInfo = {getUserInfo}/></li>
+                        {loggedInUser.username}
+                        <LogoutButton getUserInfo = {getUserInfo}/>
                      </div>
                  ) : (
-                     <li><a href="/login">Login</a></li>
+                     <Nav.Link href="/login">Login</Nav.Link>
                  )}
-               </ul>
-             </nav>
-         </div>
+        </Container>
+        </Navbar>
+        </>
     )
 }
 
