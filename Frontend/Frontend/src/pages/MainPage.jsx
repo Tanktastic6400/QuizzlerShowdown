@@ -8,9 +8,9 @@ const MainPage = () => {
         navigate('/reviews');
     }
     return (
-        <div className="main-page-container">
-                <h1>Welcome to Quizzler Showdown</h1>
-                <div className="position-fixed top-0 end-0 p-3">
+        //<div className="main-page-container">
+                //<h1>Welcome to Quizzler Showdown</h1>
+                //<div className="position-fixed top-0 end-0 p-3">
                      <button
                         className="btn btn-primary d-flex align-items-center"
                         onClick={handleReviewButtonClick}
@@ -18,8 +18,8 @@ const MainPage = () => {
                         <span className="me-2">Reviews</span>
                         <span className="text-warning">★★★★★</span>
                     </button>
-                </div>
-            </div>
+                //</div>
+            //</div>
     );
 };
 

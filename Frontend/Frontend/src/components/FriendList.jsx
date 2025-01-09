@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownDivider from "react-bootstrap/esm/DropdownDivider";
-import DropdownButton from 'react-bootstrap/DropdownButton';
+import DropdownButton from "react-bootstrap/DropdownButton";
 
 const FriendList = () => {
   const [friendList, setFriendList] = useState([]);
@@ -58,31 +58,27 @@ const FriendList = () => {
 
   return (
     //Display approved friends and friends waiting on a response.
-    
-      <Dropdown>
-        <DropdownButton variant="warning" title="Friends">
-          {friendList.map((friend) => (
-            <Dropdown.Item key={friend.id}>
+
+    <Dropdown>
+      <DropdownButton variant="warning" title="Friends">
+        {friendList.map((friend) => (
+          <Dropdown.Item key={friend.id}>
             <div>
               User: {friend.friends.username} Status: {friend.status}
             </div>
-              {friend.status === "PENDING" && (
-                <div>
-                  <button onClick={() => handleAccept(friend.id)}>
-                    Accept
-                  </button>
-                  <button onClick={() => handleDecline(friend.id)}>
-                    Decline
-                  </button>
-                </div>
-              )}
-            </Dropdown.Item>
-            
-          ))}
-          <DropdownDivider />
-          </DropdownButton>
-      </Dropdown>
-    
+            {friend.status === "PENDING" && (
+              <div>
+                <button onClick={() => handleAccept(friend.id)}>Accept</button>
+                <button onClick={() => handleDecline(friend.id)}>
+                  Decline
+                </button>
+              </div>
+            )}
+          </Dropdown.Item>
+        ))}
+        <DropdownDivider />
+      </DropdownButton>
+    </Dropdown>
   );
 };
 
