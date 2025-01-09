@@ -9,9 +9,9 @@ import java.util.List;
 public class UserProfile extends AbstractClass {
 
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    //@OneToOne(mappedBy = "userProfile")
+    //@OneToOne
+    //@JoinColumn(name = "user_id")
+    @OneToOne(mappedBy = "userProfile")
     private User user;
 
     private int score = 0; //Have score start at 0?

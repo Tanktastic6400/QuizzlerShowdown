@@ -10,9 +10,9 @@ public class User extends AbstractClass {
     private String email;
     private String password;
 
-    @OneToOne(mappedBy = "user")
-    //@OneToOne(cascade = CascadeType.ALL)
-    //@JoinColumn(name = "profile_id", referencedColumnName = "id")
+    //@OneToOne(mappedBy = "user")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "profile_id", referencedColumnName = "id")
     private UserProfile userProfile;
 
     //Added encoder
