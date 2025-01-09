@@ -15,6 +15,7 @@ import LoginPage from './pages/LoginPage';
 import Chatbox from './components/Chatbox';
 import FriendList from './components/FriendList';
 import UserBar from './components/UserBar';
+import ScorePage from './pages/ScorePage';
 
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
       <Route path="/login" element={<LoginPage getUserInfo={getUserInfo} />} />
       <Route path="/quizdisplay" element={<QuizDisplay/>} />
       <Route path="/quizselector" element={<QuizSelector/>} />
+      <Route path="/scores" element={<ScorePage />} />
     </Routes>
     <UserBar loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>
     {/*}<Chatbox />

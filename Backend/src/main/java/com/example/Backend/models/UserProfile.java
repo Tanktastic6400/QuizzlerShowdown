@@ -8,11 +8,14 @@ import java.util.List;
 @Table(name = "user_profiles")
 public class UserProfile extends AbstractClass {
 
+
     @OneToOne
     @JoinColumn(name = "user_id")
+    //@OneToOne(mappedBy = "userProfile")
     private User user;
 
-    private int score;
+    private int score = 0; //Have score start at 0?
+    //private int score;
 
     @OneToMany(mappedBy = "userProfile")
     private List<AnsweredQuestion> answeredQuestions;

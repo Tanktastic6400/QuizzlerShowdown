@@ -11,6 +11,8 @@ public class User extends AbstractClass {
     private String password;
 
     @OneToOne(mappedBy = "user")
+    //@OneToOne(cascade = CascadeType.ALL)
+    //@JoinColumn(name = "profile_id", referencedColumnName = "id")
     private UserProfile userProfile;
 
     //Added encoder
@@ -35,7 +37,7 @@ public class User extends AbstractClass {
         return username;
     }
 
-    //Do we need a setter for this? Want folks to be able to change their accounts username?
+    //Do we need a setter for this? Want folks to be able to change their account's username?
     public void setUsername(String username) {
         this.username = username;
     }
