@@ -1,7 +1,7 @@
 
 
 import { useState, useEffect } from 'react'
-import './App.css'
+//import './App.css'
 import './styles/App.css'
 import QuizDisplay from './components/QuizDisplay'
 import QuizSelector from './components/QuizSelector'
@@ -51,7 +51,8 @@ function App() {
   
   return (
     
-    <BrowserRouter>
+    // <BrowserRouter>
+    <>
     <Routes>
       <Route path="/" element={<MainPage />} />
       <Route path="/reviews" element={<ReviewPage />} />
@@ -64,9 +65,9 @@ function App() {
     {/*}<Chatbox />
     <FriendList />
     <QuizSelector/>
-    <QuizDisplay/>*/}
-    </BrowserRouter>
-    
+    <QuizDisplay/>
+    </BrowserRouter>*/}
+    </>
   )
 }
 
