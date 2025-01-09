@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class ApiResponse {
+public class OpenTBDResponse {
 
     @JsonProperty("response_code")
     private int responseCode;
@@ -32,6 +32,7 @@ public class ApiResponse {
         private String difficulty;
         private String category;
         private String question;
+
 
         @JsonProperty("correct_answer")
         private String correctAnswer;
@@ -86,6 +87,18 @@ public class ApiResponse {
 
         public void setIncorrectAnswers(List<String> incorrectAnswers) {
             this.incorrectAnswers = incorrectAnswers;
+        }
+
+        @Override
+        public String toString() {
+            return "Question{" +
+                    "type='" + type + '\'' +
+                    ", difficulty='" + difficulty + '\'' +
+                    ", category='" + category + '\'' +
+                    ", question='" + question + '\'' +
+                    ", correctAnswer='" + correctAnswer + '\'' +
+                    ", incorrectAnswers=" + incorrectAnswers +
+                    '}';
         }
     }
 }
