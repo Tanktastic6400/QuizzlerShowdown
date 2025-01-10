@@ -25,30 +25,25 @@ public class FriendListService {
     public void sendFriendRequest(Long userId, Long friendId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         User friend = userRepository.findById(friendId).orElseThrow(() -> new RuntimeException("Friend not found"));
-
         FriendList friendlist = new FriendList();
         friendlist.setUser(user);
         friendlist.setFriends(friend);
+        friendlist.setRequestId(userId.toString()+"-"+friendId.toString());
         friendlist.setStatus(FriendStatus.PENDING);
-
         friendListRepository.save(friendlist);
     }
 
-    public void respondToRequest(Long friendshipId, FriendStatus status) {
-        FriendList friendlist = friendListRepository.findById(friendshipId).orElseThrow();
+//    public void respondToRequest(Long friendshipId, FriendStatus status) {
+//        FriendList friendlist = friendListRepository.findById(friendshipId).orElseThrow();
+//        friendlist.setStatus(status);
+//        friendListRepository.save(friendlist);
+//    }
+
+    public void respondToRequest(String requestId, FriendStatus status) {
+        FriendList friendlist = friendListRepository.findByRequestId(requestId);
         friendlist.setStatus(status);
         friendListRepository.save(friendlist);
     }
-
-//    public void findUser(String username) {
-//        System.out.println("Searching for a user to add to friend list " + username);
-//        User searchedUser = userRepository.findByUsername(username);
-//        if(searchedUser == null){
-//            System.out.println("Unable to find " + username);
-//        } else {
-//            System.out.println("The userId for " + username + " " + "is: " + searchedUser.getId());
-//        }
-//    }
 
     public List<User> findUser(String username) {
         return userRepository.findByUsernameContaining(username); // Adjust repository method as needed

@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -31,32 +30,42 @@ public class FriendListController {
         Long friendId = request.getFriendId();
         friendListService.sendFriendRequest(userId, friendId);
     }
-
+    
     @PostMapping("/respond-request")
-    public void respondToFriendRequest(@RequestBody RespondRequestDTO request) {
-        Long friendshipId = request.getFriendshipId();
-        String status = request.getStatus();
-        FriendStatus friendshipStatus = FriendStatus.valueOf(status.toUpperCase());
-        friendListService.respondToRequest(friendshipId, friendshipStatus);
-    }
+    public ResponseEntity<String> respondToFriendRequest(@RequestBody RespondRequestDTO request) {
 
-//    @GetMapping("/findfriends")
-//    public void findFriends(@RequestParam String username){
-//        System.out.println("user search from controller");
-//        friendListService.findUser(username);
-//    }
+        try {
+            String requestId = request.getRequestId();
+            String status = request.getStatus();
+
+            // Validate status
+            FriendStatus friendshipStatus;
+            try {
+                friendshipStatus = FriendStatus.valueOf(status.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                return ResponseEntity.badRequest().body("Invalid status: " + status);
+            }
+            System.out.println("friendshipid: " + request.getRequestId());
+            // Update the friend request
+            friendListService.respondToRequest(requestId, friendshipStatus);
+            return ResponseEntity.ok("Friend request updated successfully.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred.");
+        }
+    }
 
     @GetMapping("/findfriends")
     public ResponseEntity<List<User>> findFriends(@RequestParam String username) {
-        System.out.println("User search from controller: " + username);
 
         try {
-            List<User> friends = friendListService.findUser(username); // Assume this returns a list of users
+            List<User> friends = friendListService.findUser(username);
             if (friends.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(Collections.emptyList()); // Return 404 with empty list if no users found
+                        .body(Collections.emptyList());
             }
-            return ResponseEntity.ok(friends); // Return 200 with the list of users
+            return ResponseEntity.ok(friends);
         } catch (Exception e) {
             System.err.println("Error in finding friends: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
