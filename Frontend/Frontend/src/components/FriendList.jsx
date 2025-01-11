@@ -17,14 +17,10 @@ const FriendList = ({loggedInUser}) => {
       .then((data) => {
         setFriendList(data);
       });
+      
   }, []);
 
-  useEffect(() => {
-    console.log(friendList); // Logs the updated friendList
-  }, [friendList]);
-
   const handleAccept = async (id) => {
-    console.log(requestId);
     try {
       const acceptResponse = await fetch(
         "http://localhost:8080/friendlist/respond-request",
@@ -34,7 +30,7 @@ const FriendList = ({loggedInUser}) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            requestId: id, // Pass the friendship ID. Currently the friend_list database id
+            requestId: id,
             status: "ACCEPTED",
           }),
         }

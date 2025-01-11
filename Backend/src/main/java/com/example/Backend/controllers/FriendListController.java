@@ -30,7 +30,7 @@ public class FriendListController {
         Long friendId = request.getFriendId();
         friendListService.sendFriendRequest(userId, friendId);
     }
-    
+
     @PostMapping("/respond-request")
     public ResponseEntity<String> respondToFriendRequest(@RequestBody RespondRequestDTO request) {
 
@@ -38,7 +38,6 @@ public class FriendListController {
             String requestId = request.getRequestId();
             String status = request.getStatus();
 
-            // Validate status
             FriendStatus friendshipStatus;
             try {
                 friendshipStatus = FriendStatus.valueOf(status.toUpperCase());
@@ -46,7 +45,7 @@ public class FriendListController {
                 return ResponseEntity.badRequest().body("Invalid status: " + status);
             }
             System.out.println("friendshipid: " + request.getRequestId());
-            // Update the friend request
+
             friendListService.respondToRequest(requestId, friendshipStatus);
             return ResponseEntity.ok("Friend request updated successfully.");
         } catch (IllegalArgumentException e) {
@@ -69,7 +68,7 @@ public class FriendListController {
         } catch (Exception e) {
             System.err.println("Error in finding friends: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Collections.emptyList()); // Return 500 in case of error
+                    .body(Collections.emptyList());
         }
     }
 }
