@@ -3,9 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import Dropdown from 'react-bootstrap/Dropdown';
 
 import LogoutButton from "../components/LogoutButton";
 import MainPage from "../pages/MainPage";
+import FriendList from "./FriendList";
 
 function UserBar({ loggedInUser, getUserInfo }) {
   return (
@@ -28,8 +30,15 @@ function UserBar({ loggedInUser, getUserInfo }) {
         <Nav>
           {loggedInUser ? (
             <div className="d-flex align-items-center">
-              <span className="me-2">{loggedInUser.username}</span>
-              <LogoutButton getUserInfo={getUserInfo} />
+              <Dropdown autoClose={false}>
+              <Dropdown.Toggle variant="success" id="dropdown-basic">
+              {loggedInUser.username}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+              <Dropdown.Item as="div"><LogoutButton getUserInfo={getUserInfo} /></Dropdown.Item>
+              <Dropdown.Item as="div"><FriendList loggedInUser={loggedInUser}/></Dropdown.Item>
+              </Dropdown.Menu>
+              </Dropdown>
             </div>
           ) : (
             <Nav.Link as={Link} to="/login">Login</Nav.Link>
