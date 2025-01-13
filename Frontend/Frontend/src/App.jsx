@@ -19,19 +19,21 @@ import FriendList from './components/FriendList';
 function App() {
   
   return (
-    <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<MainPage />} />
-      <Route path="/reviews" element={<ReviewPage />} />
-      <Route path="/register" element={<RegisterPage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/quizDisplay" element={<QuizDisplay/>}/>
-    </Routes>
-    <Chatbox />
-    <FriendList />
-    <QuizSelector/>
-    <QuizDisplay/>
-  </BrowserRouter>
+  //   <BrowserRouter>
+  //   <Routes>
+  //     <Route path="/" element={<MainPage />} />
+  //     <Route path="/reviews" element={<ReviewPage />} />
+  //     <Route path="/register" element={<RegisterPage />} />
+  //     <Route path="/login" element={<LoginPage />} />
+  //     <Route path="/quizDisplay" element={<QuizDisplay/>}/>
+  //   </Routes>
+  //   <Chatbox />
+  //   <FriendList />
+  // </BrowserRouter>
+  <>
+{/* <QuizSelector/> */}
+<QuizDisplay/>
+</>
 
   )
 }

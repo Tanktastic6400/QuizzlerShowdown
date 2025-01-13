@@ -36,7 +36,7 @@ public OpenTBDController(OpenTBDService openTBDService){
 
 @PostMapping("/questions")
     public void setQuestions(@RequestParam Integer amount, @RequestParam Integer valueOfCategory, @RequestParam String type, @RequestParam String difficulty){
-    this.amount = amount;
+    this.amount = 10;
     this.category = valueOfCategory;
     this.type = type;
     this.difficulty=difficulty;

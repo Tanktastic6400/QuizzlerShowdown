@@ -31,7 +31,7 @@ function QuizSelector() {
                     alert(response.data);
                 })
                 .catch(error => {
-                    console.error("There was an issue submitting quiz customization data");
+                    console.error("There was an issue submitting quiz customization data", error);
                 });
             
         }else{
