@@ -26,11 +26,9 @@ public class UserController {
     @PostMapping("/deleteAccount")
     public ResponseEntity<String> attemptDeletion(HttpSession session){
 
-        System.out.println("GOT IN HERE");
         User deletedUser = authenticationService.getUserFromSession(session);
         userService.deleteUser(deletedUser);
         session.invalidate();
-        //userRepository.deleteById((long)4);
         return ResponseEntity.ok("Account deleted");
     }
 
