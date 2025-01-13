@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import LogoutButton from "../components/LogoutButton";
+import DeleteButton from "../components/DeleteButton";
 
 function UserBar ( {loggedInUser, getUserInfo} ){
 
@@ -19,6 +20,7 @@ function UserBar ( {loggedInUser, getUserInfo} ){
                      <div>
                         <li>{loggedInUser.username}</li>
                         <li><LogoutButton getUserInfo = {getUserInfo}/></li>
+                        <li><DeleteButton getUserInfo = {getUserInfo}/></li>
                      </div>
                  ) : (
                      <li><a href="/login">Login</a></li>

@@ -1,6 +1,8 @@
 package com.example.Backend.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
@@ -10,9 +12,15 @@ public class User extends AbstractClass {
     private String email;
     private String password;
 
-    //@OneToOne(mappedBy = "user")
+    //@OneToOne(mappedBy = "user") //Irena original
+
+    //@OneToOne(mappedBy = "user") //Keith Suggestion
+
+    //Mine CHANGE???
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
+    //@NotNull
+    //@Valid  //WILL THESE TWO ANNOTATIONS FIX IT?
     private UserProfile userProfile;
 
     //Added encoder
@@ -27,6 +35,7 @@ public class User extends AbstractClass {
         //changed it so user's given password is encoded
         //this.password = password;
         this.password = encoder.encode(password);
+        this.userProfile = new UserProfile(); //Okay, doing this means userProfile isn't null, and it's mapping "properly" but what about over in UserProfile? That's still null...
     }
 
     public User(Long senderId) {
@@ -57,4 +66,13 @@ public class User extends AbstractClass {
     }
 
     //Deleted getter and setter for password. Don't want them.
+
+
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
+
+    public void setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
+    }
 }

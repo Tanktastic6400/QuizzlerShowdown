@@ -71,5 +71,4 @@ public class AuthenticationController {
         return ResponseEntity.ok(userInfo);
     }
 
-
 }

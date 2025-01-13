@@ -68,10 +68,15 @@ public class AuthenticationService {
 
         userRepository.save(newUser);
 
-        System.out.println(newUser.getId());
+        //System.out.println(newUser.getId());
+        //newUser.getUserProfile().setScore(1000); //Score didn't update in database when I did that.
+        //System.out.println(newUser.getUserProfile().getScore()); //but it did update here.
+        //System.out.println("SHOULD SEE PROFILE ABOVE");
 
-        //UserProfile newUserProfile
-        //userProfileRepository.save()
+        //UserProfile newUserProfile = new UserProfile();
+        //System.out.println(newUserProfile.getScore());
+        //System.out.println("SHOULD SEE SCORE ABOVE");
+        //userProfileRepository.save(newUserProfile);
         return true;
     }
 

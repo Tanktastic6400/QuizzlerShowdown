@@ -1,5 +1,6 @@
 package com.example.Backend.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -8,9 +9,15 @@ import java.util.List;
 @Table(name = "user_profiles")
 public class UserProfile extends AbstractClass {
 
-
-    //@OneToOne
+    //IRENA ORIGINAL
+    //@OneToOne //(cascade = CascadeType.ALL) //cascade type addition by me to try to get this thing working finally. ^^;
     //@JoinColumn(name = "user_id")
+
+    //KEITH SUGGESTION
+    //@OneToOne
+    //@JsonBackReference
+
+    //MINE CHANGE!!???
     @OneToOne(mappedBy = "userProfile")
     private User user;
 
