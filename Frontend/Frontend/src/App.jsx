@@ -31,7 +31,7 @@ function App() {
   //   <FriendList />
   // </BrowserRouter>
   <>
-{/* <QuizSelector/> */}
+<QuizSelector/>
 <QuizDisplay/>
 </>
 

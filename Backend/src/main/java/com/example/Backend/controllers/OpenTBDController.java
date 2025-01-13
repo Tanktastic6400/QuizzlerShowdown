@@ -3,6 +3,7 @@ package com.example.Backend.controllers;
 
 
 //import com.example.Backend.configurations.ApiResponse;
+import com.example.Backend.DTO.QuestionDTO;
 import com.example.Backend.configurations.OpenTBDResponse;
 import com.example.Backend.services.OpenTBDService;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class OpenTBDController {
 
 private final OpenTBDService openTBDService;
-private Integer amount;
-private Integer category;
+private String amount;
+private String category;
 private String type;
 private String difficulty;
 
@@ -30,16 +31,31 @@ public OpenTBDController(OpenTBDService openTBDService){
 @GetMapping("/questions")
     public OpenTBDResponse getTriviaQuestions(){
 
-    return createRandomQuiz(amount, category,type,difficulty);
+
+    return createRandomQuiz(Integer.parseInt(this.amount), Integer.parseInt(this.category),type,difficulty);
+}
+
+@PostMapping("/graded-answers")
+public void gradedAnswers(@RequestBody String numberOfAnswersCorrect){
+    System.out.println("Quiz created successfully, you got this many right: " + numberOfAnswersCorrect);
+
 }
 
 
+
+
 @PostMapping("/questions")
-    public void setQuestions(@RequestParam Integer amount, @RequestParam Integer valueOfCategory, @RequestParam String type, @RequestParam String difficulty){
-    this.amount = 10;
-    this.category = valueOfCategory;
-    this.type = type;
-    this.difficulty=difficulty;
+    public OpenTBDResponse setQuestions(@RequestBody QuestionDTO questionRequest){
+    try {
+        this.amount = questionRequest.getAmount();
+        this.category = questionRequest.getValueOfCategory();
+        this.type = questionRequest.getType();
+        this.difficulty = questionRequest.getDifficulty();
+        return getTriviaQuestions();
+    }catch (Exception e) {
+        e.printStackTrace();
+        throw new RuntimeException("Failed to process request: " + e.getMessage());
+    }
 }
 
 

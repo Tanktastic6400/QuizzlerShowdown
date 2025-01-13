@@ -65,6 +65,15 @@ function QuizDisplay() {
         console.log('Selected Answers:', selectedAnswers)
         console.log(correctAnswers);
         console.log('\n Correct Answers:', checkAnswers())
+        axios.post('http://localhost:8080/graded-answers', {
+            // numberOfCorrectAnswers: parseInt(checkAnswers(), 10)
+
+            numberOfCorrectAnswers: checkAnswers()
+        }).then(response => {
+           
+        }).catch(error => {
+            console.error("There was an issue grading answers", error);
+        });
 
     }
 
