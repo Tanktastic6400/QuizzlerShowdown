@@ -18,7 +18,6 @@ public class UserService {
 
     public void updateUserProfile(UserProfile userProfile){
         userProfileRepository.save(userProfile);
-        userProfileRepository.findBy()
         //userProfileRepository.
     }
 
