@@ -10,6 +10,7 @@ import ReviewPage from "./pages/ReviewPage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import UserBar from "./components/UserBar";
+import UserSearch from "./components/UserSearch";
 
 function App() {
   const [loggedInUser, setUser] = useState(null);
@@ -59,6 +60,7 @@ function App() {
         <Route path="/quizselector" element={<QuizSelector />} />
       </Routes>
       <UserBar loggedInUser={loggedInUser} getUserInfo={getUserInfo} />
+      
     </>
   );
 }
