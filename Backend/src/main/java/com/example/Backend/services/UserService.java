@@ -1,6 +1,7 @@
 package com.example.Backend.services;
 
 import com.example.Backend.models.User;
+import com.example.Backend.models.UserProfile;
 import com.example.Backend.models.data.UserProfileRepository;
 import com.example.Backend.models.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,12 @@ public class UserService {
 
     @Autowired
     private UserProfileRepository userProfileRepository;
+
+    public void updateUserProfile(UserProfile userProfile){
+        userProfileRepository.save(userProfile);
+        userProfileRepository.findBy()
+        //userProfileRepository.
+    }
 
     public void updateUser(User user) {
         userRepository.save(user);

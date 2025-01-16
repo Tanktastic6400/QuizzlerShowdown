@@ -1,6 +1,7 @@
 package com.example.Backend.controllers;
 
 import com.example.Backend.models.User;
+import com.example.Backend.models.UserProfile;
 import com.example.Backend.models.data.UserRepository;
 import com.example.Backend.services.AuthenticationService;
 import com.example.Backend.services.UserService;
@@ -23,6 +24,19 @@ public class UserController {
     @Autowired
     private AuthenticationService authenticationService;
 
+    @PostMapping("/updateScore")
+    //public ResponseEntity<String> attemptUpdateScore(User user, int score){
+        public ResponseEntity<String> attemptUpdateScore(int score){
+        long doubleId = score;
+                                                    //Not a good idea to do without an in present, but I just wanna test this stupid crud.
+        User user = userRepository.findById(doubleId).get();
+        UserProfile profileToUpdate = user.getUserProfile();
+        profileToUpdate.setScore(score);
+        userService.updateUserProfile(profileToUpdate);
+        return ResponseEntity.ok("Score update");
+    }
+
+    //Add some checks here in the event of error for some reason?
     @PostMapping("/deleteAccount")
     public ResponseEntity<String> attemptDeletion(HttpSession session){
 
