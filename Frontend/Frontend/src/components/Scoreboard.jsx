@@ -50,15 +50,14 @@ function Scoreboard (){
                     </tr>
                 </thead>
                 <tbody>
-                    {/*}{highScores.map( (player) => (
+                    {highScores.map( (player) => (
+                        <tr>
                             <td>FILLER</td>
-                        ))}*/}
-                    <tr>
-                          {listItems}
-                          {/*}<td>FILLER</td>
-                          <td>FILLER</td>
-                          <td>FILLER</td>*/}
+                            <td>FILLER</td>
+                            <td>{player.score}</td>
+
                         </tr>
+                        ))}
                 </tbody>
             </table>
         </div>

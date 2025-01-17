@@ -25,24 +25,24 @@ public class UserController {
     private AuthenticationService authenticationService;
 
     @PostMapping("/updateScore")
-    //public ResponseEntity<String> attemptUpdateScore(@RequestParam User user, @RequestParam int score){
+    public ResponseEntity<String> attemptUpdateScore(@RequestParam User user, @RequestParam int score){
 
         //JUST A TEST PLACEHOLDER
-        public ResponseEntity<String> attemptUpdateScore(){
+        //public ResponseEntity<String> attemptUpdateScore(){
         //HARDCORED PLACEHOLDRS FOR NOW
-        Long doubleId = (long) 1;
-        int score = 500;
+        //Long doubleId = (long) 1;
+        //int score = 500;
 
         //System.out.println("SCORE");
         //System.out.println(score);
         //System.out.println("SCORE");
 
         //This is all just for pulling up a user for testing. Ugh.
-        User user;
-        if(userRepository.findById(doubleId).isPresent()){
-            user = userRepository.findById(doubleId).get();
-        } else
-            return ResponseEntity.status(401).body("User not found");
+        //User user;
+        //if(userRepository.findById(doubleId).isPresent()){
+        //    user = userRepository.findById(doubleId).get();
+        //} else
+        //    return ResponseEntity.status(401).body("User not found");
 
         UserProfile profileToUpdate = user.getUserProfile();
         profileToUpdate.setScore(score);
