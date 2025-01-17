@@ -4,6 +4,7 @@ import com.example.Backend.models.User;
 import com.example.Backend.models.data.MessageRepository;
 import com.example.Backend.models.data.UserRepository;
 import com.example.Backend.services.ChatService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.time.format.DateTimeFormatter;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -26,19 +27,27 @@ public class ChatController {
     @Autowired
     private MessageRepository messageRepository;
 
+    @Transactional
     @MessageMapping("/chat.private.{chatId}")
     @SendTo("/topic/private.{chatId}")
     public Message handlePrivateChat(@DestinationVariable String chatId, @Payload Message message) {
         if (!chatService.isValidChat(chatId)) {
             throw new IllegalArgumentException("Invalid chatId");
         }
-        Optional<User> user1 = userRepository.findById(1L);
-        Optional<User> user2 = userRepository.findById(2L);
 
-        System.out.println("Chat ID: " + chatId);
-        System.out.println("Received message: " + message.getContent());
-        System.out.println("Sender: " + message.getSender().getId());
-        System.out.println("Recipient: " + message.getRecipient().getId());
+        User messageSender = chatService.getUserById(message.getSender().getId());
+        User messageReceiver = chatService.getUserById(message.getRecipient().getId());
+
+        //////////////////// For testing ///////////////////////////////////
+//        System.out.println("Sender ID: " + messageSender.getId());
+//        System.out.println("Sender Username: " + messageSender.getUsername());
+//        System.out.println("Receiver ID: " + messageReceiver.getId());
+//        System.out.println("Receiver Username: " + messageReceiver.getUsername());
+//        System.out.println("Chat ID: " + chatId);
+//        System.out.println("Received message: " + message.getContent());
+
+        message.setSender(messageSender);
+        message.setRecipient(messageReceiver);
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDate = now.format(formatter);

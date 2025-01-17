@@ -11,6 +11,7 @@ import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import UserBar from "./components/UserBar";
 import UserSearch from "./components/UserSearch";
+import Chatbox from "./components/Chatbox";
 
 function App() {
   const [loggedInUser, setUser] = useState(null);
@@ -51,6 +52,7 @@ function App() {
         <Route path="/" element={<MainPage />} />
         <Route path="/reviews" element={<ReviewPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/chat" element={<Chatbox loggedInUser={loggedInUser} />} />
         <Route
           path="/login"
           element={<LoginPage getUserInfo={getUserInfo} />}

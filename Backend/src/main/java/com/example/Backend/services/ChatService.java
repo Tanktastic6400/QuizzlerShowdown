@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ChatService {
@@ -26,6 +27,11 @@ public class ChatService {
 
     public boolean isValidChat(String chatId) {
         return chatRepository.existsByChatId(chatId);
+    }
+
+    public User getUserById(Long id){
+        Optional<User> user = userRepository.findById(id);
+        return user.orElseThrow(() -> new RuntimeException("User not found"));
     }
 
     public String getOrCreateChatId(Long senderId, Long recipientId) {
