@@ -18,7 +18,9 @@ public class UserProfile extends AbstractClass {
     //@JsonBackReference
 
     //MINE CHANGE!!???
+
     @OneToOne(mappedBy = "userProfile")
+    @JsonBackReference //Avoid infinite recursion
     private User user;
 
     private int score = 0; //Have score start at 0?

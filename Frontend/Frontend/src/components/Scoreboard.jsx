@@ -8,6 +8,34 @@ function Scoreboard (){
     const numbers = [1,2,3,4,5];
     const listItems = numbers.map((number) => <td>{number}</td>);
 
+    useEffect(() => {
+
+         const fetchSpecifications = {
+                             method: "GET",
+                             }
+          fetch("http://localhost:8080/scoreservice/getAllScores", fetchSpecifications)
+          .then((response) => response.json())
+          .then((data) => {setHighScores(data);
+              });
+
+          console.log(highScores);
+
+      }, []);
+
+                 /*const fetchSpecifications = {
+                     method: "GET",
+                     }
+
+                 fetch("http://localhost:8080/scoreservice/getAllScores", fetchSpecifications)
+                 .then((response) => response.json())
+                       .then((data) => {
+                         setHighScores(data);
+                       });
+                   }, []);*/
+
+    //useEffect(() => {
+    //      getHighScores(); //
+    //    }, []);
 
 
     return (
@@ -22,6 +50,9 @@ function Scoreboard (){
                     </tr>
                 </thead>
                 <tbody>
+                    {/*}{highScores.map( (player) => (
+                            <td>FILLER</td>
+                        ))}*/}
                     <tr>
                           {listItems}
                           {/*}<td>FILLER</td>
