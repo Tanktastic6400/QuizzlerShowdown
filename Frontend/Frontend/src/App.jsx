@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "./styles/App.css";
 import QuizDisplay from "./components/QuizDisplay";
 import QuizSelector from "./components/QuizSelector";
+import Chatbox from "./components/Chatbox";
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -51,6 +52,8 @@ function App() {
         <Route path="/" element={<MainPage />} />
         <Route path="/reviews" element={<ReviewPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/chat" element={<Chatbox />} />
+        
         <Route
           path="/login"
           element={<LoginPage getUserInfo={getUserInfo} />}
