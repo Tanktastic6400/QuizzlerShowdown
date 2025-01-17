@@ -2,91 +2,105 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 function QuizSelector() {
-  const [value, setValue] = useState("");
-  const [isValid, setIsValid] = useState(true);
-  const [categoryData, setCategoryData] = useState(null);
-  const [category, setCategory] = useState("");
-  const [type, setType] = useState("");
-  const [difficulty, setDifficulty] = useState("");
 
-  const handleChange = (event) => {
-    let inputValue = event.target.value;
+    const [value, setValue] = useState('');
+    const [isValid, setIsValid] = useState(true);
+    const [categoryData, setCategoryData] = useState(null);
+    const [category, setCategory] = useState('19');
+    const [type, setType] = useState('multiple');
+    const [difficulty, setDifficulty] = useState('easy');
 
-    let isNumber = !isNaN(inputValue && inputValue !== "");
+    const handleAmountChange = (event) => {
+        let inputValue = event.target.value;
 
-    setValue(inputValue);
-    setIsValid(isNumber);
-  };
+        let isNumber = !isNaN(inputValue && inputValue !== '');
 
-  const handleSubmit = () => {
-    if (isValid && value) {
-      axios
-        .post("http://localhost:8080/questions", {
-          amount: value,
-          category: category,
-          type: type,
-          difficulty: difficulty,
-        })
-        .then((response) => {
-          alert(response.data);
-        })
-        .catch((error) => {
-          console.error(
-            "There was an issue submitting quiz customization data"
-          );
-        });
-    } else {
-      alert("Please enter desired amount of questions!");
+        setValue(inputValue);
+        setIsValid(isNumber);
     }
-  };
 
-  useEffect(() => {
-    axios
-      .get("https://opentdb.com/api_category.php")
-      .then((response) => {
-        setCategoryData(response.data);
-      })
-      .catch((error) => {
-        console.error(
-          "There was an error getting data from 'https://opentdb.com/api_category.php'"
-        );
-      });
-  }, []);
+    const handleCategoryChange = (event) => {
+        setCategory(event.target.value);
+    }
+    const handleTypeChange = (event) => {
+        setType(event.target.value);
+    }
+    const handleDifficultyChange = (event) => {
+        setDifficulty(event.target.value);
+    }
 
-  return (
-    <div>
-      <label htmlFor="amount">Number of Questions </label>
-      <input
-        id="amount"
-        type="text"
-        value={value}
-        onChange={handleChange}
-      ></input>
+    const handleSubmit = () => {
 
-      <label htmlFor="Category">Category of Questions </label>
-      <select name="category" id="category">
-        {categoryData &&
-          categoryData.trivia_categories.map((category, index) => (
-            <option value={category.id}>{category.name}</option>
-          ))}
-      </select>
+        // if (isValid && value) {
+        //     const requestData = {
+        //         amount: value,
+        //     }
+        if (isValid && value) {
+            axios.post('http://localhost:8080/questions', {
+                amount: value,
+                valueOfCategory: category,
+                type: type,
+                difficulty: difficulty
+            })
+                .then(response => {
+                    // alert(response.data);
+                })
+                .catch(error => {
+                    console.error("There was an issue submitting quiz customization data", error);
+                });
+            
+        }else{
+            alert("Please enter desired amount of questions!");
+        }
+    };
 
-      <label htmlFor="Type">Type of Questions </label>
-      <select name="type" id="type">
-        <option value="multiple">Multiple Choice</option>
-        <option value="boolean">True or False</option>
-      </select>
 
-      <label htmlFor="Difficulty">Difficulty </label>
-      <select name="difficulty" id="difficulty">
-        <option value="easy">Easy</option>
-        <option value="medium">Medium</option>
-        <option value="hard">Hard</option>
-      </select>
-      <button id="submit" onClick={handleSubmit}></button>
-      {/* <input id="submit" type="submit" onSubmit={handleSubmit}/> */}
-    </div>
-  );
+    useEffect(() => {
+        axios.get('https://opentdb.com/api_category.php')
+            .then(response => {
+                setCategoryData(response.data);
+
+            })
+            .catch(error => {
+                console.error("There was an error getting data from 'https://opentdb.com/api_category.php'");
+            })
+    }, []);
+
+
+
+
+
+    return (
+        <div>
+            <label htmlFor="amount">Number of Questions </label>
+            <input id="amount" type="text" value={value} onChange={handleAmountChange}></input>
+
+            <label htmlFor="Category">Category of Questions </label>
+            <select name="category" id="category" onChange={() => handleCategoryChange}>
+                {categoryData && categoryData.trivia_categories.map((category, index) => (
+                    <option key = {category.id} value={category.id}>{category.name}</option>
+
+
+                ))}
+            </select>
+
+            <label htmlFor="Type">Type of Questions </label>
+            <select name="type" id="type" onChange={() => handleTypeChange}>
+                <option value="multiple">Multiple Choice</option>
+                <option value="boolean">True or False</option>
+            </select>
+
+            <label htmlFor="Difficulty">Difficulty </label>
+            <select name="difficulty" id="difficulty" onChange={() => handleDifficultyChange}>
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+            </select>
+            <button id="submit" onClick={handleSubmit}>Submit</button>
+            {/* <input id="submit" type="submit" onSubmit={handleSubmit}/> */}
+
+        </div>
+    );
 }
 
 export default QuizSelector;
