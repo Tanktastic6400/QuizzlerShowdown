@@ -7,17 +7,12 @@ import java.time.LocalDateTime;
 @Entity
 public class FriendList extends AbstractClass {
 
-
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "user_id")  // This will reference the user who owns the friend list
+    @JoinColumn(name = "user_id", nullable = false) // References the user who owns the friend list
     private User user;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinTable(
-            name = "friendship",  // This will be the join table
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "friend_id")
-    )
+    @JoinColumn(name = "friend_id", nullable = false) // This will create the friend_id column
     private User friend;
 
     @Enumerated(EnumType.STRING)
@@ -26,11 +21,14 @@ public class FriendList extends AbstractClass {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    public FriendList(User user, User friend, FriendStatus status, LocalDateTime createdAt) {
+    private String requestId;
+
+    public FriendList(User user, User friend, FriendStatus status, LocalDateTime createdAt, String requestId) {
         this.user = user;
         this.friend = friend;
         this.status = status;
         this.createdAt = createdAt;
+        this.requestId = requestId;
     }
 
     public FriendList() {
@@ -66,5 +64,13 @@ public class FriendList extends AbstractClass {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(String requestId) {
+        this.requestId = requestId;
     }
 }

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 function QuizSelector() {
 
@@ -103,8 +103,9 @@ function QuizSelector() {
     );
 }
 
-export default QuizSelector
-{/* <option value="9">General Knowledge</option>
+export default QuizSelector;
+{
+  /* <option value="9">General Knowledge</option>
 <option value="10">Books</option>
 <option value="11">Film</option>
 <option value="12">Music</option>
@@ -127,4 +128,5 @@ export default QuizSelector
 <option value="29">Comics</option>
 <option value="30">Gadgets</option>
 <option value="31">Japanese Anime & Manga</option>
-<option value="32">Cartoon & Animations</option> */}
+<option value="32">Cartoon & Animations</option> */
+}

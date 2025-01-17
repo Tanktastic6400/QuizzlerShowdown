@@ -18,25 +18,37 @@ public class FriendListService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private ChatService chatService;
+
     public List<FriendList> getFriends(Long userId) {
-        return friendListRepository.findByUserId(userId);
+        return friendListRepository.findByUserIdOrFriendId(userId, userId);
     }
 
     public void sendFriendRequest(Long userId, Long friendId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         User friend = userRepository.findById(friendId).orElseThrow(() -> new RuntimeException("Friend not found"));
-
         FriendList friendlist = new FriendList();
-        friendlist.setUser(user);   // Set the user (this should already be persisted)
-        friendlist.setFriends(friend);  // Set the friend (this should also be persisted)
+        friendlist.setUser(user);
+        friendlist.setFriends(friend);
+        friendlist.setRequestId(userId.toString()+"-"+friendId.toString());
         friendlist.setStatus(FriendStatus.PENDING);
-
         friendListRepository.save(friendlist);
     }
 
-    public void respondToRequest(Long friendshipId, FriendStatus status) {
-        FriendList friendlist = friendListRepository.findById(friendshipId).orElseThrow();
+    public void respondToRequest(String requestId, FriendStatus status) {
+        FriendList friendlist = friendListRepository.findByRequestId(requestId);
+        Long friendId = friendlist.getFriends().getId();
+        Long userId = friendlist.getUser().getId();
         friendlist.setStatus(status);
+        if(friendlist.getStatus() == FriendStatus.ACCEPTED) {
+            chatService.getOrCreateChatId(userId, friendId);
+        }
         friendListRepository.save(friendlist);
+
+    }
+
+    public List<User> findUser(String username) {
+        return userRepository.findByUsernameContaining(username); // Adjust repository method as needed
     }
 }

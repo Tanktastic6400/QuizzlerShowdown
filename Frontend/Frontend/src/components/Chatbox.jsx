@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
-import Toast from 'react-bootstrap/Toast';
-import Button from 'react-bootstrap/Button';
-import ToastContainer from 'react-bootstrap/ToastContainer';
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import DropdownHeader from 'react-bootstrap/DropdownHeader'
+import Toast from "react-bootstrap/Toast";
+import Button from "react-bootstrap/Button";
+import ToastContainer from "react-bootstrap/ToastContainer";
+import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import DropdownHeader from "react-bootstrap/DropdownHeader";
 import ToastHeader from "react-bootstrap/esm/ToastHeader";
 import DropdownItem from "react-bootstrap/esm/DropdownItem";
 import DropdownDivider from "react-bootstrap/esm/DropdownDivider";
@@ -32,19 +32,21 @@ const Chatbox = () => {
 
   const getMessages = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/chat/messages?chatId=${chatId}`);
+      const response = await fetch(
+        `http://localhost:8080/chat/messages?chatId=${chatId}`
+      );
       if (!response.ok) {
-          throw new Error(`Error fetching chat messages: ${response.statusText}`);
+        throw new Error(`Error fetching chat messages: ${response.statusText}`);
       }
       const data = await response.json();
       setMessages(data);
-  } catch (err) {
+    } catch (err) {
       setError(err.message);
-  } finally {
+    } finally {
       setLoading(false);
-  }
-  console.log(messages);
-  }
+    }
+    console.log(messages);
+  };
 
   useEffect(() => {
     // Connect to the WebSocket server
@@ -95,50 +97,28 @@ const Chatbox = () => {
       <Dropdown>
         <DropdownButton drop="up-centered" variant="warning" title="Messages">
           <Dropdown.Item>
-            <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
-            {messages.map((message) => (
-          <div className="card-body" key={message.id}>
-            <div>
-              Sent at:{message.timestamp} User:{message.username}:{" "}
-              {message.content}
+            <div style={{ maxHeight: "200px", overflowY: "auto" }}>
+              {messages.map((message) => (
+                <div className="card-body" key={message.id}>
+                  <div>
+                    Sent at:{message.timestamp} User:{message.username}:{" "}
+                    {message.content}
+                  </div>
+                </div>
+              ))}
             </div>
-          </div>
-        ))}
-        </div>
-        </Dropdown.Item>
-        <DropdownDivider />
-        <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="Type your message"
-        />
-        <button onClick={sendMessage}>Send</button>
+          </Dropdown.Item>
+          <DropdownDivider />
+          <input
+            type="text"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder="Type your message"
+          />
+          <button onClick={sendMessage}>Send</button>
         </DropdownButton>
       </Dropdown>
-      
-{/* <Button onClick={toggleShowChat} className="mb-2">Username</Button>
-        <Toast bg="secondary" onClose={toggleShowChat} show={showChat} animation={false} position="bottom-end">
-          <ToastHeader>Header</ToastHeader>
-          <Toast.Body style={{ maxHeight: "150px", overflowY: "auto" }}>
-          {messages.map((message) => (
-          <div className="card-body" key={message.id}>
-            <div>
-              Sent at:{message.timestamp} User:{message.username}:{" "}
-              {message.content}
-            </div>
-          </div>
-        ))}
-          </Toast.Body>
-          <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="Type your message"
-        />
-        <button onClick={sendMessage}>Send</button>
-        </Toast> */}
-  </>
+    </>
   );
 };
 

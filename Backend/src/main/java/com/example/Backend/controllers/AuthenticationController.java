@@ -3,6 +3,7 @@ package com.example.Backend.controllers;
 
 import com.example.Backend.DTO.LoginFormDTO;
 import com.example.Backend.DTO.RegisterFormDTO;
+import com.example.Backend.DTO.UserInfoDTO;
 import com.example.Backend.models.User;
 import com.example.Backend.models.data.UserRepository;
 import com.example.Backend.services.AuthenticationService;
@@ -45,9 +46,36 @@ public class AuthenticationController {
 
     @PostMapping("/logout")
     public ResponseEntity<String> attemptLogout(HttpSession session) {
-        System.out.println("GOT IN HERE");
+        //System.out.println("GOT IN HERE");
         session.invalidate();
         return ResponseEntity.ok("Successfully logged out");
+    }
+
+    @GetMapping("/userinfo")
+    public ResponseEntity<UserInfoDTO> getUserInfo(HttpSession session){
+
+        //System.out.println("GOT IN HERE");
+
+        User currentUser= authenticationService.getUserFromSession(session);
+
+        UserInfoDTO userInfo = new UserInfoDTO();
+
+        if(currentUser == null){
+            System.out.println("GOT INSIDE CURRENT USER IS NULL");
+            //Return the empty DTO, but since the error code is 401 it won't never be used?
+            return ResponseEntity.status(401).body(userInfo);
+        }
+        //System.out.println("GOT TO RETURN");
+        String currentUsername = currentUser.getUsername();
+
+        userInfo.setId(currentUser.getId());
+        userInfo.setUsername(currentUser.getUsername());
+        userInfo.setEmail(currentUser.getEmail());
+
+        System.out.println(currentUsername);
+        System.out.println(userInfo.getUsername());
+
+        return ResponseEntity.ok(userInfo);
     }
 
 
