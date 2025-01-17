@@ -43,7 +43,7 @@ function QuizSelector() {
                 difficulty: difficulty
             })
                 .then(response => {
-                    alert(response.data);
+                    // alert(response.data);
                 })
                 .catch(error => {
                     console.error("There was an issue submitting quiz customization data", error);
