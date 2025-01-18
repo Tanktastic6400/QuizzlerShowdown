@@ -11,7 +11,7 @@ import ToastHeader from "react-bootstrap/esm/ToastHeader";
 import DropdownItem from "react-bootstrap/esm/DropdownItem";
 import DropdownDivider from "react-bootstrap/esm/DropdownDivider";
 
-const Chatbox = () => {
+const Chatbox = ({loggedInUser}) => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
   const [showChat, setShowChat] = useState(true);
@@ -25,7 +25,7 @@ const Chatbox = () => {
 
   //this will be set by userids of sender and receiver
   const getChatId = () => {
-    return "1234";
+    return "1-2";
   };
 
   const chatId = getChatId();
@@ -74,11 +74,12 @@ const Chatbox = () => {
   const sendMessage = () => {
     if (message.trim() !== "") {
       const messageObj = {
-        sender: 1,
-        recipient: 2, // Replace with dynamic user data
+        sender: loggedInUser,
+        recipient: loggedInUser, // Replace with dynamic user data
         content: message.trim(),
       };
       console.log("Sending message:", messageObj);
+      
       if (stompClient.current && stompClient.current.send) {
         stompClient.current.send(
           `/app/chat.private.${chatId}`,

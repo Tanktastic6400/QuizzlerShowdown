@@ -4,11 +4,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 function QuizDisplay() {
-  const [questionData, setQuestionsData] = useState(null);
-
-
-   
-
+  
     const [questionData, setQuestionsData] = useState(null);
     const [selectedAnswers, setSelectedAnswers] = useState({});
     const [correctAnswers, setCorrectAnswers] = useState({})
