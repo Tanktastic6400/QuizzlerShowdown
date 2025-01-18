@@ -21,11 +21,14 @@ public class FriendList extends AbstractClass {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    public FriendList(User user, User friend, FriendStatus status, LocalDateTime createdAt) {
+    private String requestId;
+
+    public FriendList(User user, User friend, FriendStatus status, LocalDateTime createdAt, String requestId) {
         this.user = user;
         this.friend = friend;
         this.status = status;
         this.createdAt = createdAt;
+        this.requestId = requestId;
     }
 
     public FriendList() {
@@ -61,5 +64,13 @@ public class FriendList extends AbstractClass {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(String requestId) {
+        this.requestId = requestId;
     }
 }

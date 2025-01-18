@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 function QuizSelector() {
 
     const [value, setValue] = useState('');
     const [isValid, setIsValid] = useState(true);
     const [categoryData, setCategoryData] = useState(null);
-    const [category, setCategory] = useState('');
-    const [type, setType] = useState('');
-    const [difficulty, setDifficulty] = useState('');
+    const [category, setCategory] = useState('19');
+    const [type, setType] = useState('multiple');
+    const [difficulty, setDifficulty] = useState('easy');
 
-    const handleChange = (event) => {
+    const handleAmountChange = (event) => {
         let inputValue = event.target.value;
 
         let isNumber = !isNaN(inputValue && inputValue !== '');
@@ -19,19 +19,34 @@ function QuizSelector() {
         setIsValid(isNumber);
     }
 
+    const handleCategoryChange = (event) => {
+        setCategory(event.target.value);
+    }
+    const handleTypeChange = (event) => {
+        setType(event.target.value);
+    }
+    const handleDifficultyChange = (event) => {
+        setDifficulty(event.target.value);
+    }
+
     const handleSubmit = () => {
+
+        // if (isValid && value) {
+        //     const requestData = {
+        //         amount: value,
+        //     }
         if (isValid && value) {
             axios.post('http://localhost:8080/questions', {
                 amount: value,
-                category: category,
+                valueOfCategory: category,
                 type: type,
                 difficulty: difficulty
             })
                 .then(response => {
-                    alert(response.data);
+                    // alert(response.data);
                 })
                 .catch(error => {
-                    console.error("There was an issue submitting quiz customization data");
+                    console.error("There was an issue submitting quiz customization data", error);
                 });
             
         }else{
@@ -58,38 +73,39 @@ function QuizSelector() {
     return (
         <div>
             <label htmlFor="amount">Number of Questions </label>
-            <input id="amount" type="text" value={value} onChange={handleChange}></input>
+            <input id="amount" type="text" value={value} onChange={handleAmountChange}></input>
 
             <label htmlFor="Category">Category of Questions </label>
-            <select name="category" id="category">
+            <select name="category" id="category" onChange={() => handleCategoryChange}>
                 {categoryData && categoryData.trivia_categories.map((category, index) => (
-                    <option value={category.id}>{category.name}</option>
+                    <option key = {category.id} value={category.id}>{category.name}</option>
 
 
                 ))}
             </select>
 
             <label htmlFor="Type">Type of Questions </label>
-            <select name="type" id="type">
+            <select name="type" id="type" onChange={() => handleTypeChange}>
                 <option value="multiple">Multiple Choice</option>
                 <option value="boolean">True or False</option>
             </select>
 
             <label htmlFor="Difficulty">Difficulty </label>
-            <select name="difficulty" id="difficulty">
+            <select name="difficulty" id="difficulty" onChange={() => handleDifficultyChange}>
                 <option value="easy">Easy</option>
                 <option value="medium">Medium</option>
                 <option value="hard">Hard</option>
             </select>
-            <button id="submit" onClick={handleSubmit}></button>
+            <button id="submit" onClick={handleSubmit}>Submit</button>
             {/* <input id="submit" type="submit" onSubmit={handleSubmit}/> */}
 
         </div>
     );
 }
 
-export default QuizSelector
-{/* <option value="9">General Knowledge</option>
+export default QuizSelector;
+{
+  /* <option value="9">General Knowledge</option>
 <option value="10">Books</option>
 <option value="11">Film</option>
 <option value="12">Music</option>
@@ -112,4 +128,5 @@ export default QuizSelector
 <option value="29">Comics</option>
 <option value="30">Gadgets</option>
 <option value="31">Japanese Anime & Manga</option>
-<option value="32">Cartoon & Animations</option> */}
+<option value="32">Cartoon & Animations</option> */
+}

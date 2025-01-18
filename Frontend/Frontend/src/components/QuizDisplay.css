@@ -1,18 +1,41 @@
-.answerRadio{
-    margin-bottom: 5px
+.answerRadio {
+  margin-bottom: 5px;
 }
+
 
 .answerLabel{
     margin-bottom: 5px;
     margin-right: 50px;
     display: flex;
+    font-family:cursive;
+    font-size: large;
+    
 }
 
 .questionStats{
     padding: 5px;
     margin-right: 5px;
+    font-family: cursive;
+    font-size: large;
 }
 
 table{
-    width: 100%
+    width: 100%;
+    background-color: darkgoldenrod;
 }
+
+.answerLabel {
+  margin-bottom: 5px;
+  margin-right: 50px;
+  display: flex;
+}
+
+.questionStats {
+  padding: 5px;
+  margin-right: 5px;
+}
+
+table {
+  width: 100%;
+}
+

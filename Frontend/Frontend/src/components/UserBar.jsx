@@ -1,34 +1,56 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import Dropdown from 'react-bootstrap/Dropdown';
 import LogoutButton from "../components/LogoutButton";
 import DeleteButton from "../components/DeleteButton";
+import MainPage from "../pages/MainPage";
+import FriendList from "./FriendList";
 
-function UserBar ( {loggedInUser, getUserInfo} ){
-
-
-
-    return(
-
-         <div>
-             <nav className="menu">
-               <ul>
-                 <li><a href="/">Home</a></li>
-                 <li><a href="/reviews">Reviews</a></li>
-                 <li><a href="/register">Register</a></li>
-                 {loggedInUser ? (
-                     <div>
-                        <li>{loggedInUser.username}</li>
-                        <li><LogoutButton getUserInfo = {getUserInfo}/></li>
-                        <li><DeleteButton getUserInfo = {getUserInfo}/></li>
-                     </div>
-                 ) : (
-                     <li><a href="/login">Login</a></li>
-                 )}
-               </ul>
-             </nav>
-         </div>
-    )
+function UserBar({ loggedInUser, getUserInfo }) {
+  return (
+    <Navbar bg="warning" fixed="top" className="navbar">
+      <Container>
+        <Navbar.Brand as={Link} to="/"> 
+        <img
+              src="../src/images/QuizzlerCowboy.jpg"
+              width="50"
+              height="50"
+              className="d-inline-block align-top"
+              alt="React Bootstrap logo"
+            />
+            </Navbar.Brand>
+        <Nav className="me-auto">
+          <Nav.Link as={Link} to="/">Home</Nav.Link>
+          <Nav.Link as={Link} to="/reviews">Reviews</Nav.Link>
+          <Nav.Link as={Link} to="/quizselector">Create Quiz</Nav.Link>
+        </Nav>
+        <Nav>
+          {loggedInUser ? (
+            <div className="d-flex align-items-center">
+              <Dropdown autoClose={false}>
+              <Dropdown.Toggle variant="success" id="dropdown-basic">
+              {loggedInUser.username}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+              <Dropdown.Item as="div"><LogoutButton getUserInfo={getUserInfo} /></Dropdown.Item>
+              <Dropdown.Item as="div"><FriendList loggedInUser={loggedInUser}/></Dropdown.Item>
+              <Dropdown.Item as="div"><DeleteButton getUserInfo={getUserInfo}/></Dropdown.Item>
+                    
+              </Dropdown.Menu>
+              </Dropdown>
+            </div>
+          ) : (
+            <Nav.Link as={Link} to="/login">Login</Nav.Link>
+          )}
+          <Nav.Link as={Link} to="/register">Register</Nav.Link>
+        </Nav>
+        <MainPage/>
+      </Container>
+    </Navbar>
+  );
 }
 
-export default UserBar
+export default UserBar;

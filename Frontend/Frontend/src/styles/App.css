@@ -22,6 +22,9 @@
   /* overflow: hidden; */
 } 
 
+.navbar {
+  display: flex;
+}
 /* 
 .logo {
   height: 6em;

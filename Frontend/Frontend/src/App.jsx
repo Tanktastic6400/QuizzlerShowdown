@@ -1,5 +1,4 @@
 
-
 import { useState, useEffect } from 'react'
 //import './App.css'
 import './styles/App.css'
@@ -19,41 +18,41 @@ import ScorePage from './pages/ScorePage';
 
 
 function App() {
+  const [loggedInUser, setUser] = useState(null);
+  const [username, setUsername] = useState("Get Username");
 
-    const [loggedInUser, setUser] = useState(null);
-    const [username, setUsername] = useState("Get Username");
+  function getUserInfo() {
+    const fetchSpecifications = {
+      method: "GET",
+      credentials: "include",
+    };
 
-        function getUserInfo(){
+    fetch(
+      "http://localhost:8080/authenticationservice/userinfo",
+      fetchSpecifications
+    )
+      .then(function (response) {
+        if (!response.ok) {
+          setUser(null);
+          throw new Error("No current user");
+        }
+        return response.json();
+      })
+      .then(function (receivedUserInfo) {
+        const userInfo = receivedUserInfo;
+        setUser(userInfo);
+        const current_username = userInfo.username;
+        setUsername(current_username);
+      });
+  }
 
-             const fetchSpecifications = {
-                 method: "GET",
-                 credentials: "include",
-                 }
+  useEffect(() => {
+    getUserInfo();
+  }, []);
 
-             fetch("http://localhost:8080/authenticationservice/userinfo", fetchSpecifications)
-             .then(function (response){
-                if (!response.ok) {
-                    setUser(null);
-                    throw new Error("No current user");
-                  }
-                 return response.json();
-                 })
-                .then(function (receivedUserInfo){
-                    const userInfo = receivedUserInfo;
-                    setUser(userInfo);
-                    const current_username = userInfo.username;
-                    setUsername(current_username);
-                    });
-             }
-
-   useEffect(() => {
-      getUserInfo(); //
-    }, []);
-  
   return (
-    
-    // <BrowserRouter>
     <>
+
     <Routes>
       <Route path="/" element={<MainPage />} />
       <Route path="/reviews" element={<ReviewPage />} />
@@ -69,8 +68,9 @@ function App() {
     <QuizSelector/>
     <QuizDisplay/>
     </BrowserRouter>*/}
+
     </>
-  )
+  );
 }
 
-export default App
+export default App;
