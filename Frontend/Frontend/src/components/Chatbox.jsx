@@ -1,34 +1,19 @@
+
 import React, { useEffect, useState, useRef } from "react";
+import { Modal, Button } from "react-bootstrap";
 import { Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
-import Toast from "react-bootstrap/Toast";
-import Button from "react-bootstrap/Button";
-import ToastContainer from "react-bootstrap/ToastContainer";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
-import DropdownHeader from "react-bootstrap/DropdownHeader";
-import ToastHeader from "react-bootstrap/esm/ToastHeader";
-import DropdownItem from "react-bootstrap/esm/DropdownItem";
-import DropdownDivider from "react-bootstrap/esm/DropdownDivider";
 
-const Chatbox = ({loggedInUser}) => {
+const Chatbox = ({ loggedInUser, chatId }) => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
-  const [showChat, setShowChat] = useState(true);
+  const [showChat, setShowChat] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const toggleShowChat = () => setShowChat(!showChat);
-
-  // Use useRef to store stompClient so it persists across renders
   const stompClient = useRef(null);
 
-  //this will be set by userids of sender and receiver
-  const getChatId = () => {
-    return "1-2";
-  };
-
-  const chatId = getChatId();
+  const toggleShowChat = () => setShowChat(!showChat);
 
   const getMessages = async () => {
     try {
@@ -45,20 +30,16 @@ const Chatbox = ({loggedInUser}) => {
     } finally {
       setLoading(false);
     }
-    console.log(messages);
   };
 
   useEffect(() => {
-    // Connect to the WebSocket server
     const socket = new SockJS("http://localhost:8080/ws");
     stompClient.current = Stomp.over(socket);
 
     stompClient.current.connect({}, () => {
       console.log("Connected to WebSocket");
       stompClient.current.subscribe(`/topic/private.${chatId}`, (message) => {
-        console.log(chatId);
         const receivedMessage = JSON.parse(message.body);
-        console.log("Received message:", receivedMessage);
         setMessages((prevMessages) => [...prevMessages, receivedMessage]);
       });
       getMessages();
@@ -78,8 +59,6 @@ const Chatbox = ({loggedInUser}) => {
         recipient: loggedInUser, // Replace with dynamic user data
         content: message.trim(),
       };
-      console.log("Sending message:", messageObj);
-      
       if (stompClient.current && stompClient.current.send) {
         stompClient.current.send(
           `/app/chat.private.${chatId}`,
@@ -94,32 +73,47 @@ const Chatbox = ({loggedInUser}) => {
   };
 
   return (
-    <>
-      <Dropdown>
-        <DropdownButton drop="up-centered" variant="warning" title="Messages">
-          <Dropdown.Item>
-            <div style={{ maxHeight: "200px", overflowY: "auto" }}>
+    <div>
+      <Button variant="primary" onClick={toggleShowChat}>
+        {showChat ? "Close Chat" : "Open Chat"}
+      </Button>
+
+      <Modal show={showChat} onHide={toggleShowChat} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Chat</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {loading ? (
+            <p>Loading messages...</p>
+          ) : error ? (
+            <p>Error: {error}</p>
+          ) : (
+            <div style={{ maxHeight: "300px", overflowY: "auto" }}>
               {messages.map((message) => (
-                <div className="card-body" key={message.id}>
+                <div key={message.id} className="mb-2">
                   <div>
-                    Sent at:{message.timestamp} User:{message.username}:{" "}
-                    {message.content}
+                    <strong>{message.username}</strong>: {message.content}
                   </div>
+                  <small className="text-muted">{message.timestamp}</small>
                 </div>
               ))}
             </div>
-          </Dropdown.Item>
-          <DropdownDivider />
+          )}
+        </Modal.Body>
+        <Modal.Footer>
           <input
             type="text"
+            className="form-control me-2"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Type your message"
           />
-          <button onClick={sendMessage}>Send</button>
-        </DropdownButton>
-      </Dropdown>
-    </>
+          <Button variant="success" onClick={sendMessage}>
+            Send
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </div>
   );
 };
 

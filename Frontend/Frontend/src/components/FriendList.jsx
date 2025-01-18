@@ -3,22 +3,55 @@ import Dropdown from "react-bootstrap/Dropdown";
 import DropdownDivider from "react-bootstrap/esm/DropdownDivider";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import FindFriend from "./FindFriend";
+import Chatbox from "./Chatbox";
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Popover from 'react-bootstrap/Popover';
 
-const FriendList = ({loggedInUser}) => {
+
+const FriendList = ({loggedInUser}, {getUserInfo}) => {
   const [friendList, setFriendList] = useState([]);
-  const [friendStatus, setFriendStatus] = useState("");
-  const [requestId, setRequestId] = useState("");
+  const [selectedFriend, setSelectedFriend] = useState();
+  const [chatId, setChatId] = useState("");
+ 
   
   useEffect(() => {
-    console.log("From the friends list " + loggedInUser.id);
-    // get friends list here.
     fetch(`http://localhost:8080/friendlist/${loggedInUser.id}?userId=${loggedInUser.id}`)
       .then((response) => response.json())
       .then((data) => {
         setFriendList(data);
       });
       
-  }, []);
+  }, [loggedInUser]);
+
+  
+  const friendClicked = async (clickedFriend) => {
+  
+    const friendIndex = friendList.findIndex((friend) => friend.id === clickedFriend);
+    setSelectedFriend(friendList[friendIndex]);
+    console.log(selectedFriend.friends.id);
+    const selectedFriendInfo = friendList[friendIndex];
+    try {
+      const response = await fetch(
+        `http://localhost:8080/chat/chatid?sender=${loggedInUser.id}&receiver=${selectedFriendInfo.friends.id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+      const data = await response.text();
+      <Chatbox chatId={data}/>
+      console.log(`this is the data ${data}`);
+    } catch (error) {
+      console.error("Error fetching chat ID:", error);
+    }
+  };
 
   const handleAccept = async (id) => {
     try {
@@ -57,28 +90,25 @@ const FriendList = ({loggedInUser}) => {
   };
 
   return (
-    <Dropdown>
-      <DropdownButton variant="warning" title="Friends">
-        {friendList.map((friend) => (
-          <Dropdown.Item key={friend.id}>
-            <div>
-              User: {friend.friends.username} Status: {friend.status} Request ID: {friend.requestId}
-            </div>
-            {friend.status === "PENDING" && (
-              <div>
-                <button onClick={() => handleAccept(friend.requestId)}>Accept</button>
-                <button onClick={() => handleDecline(friend.requestId)}>
-                  Decline
-                </button>
-              </div>
-            )}
-          </Dropdown.Item>
-        ))}
-        <DropdownDivider />
-        <FindFriend loggedInUser={loggedInUser}/>
-      </DropdownButton>
-    </Dropdown>
-  );
+    <Popover id="popover-basic">
+    <Popover.Header as="h3">Popover right</Popover.Header>
+    {friendList.map((friend) => (
+      <Popover.Body key={friend.id}>  
+        <button onClick={() => friendClicked(friend.id)}>
+          <div>
+            User: {friend.friends.username}
+          </div>
+        </button>
+        {friend.status === "PENDING" && (
+          <div>
+            <button onClick={() => handleAccept(friend.requestId)}>Accept</button>
+            <button onClick={() => handleDecline(friend.requestId)}>Decline</button>
+          </div>
+        )}
+      </Popover.Body>
+    ))}
+  </Popover>);
+
 };
 
 export default FriendList;

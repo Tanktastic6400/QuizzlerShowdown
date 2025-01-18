@@ -28,6 +28,7 @@ public class FriendListController {
     public void sendFriendRequest(@RequestBody FriendRequestDTO request) {
         Long userId = request.getUserId();
         Long friendId = request.getFriendId();
+        System.out.println("FriendDTO info - userId: " + userId + "friendId: " + friendId);
         friendListService.sendFriendRequest(userId, friendId);
     }
 

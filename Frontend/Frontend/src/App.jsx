@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect } from 'react'
 //import './App.css'
 import './styles/App.css'
@@ -16,6 +14,7 @@ import Chatbox from './components/Chatbox';
 import FriendList from './components/FriendList';
 import UserBar from './components/UserBar';
 import ScorePage from './pages/ScorePage';
+import ChatContainer from './components/ChatContainer';
 
 function App() {
   const [loggedInUser, setUser] = useState(null);
@@ -62,11 +61,14 @@ function App() {
       <Route path="/quizdisplay" element={<QuizDisplay/>} />
       <Route path="/quizselector" element={<QuizSelector/>} />
       <Route path="/scores" element={<ScorePage />} />
-      <Route path="/chat" element={<Chatbox loggedInUser={loggedInUser} />} />
+      <Route path="/chat" element={<Chatbox loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>} />
     </Routes>
     <UserBar loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>
-    {/*}<Chatbox />
-    <FriendList />
+  
+
+    {/*}
+    <Chatbox />
+    
     <QuizSelector/>
     <QuizDisplay/>
     </BrowserRouter>*/}
