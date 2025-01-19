@@ -9,6 +9,7 @@ const Chatbox = ({ loggedInUser, chatId, onClose }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const stompClient = useRef(null);
+  const scrollContainerRef = useRef(null);
 
   const getMessages = async () => {
     try {
@@ -25,11 +26,9 @@ const Chatbox = ({ loggedInUser, chatId, onClose }) => {
     } finally {
       setLoading(false);
     }
-    console.log(`Messages ${messages}`);
   };
   
   useEffect(() => {
-    console.log(`The chatId in the chatbox is: ${chatId}`);
     const socket = new SockJS("http://localhost:8080/ws");
     stompClient.current = Stomp.over(socket);
 
@@ -40,13 +39,21 @@ const Chatbox = ({ loggedInUser, chatId, onClose }) => {
       });
       getMessages();
     });
-
+    
     return () => {
       if (stompClient.current) {
         stompClient.current.disconnect();
       }
     };
-  }, []);
+  }, [chatId]);
+
+  useEffect(() => {
+    
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop =
+        scrollContainerRef.current.scrollHeight;
+    }
+  }, [messages]);
 
   const sendMessage = () => {
     if (message.trim() !== "") {
@@ -55,6 +62,13 @@ const Chatbox = ({ loggedInUser, chatId, onClose }) => {
         recipient: loggedInUser, // Friend object needs to be passed into here. 
         content: message.trim(),
       };
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        {
+          id: Date.now(), // Temporary ID for UI purposes
+          ...messageObj,
+        },
+      ]);
       stompClient.current.send(
         `/app/chat.private.${chatId}`,
         {},
@@ -70,7 +84,7 @@ const Chatbox = ({ loggedInUser, chatId, onClose }) => {
         <Modal.Title>Chat with {}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div style={{ maxHeight: "300px", overflowY: "auto" }}>
+        <div style={{ maxHeight: "300px", overflowY: "auto" }} ref={scrollContainerRef}>
         {messages.map((message) => (
                 <div className="card-body" key={message.id}>
                   <div>
