@@ -64,6 +64,7 @@ function App() {
       <Route path="/chat" element={<Chatbox loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>} />
     </Routes>
     <UserBar loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>
+    <ChatContainer loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>
   
 
     {/*}

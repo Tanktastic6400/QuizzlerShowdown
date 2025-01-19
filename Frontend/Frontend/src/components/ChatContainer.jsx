@@ -1,35 +1,55 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Chatbox from './Chatbox';
-import FriendList from './FriendList';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Popover from 'react-bootstrap/Popover';
-import Button from 'react-bootstrap/Button';
+import React, { useState } from "react";
+import { OverlayTrigger, Popover, Button } from "react-bootstrap";
+import Chatbox from "./Chatbox";
+import FriendList from "./FriendList";
 
 const ChatContainer = ({ loggedInUser, getUserInfo }) => {
+  const [chatId, setChatId] = useState(null);
+  const [showChat, setShowChat] = useState(false);
+  const [showPopover, setShowPopover] = useState(false);
+
+  const handleOpenChat = (chatId) => {
+    console.log(`Called from the chatContainer:  ${chatId}`);
+    setChatId(chatId); // Set the chatId
+    setShowPopover(false); // Close the popover
+    setShowChat(true); // Open the chat modal
+  };
+
   const popover = (
-    <>
-     {/* <Popover id="popover-basic">
-       <Popover.Header as="h3">Friend List</Popover.Header>
-       <Popover.Body> */}
-        <FriendList loggedInUser={loggedInUser} getUserInfo={getUserInfo} />
-        <Chatbox loggedInUser={loggedInUser} getUserInfo={getUserInfo} />
-      {/* </Popover.Body>
-    </Popover> */}
-</>
+    <Popover id="popover-basic">
+      <Popover.Header as="h3">Friend List</Popover.Header>
+      <Popover.Body>
+        <FriendList
+          loggedInUser={loggedInUser}
+          getUserInfo={getUserInfo}
+          onOpenChat={handleOpenChat} // Pass the handler to FriendList
+        />
+      </Popover.Body>
+    </Popover>
   );
 
   return (
-    <OverlayTrigger trigger="click" placement="top" overlay={popover}>
-      <Button variant="success">Click me to see</Button>
-    </OverlayTrigger>
+    <>
+      <OverlayTrigger
+        trigger="click"
+        placement="top"
+        overlay={popover}
+        show={showPopover}
+        onToggle={() => setShowPopover(!showPopover)}
+      >
+        <Button variant="success">Friends</Button>
+      </OverlayTrigger>
+
+      {/* Chat Modal */}
+      {showChat && (
+        <Chatbox
+          loggedInUser={loggedInUser}
+          chatId={chatId}
+          onClose={() => setShowChat(false)}
+        />
+      )}
+    </>
   );
 };
-
-// Example usage (replace with actual rendering logic in your app entry point)
-ReactDOM.render(
-    <ChatContainer loggedInUser={{ username: 'JohnDoe' }} getUserInfo={() => {}} />,
-  document.getElementById('root')
-);
 
 export default ChatContainer;
