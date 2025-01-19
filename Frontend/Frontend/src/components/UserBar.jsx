@@ -36,7 +36,6 @@ function UserBar({ loggedInUser, getUserInfo }) {
               </Dropdown.Toggle>
               <Dropdown.Menu>
               <Dropdown.Item as="div"><LogoutButton getUserInfo={getUserInfo} /></Dropdown.Item>
-              <Dropdown.Item as="div"><FriendList loggedInUser={loggedInUser}/></Dropdown.Item>
               <Dropdown.Item as="div"><DeleteButton getUserInfo={getUserInfo}/></Dropdown.Item>
                     
               </Dropdown.Menu>

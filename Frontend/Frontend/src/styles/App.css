@@ -47,6 +47,16 @@
   width: 300px;
 }
 
+.friend-container{
+  width: 250px;
+  background-color:lightgoldenrodyellow;
+  padding: 0;
+}
+
+.friend-button {
+  width: 300px;
+}
+
 .chat-toggle-btn {
   position: fixed;
   bottom: 70px;

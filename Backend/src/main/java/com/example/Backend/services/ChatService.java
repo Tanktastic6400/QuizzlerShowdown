@@ -43,12 +43,12 @@ public class ChatService {
 
         Chat chat = chatRepository.findBySenderIdAndReceiverId(senderId, recipientId);
         if(chat == null){
-            UUID newChatId = UUID.randomUUID();
-            if (!chatRepository.existsByChatId(newChatId.toString())) {
+            String newChatId = UUID.randomUUID().toString();
+            if (!chatRepository.existsByChatId(newChatId)) {
                 Chat newChat = new Chat();
                 newChat.setSender(sender);
                 newChat.setReceiver(receiver);
-                newChat.setChatId(newChatId.toString());
+                newChat.setChatId(newChatId);
                 chatRepository.save(newChat);
             }
         }

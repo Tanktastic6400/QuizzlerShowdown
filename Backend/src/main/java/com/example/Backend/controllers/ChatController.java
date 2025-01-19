@@ -41,18 +41,18 @@ public class ChatController {
         if (!chatService.isValidChat(chatId)) {
             throw new IllegalArgumentException("Invalid chatId");
         }
-        UUID testChatId = UUID.randomUUID();
-        System.out.println(testChatId);
         User messageSender = chatService.getUserById(message.getSender().getId());
         User messageReceiver = chatService.getUserById(message.getRecipient().getId());
 
         message.setSender(messageSender);
         message.setRecipient(messageReceiver);
+        System.out.println(message.toString());
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDate = now.format(formatter);
         message.setTimestamp(formattedDate);
         message.setChatId(chatId);
+
         messageRepository.save(message);
         System.out.println(message.toString());
         return message;
