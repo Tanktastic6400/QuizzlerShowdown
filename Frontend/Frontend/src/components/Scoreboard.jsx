@@ -5,37 +5,19 @@ function Scoreboard (){
 
     const [highScores, setHighScores] = useState([]);
 
-    const numbers = [1,2,3,4,5];
-    const listItems = numbers.map((number) => <td>{number}</td>);
-
     useEffect(() => {
 
          const fetchSpecifications = {
                              method: "GET",
                              }
-          fetch("http://localhost:8080/scoreservice/getAllScores", fetchSpecifications)
+          fetch("http://localhost:8080/scoreservice/getTopScores", fetchSpecifications)
           .then((response) => response.json())
           .then((data) => {setHighScores(data);
               });
 
-          console.log(highScores);
+          //console.log(highScores);
 
       }, []);
-
-                 /*const fetchSpecifications = {
-                     method: "GET",
-                     }
-
-                 fetch("http://localhost:8080/scoreservice/getAllScores", fetchSpecifications)
-                 .then((response) => response.json())
-                       .then((data) => {
-                         setHighScores(data);
-                       });
-                   }, []);*/
-
-    //useEffect(() => {
-    //      getHighScores(); //
-    //    }, []);
 
 
     return (
@@ -50,12 +32,10 @@ function Scoreboard (){
                     </tr>
                 </thead>
                 <tbody>
-                    {highScores.map( (player) => (
-                        <tr>
-                            <td>FILLER</td>
-                            <td>FILLER</td>
+                    {highScores.map( (player, index) => (<tr>
+                            <td>{index+1}</td>
+                            <td>{player.username}</td>
                             <td>{player.score}</td>
-
                         </tr>
                         ))}
                 </tbody>
