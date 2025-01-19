@@ -30,6 +30,7 @@ const ChatContainer = ({ loggedInUser, getUserInfo }) => {
 
   return (
     <>
+    <div className="chatbox-container">
       <OverlayTrigger
         trigger="click"
         placement="top"
@@ -37,9 +38,9 @@ const ChatContainer = ({ loggedInUser, getUserInfo }) => {
         show={showPopover}
         onToggle={() => setShowPopover(!showPopover)}
       >
-        <Button variant="success">Friends</Button>
+        <Button className="friend-button" variant="success">Friends</Button>
       </OverlayTrigger>
-
+      </div>
       {/* Chat Modal */}
       {showChat && (
         <Chatbox

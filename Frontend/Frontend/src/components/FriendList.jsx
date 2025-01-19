@@ -48,6 +48,7 @@ const FriendList = ({ loggedInUser, getUserInfo, onOpenChat }) => {
 
   return (
     <>
+    <div className="friend-container">
       {friendList.map((friend) => (
         <div key={friend.id}>
           <button onClick={() => friendClicked(friend.id)}>
@@ -55,6 +56,7 @@ const FriendList = ({ loggedInUser, getUserInfo, onOpenChat }) => {
           </button>
         </div>
       ))}
+      </div>
     </>
   );
 };
