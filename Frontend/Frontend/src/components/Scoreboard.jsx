@@ -14,9 +14,6 @@ function Scoreboard (){
           .then((response) => response.json())
           .then((data) => {setHighScores(data);
               });
-
-          //console.log(highScores);
-
       }, []);
 
 

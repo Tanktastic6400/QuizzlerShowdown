@@ -85,7 +85,7 @@ public class UserController {
         UserInfoDTO userInfo = new UserInfoDTO();
 
         if(currentUser == null){
-            //Return the empty DTO, but since the error code is 401 it won't never be used?
+            //Return the empty DTO, but since the error code is 401 it won't ever be used?
             return ResponseEntity.status(401).body(userInfo);
         }
         String currentUsername = currentUser.getUsername();
