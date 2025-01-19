@@ -9,16 +9,6 @@ import java.util.List;
 @Table(name = "user_profiles")
 public class UserProfile extends AbstractClass {
 
-    //IRENA ORIGINAL
-    //@OneToOne //(cascade = CascadeType.ALL) //cascade type addition by me to try to get this thing working finally. ^^;
-    //@JoinColumn(name = "user_id")
-
-    //KEITH SUGGESTION
-    //@OneToOne
-    //@JsonBackReference
-
-    //MINE CHANGE!!???
-
     @OneToOne(mappedBy = "userProfile")
     @JsonBackReference //Avoid infinite recursion
     private User user;

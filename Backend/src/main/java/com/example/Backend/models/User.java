@@ -13,11 +13,6 @@ public class User extends AbstractClass {
     private String email;
     private String password;
 
-    //@OneToOne(mappedBy = "user") //Irena original
-
-    //@OneToOne(mappedBy = "user") //Keith Suggestion
-
-    //Mine CHANGE???
     @OneToOne(cascade = CascadeType.ALL)
     @JsonManagedReference
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
@@ -34,10 +29,8 @@ public class User extends AbstractClass {
         
         this.username = username;
         this.email = email;
-        //changed it so user's given password is encoded
-        //this.password = password;
         this.password = encoder.encode(password);
-        this.userProfile = new UserProfile(); //Okay, doing this means userProfile isn't null, and it's mapping "properly" but what about over in UserProfile? That's still null...
+        this.userProfile = new UserProfile();
     }
 
     public User(Long senderId) {
@@ -66,9 +59,6 @@ public class User extends AbstractClass {
     public boolean checkMatchingPasswords(String password){
         return encoder.matches(password, this.password);
     }
-
-    //Deleted getter and setter for password. Don't want them.
-
 
     public UserProfile getUserProfile() {
         return userProfile;

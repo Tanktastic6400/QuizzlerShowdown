@@ -1,5 +1,6 @@
 package com.example.Backend.controllers;
 
+import com.example.Backend.DTO.ScoreInfoDTO;
 import com.example.Backend.DTO.UserInfoDTO;
 import com.example.Backend.models.User;
 import com.example.Backend.models.UserProfile;
@@ -7,6 +8,7 @@ import com.example.Backend.models.data.UserProfileRepository;
 import com.example.Backend.models.data.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,16 +35,15 @@ public class ScoreController {
         return ResponseEntity.ok("FILLER");
     }
 
-    //This actually gets all profiles, but we do want to display other info as well...
+    @GetMapping("/getTopScores")
+    public List <ScoreInfoDTO> getTopScores(){
+        int topX = 10;
+        return userProfileRepository.findAllSortedByScoreDTO(PageRequest.of(0, topX));
+    }
+
     @GetMapping("/getAllScores")
-    public List <UserProfile> getAllScores()
-    {
-        //System.out.println("INSIDE HERE");
-        //List <UserProfile> userProfiles = userProfileRepository.findAll();
-        //System.out.println(userProfiles);
-        //System.out.println("PAST HERE");
-        //return userProfiles;
-        return userProfileRepository.findAll();
+    public List <UserProfile> getAllScores(){
+        return userProfileRepository.findAllSortedByScore(); //This displays all user profiles as sorted by score
     }
 
 
