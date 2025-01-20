@@ -33,10 +33,7 @@ const FriendList = ({ loggedInUser, getUserInfo, onOpenChat }) => {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const chatId = await response.text();
-
-      console.log(`this is the data ${chatId}`);
       if (chatId) {
-        
         onOpenChat(chatId); 
       }
      else {
