@@ -1,12 +1,10 @@
-import "./QuizDisplay.css";
+import "../CSS/QuizDisplay.css"
 import React, { useState, useEffect } from "react";
 
 import axios from "axios";
 
-function QuizDisplay() {
+function QuizDisplay({loggedInUser}) {
   
-
-
    
 
     const [questionData, setQuestionsData] = useState(null);
@@ -80,8 +78,10 @@ function QuizDisplay() {
     }
 
     return (
-        <div>
+        <div className="tableSurround">
             <h1> Quiz Questions</h1>
+            {/* <h1>{loggedInUser.username}</h1> */}
+            
             <table border="1">
                 <thead>
                     <tr style={{}}>
@@ -126,7 +126,7 @@ function QuizDisplay() {
 
             </table>
 
-                    <button id= "submitAnswers" name="submitAnswers" onClick={handleSubmit}>Submit Answers</button>
+                    <button class="submitButton" id= "submitAnswers" name="submitAnswers" onClick={handleSubmit}>Submit Answers</button>
 
         </div>
     )

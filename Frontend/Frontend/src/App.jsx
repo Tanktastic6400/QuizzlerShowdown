@@ -48,6 +48,7 @@ function App() {
 
   return (
     <>
+      
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/reviews" element={<ReviewPage />} />
@@ -58,8 +59,8 @@ function App() {
           path="/login"
           element={<LoginPage getUserInfo={getUserInfo} />}
         />
-        <Route path="/quizdisplay" element={<QuizDisplay />} />
-        <Route path="/quizselector" element={<QuizSelector />} />
+        <Route path="/quizdisplay" element={<QuizDisplay loggedInUser={loggedInUser} />} />
+        <Route path="/quizselector" element={<QuizSelector loggedInUser={loggedInUser} />} />
       </Routes>
       <UserBar loggedInUser={loggedInUser} getUserInfo={getUserInfo} />
       

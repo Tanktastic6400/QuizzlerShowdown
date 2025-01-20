@@ -25,7 +25,7 @@ const Chatbox = () => {
 
   //this will be set by userids of sender and receiver
   const getChatId = () => {
-    return "1234";
+    return "1-2";
   };
 
   const chatId = getChatId();
