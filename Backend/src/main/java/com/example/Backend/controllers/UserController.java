@@ -61,7 +61,6 @@ public class UserController {
 //        System.out.println("DID WE GET IT?");
 
 
-
         profileToUpdate.setScore(score);
         userService.updateUserProfile(profileToUpdate);
         return ResponseEntity.ok("Score updated");

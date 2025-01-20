@@ -60,7 +60,7 @@ function App() {
       <Route path="/login" element={<LoginPage getUserInfo={getUserInfo} />} />
       <Route path="/quizdisplay" element={<QuizDisplay/>} />
       <Route path="/quizselector" element={<QuizSelector/>} />
-      <Route path="/scores" element={<ScorePage />} />
+      <Route path="/scores" element={<ScorePage loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>} />
       <Route path="/chat" element={<Chatbox loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>} />
     </Routes>
     <UserBar loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>
