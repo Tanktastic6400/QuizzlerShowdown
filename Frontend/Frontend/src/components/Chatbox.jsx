@@ -11,13 +11,6 @@ const Chatbox = ({ loggedInUser, chatId, onClose }) => {
   const stompClient = useRef(null);
 
 
-  //this will be set by userids of sender and receiver
-  const getChatId = () => {
-    return "1-2";
-  };
-
-  const chatId = getChatId();
-
   const scrollContainerRef = useRef(null);
 
 

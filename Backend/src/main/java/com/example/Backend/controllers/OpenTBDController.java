@@ -28,21 +28,18 @@ public OpenTBDController(OpenTBDService openTBDService){
 }
 
 
-@GetMapping("/questions")
-    public OpenTBDResponse getTriviaQuestions(){
-
-
-    return createRandomQuiz(Integer.parseInt(this.amount), Integer.parseInt(this.category),type,difficulty);
-}
-
 @PostMapping("/graded-answers")
 public void gradedAnswers(@RequestBody String numberOfAnswersCorrect){
     System.out.println("Quiz created successfully, you got this many right: " + numberOfAnswersCorrect);
 
 }
 
+@GetMapping("/questions")
+    public OpenTBDResponse getTriviaQuestions(){
 
 
+    return createRandomQuiz(Integer.parseInt(this.amount), Integer.parseInt(this.category),type,difficulty);
+}
 
 @PostMapping("/questions")
     public OpenTBDResponse setQuestions(@RequestBody QuestionDTO questionRequest){

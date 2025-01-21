@@ -10,6 +10,11 @@ function QuizDisplay({loggedInUser}) {
     const [selectedAnswers, setSelectedAnswers] = useState({});
     const [correctAnswers, setCorrectAnswers] = useState({})
 
+    const [score, setScore] = useState(10);
+    const [username, setUsername] = useState(loggedInUser.username);
+    const [userid, setUserId] = useState(loggedInUser.id);
+    const [add, setAdd] = useState(true);
+
     useEffect(() =>{
 
     axios.get('http://localhost:8080/questions')
@@ -64,11 +69,17 @@ function QuizDisplay({loggedInUser}) {
         console.log('Selected Answers:', selectedAnswers)
         console.log(correctAnswers);
         console.log('\n Correct Answers:', checkAnswers())
-        axios.post('http://localhost:8080/graded-answers', {
-            // numberOfCorrectAnswers: parseInt(checkAnswers(), 10)
+        // axios.post('http://localhost:8080/graded-answers', {
+        axios.post('http://localhost:8080/updateScore', null, { params: {
+            
+            username: username,
+            score: score,
+            userId: userid,
+            add: add
 
-            numberOfCorrectAnswers: checkAnswers()
-        }).then(response => {
+
+            // numberOfCorrectAnswers: checkAnswers()
+        }}).then(response => {
            
         }).catch(error => {
             console.error("There was an issue grading answers", error);

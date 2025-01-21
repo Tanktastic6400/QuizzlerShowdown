@@ -21,6 +21,8 @@ public class UserProfile extends AbstractClass {
 
     public UserProfile() {}
 
+
+
     public User getUser() {
         return user;
     }

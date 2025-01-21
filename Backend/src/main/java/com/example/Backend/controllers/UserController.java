@@ -35,8 +35,8 @@ public class UserController {
     private AuthenticationService authenticationService;
 
     @PostMapping("/updateScore")
-    public ResponseEntity<String> attemptUpdateScore(@RequestParam User user, @RequestParam int score, @RequestParam boolean add){
 
+    public ResponseEntity<String> attemptUpdateScore(@RequestParam User user, @RequestParam int score, @RequestParam boolean add){
 //        //JUST A TEST PLACEHOLDER
 //        public ResponseEntity<String> attemptUpdateScore(){
 //        //HARDCORED PLACEHOLDRS FOR NOW

@@ -6,10 +6,13 @@ public class ScoreInfoDTO {
     private String username;
     private int score;
 
+
     public ScoreInfoDTO(int score, String username){
         this.username = username;
         this.score = score;
+
     }
+
 
     public String getUsername() {
         return username;
