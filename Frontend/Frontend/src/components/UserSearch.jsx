@@ -5,7 +5,7 @@ function UserSearch() {
     const [users, setUsers] = useState([]);
 
     function usersSearch() {
-        fetch(`http://localhost:8080/search/users?username=${username}`)
+        fetch(`http://localhost:8080/userservice/search/users?username=${username}`)
             .then(function(response) {
                 return response.json();
             })
