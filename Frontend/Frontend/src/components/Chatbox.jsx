@@ -9,7 +9,17 @@ const Chatbox = ({ loggedInUser, chatId, onClose }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const stompClient = useRef(null);
+
+
+  //this will be set by userids of sender and receiver
+  const getChatId = () => {
+    return "1-2";
+  };
+
+  const chatId = getChatId();
+
   const scrollContainerRef = useRef(null);
+
 
   const getMessages = async () => {
     try {

@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react'
 //import './App.css'
 import './styles/App.css'
@@ -15,6 +16,7 @@ import FriendList from './components/FriendList';
 import UserBar from './components/UserBar';
 import ScorePage from './pages/ScorePage';
 import ChatContainer from './components/ChatContainer';
+
 
 function App() {
   const [loggedInUser, setUser] = useState(null);
@@ -52,6 +54,24 @@ function App() {
   return (
     <>
 
+      
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/reviews" element={<ReviewPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/chat" element={<Chatbox />} />
+        
+        <Route
+          path="/login"
+          element={<LoginPage getUserInfo={getUserInfo} />}
+        />
+        <Route path="/quizdisplay" element={<QuizDisplay loggedInUser={loggedInUser} />} />
+        <Route path="/quizselector" element={<QuizSelector loggedInUser={loggedInUser} />} />
+      </Routes>
+      <UserBar loggedInUser={loggedInUser} getUserInfo={getUserInfo} />
+      
+
+
 
     <Routes>
       <Route path="/" element={<MainPage />} />
@@ -73,6 +93,7 @@ function App() {
     <QuizSelector/>
     <QuizDisplay/>
     </BrowserRouter>*/}
+
     </>
   );
 }
