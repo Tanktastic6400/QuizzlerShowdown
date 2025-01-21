@@ -44,7 +44,6 @@ public class AuthenticationController {
         return ResponseEntity.status(401).body("Incorrect registration information");
     }
 
-
     @PostMapping("/logout")
     public ResponseEntity<String> attemptLogout(HttpSession session) {
         //System.out.println("GOT IN HERE");
