@@ -1,19 +1,27 @@
 package com.example.Backend.controllers;
+
 import com.example.Backend.models.Message;
 import com.example.Backend.models.User;
 import com.example.Backend.models.data.MessageRepository;
 import com.example.Backend.models.data.UserRepository;
 import com.example.Backend.services.ChatService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.time.format.DateTimeFormatter;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/chat")
@@ -26,24 +34,25 @@ public class ChatController {
     @Autowired
     private MessageRepository messageRepository;
 
+    @Transactional
     @MessageMapping("/chat.private.{chatId}")
     @SendTo("/topic/private.{chatId}")
     public Message handlePrivateChat(@DestinationVariable String chatId, @Payload Message message) {
         if (!chatService.isValidChat(chatId)) {
             throw new IllegalArgumentException("Invalid chatId");
         }
-        Optional<User> user1 = userRepository.findById(1L);
-        Optional<User> user2 = userRepository.findById(2L);
+        User messageSender = chatService.getUserById(message.getSender().getId());
+        User messageReceiver = chatService.getUserById(message.getRecipient().getId());
 
-        System.out.println("Chat ID: " + chatId);
-        System.out.println("Received message: " + message.getContent());
-        System.out.println("Sender: " + message.getSender().getId());
-        System.out.println("Recipient: " + message.getRecipient().getId());
+        message.setSender(messageSender);
+        message.setRecipient(messageReceiver);
+        System.out.println(message.toString());
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDate = now.format(formatter);
         message.setTimestamp(formattedDate);
         message.setChatId(chatId);
+
         messageRepository.save(message);
         System.out.println(message.toString());
         return message;
@@ -54,4 +63,16 @@ public class ChatController {
         return chatService.getChat(chatId);
     }
 
+    @GetMapping("/chatid")
+    public ResponseEntity<String> getChatId(@RequestParam Long sender, @RequestParam Long receiver) {
+
+        try {
+            String ChatUUID = chatService.getOrCreateChatId(sender, receiver);
+            System.out.println("The chatId is : " + ChatUUID);
+            return ResponseEntity.ok(ChatUUID);
+        } catch (Exception e) {
+            System.err.println("Error in finding chat id: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }

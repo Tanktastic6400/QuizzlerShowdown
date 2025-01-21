@@ -9,8 +9,9 @@ import com.example.Backend.models.data.MessageRepository;
 import com.example.Backend.models.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ChatService {
@@ -28,22 +29,32 @@ public class ChatService {
         return chatRepository.existsByChatId(chatId);
     }
 
+    public User getUserById(Long id){
+        Optional<User> user = userRepository.findById(id);
+        return user.orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
     public String getOrCreateChatId(Long senderId, Long recipientId) {
-        String chatId = senderId < recipientId ? senderId + "-" + recipientId : recipientId + "-" + senderId;
 
-        // Check if the chat already exists
-        if (!chatRepository.existsByChatId(chatId)) {
-            Chat chat = new Chat();
+        User sender = userRepository.findById(senderId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        User receiver = userRepository.findById(recipientId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
-            chat.setSender(new User(senderId));
-            chat.setReceiver(new User(recipientId));
-
-            chat.setChatId(chatId);
-
-            chatRepository.save(chat);
+        Chat chat = chatRepository.findBySenderIdAndReceiverId(senderId, recipientId);
+        if(chat == null){
+            String newChatId = UUID.randomUUID().toString();
+            if (!chatRepository.existsByChatId(newChatId)) {
+                Chat newChat = new Chat();
+                newChat.setSender(sender);
+                newChat.setReceiver(receiver);
+                newChat.setChatId(newChatId);
+                chatRepository.save(newChat);
+            }
         }
 
-        return chatId;
+        return chat.getChatId();
+
     }
 
     public void sendMessage(Long senderId, Long recipientId, String content) {
@@ -54,6 +65,7 @@ public class ChatService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         String chatId = getOrCreateChatId(senderId, recipientId);
+
         message.setSender(sender);
         message.setRecipient(receiver);
         message.setChatId(chatId);
@@ -66,8 +78,9 @@ public class ChatService {
         System.out.println("MESSAGE SHOULD SAVE TO REPO");
     }
 
-    public List<Message> getMessages(Long userId1, Long userId2) {
-        return messageRepository.findBySenderIdAndRecipientId(userId1, userId2);
+    public Chat getMessages(Long senderId, Long receiverId) {
+        System.out.println("Called from chat service, Sender: " + senderId + " Receiver: " + senderId);
+        return chatRepository.findBySenderIdAndReceiverId(senderId, receiverId);
     }
 
     public List<Message> getChat(String chatId) {

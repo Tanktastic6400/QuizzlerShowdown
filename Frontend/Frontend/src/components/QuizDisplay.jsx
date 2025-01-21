@@ -3,10 +3,9 @@ import React, { useState, useEffect } from "react";
 
 import axios from "axios";
 
+
 function QuizDisplay({loggedInUser}) {
   
-   
-
     const [questionData, setQuestionsData] = useState(null);
     const [selectedAnswers, setSelectedAnswers] = useState({});
     const [correctAnswers, setCorrectAnswers] = useState({})

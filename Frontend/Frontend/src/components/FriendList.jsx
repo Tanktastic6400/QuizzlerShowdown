@@ -1,83 +1,63 @@
 import React, { useEffect, useState } from "react";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownDivider from "react-bootstrap/esm/DropdownDivider";
-import DropdownButton from "react-bootstrap/DropdownButton";
-import FindFriend from "./FindFriend";
+import Button from "react-bootstrap/Button";
 
-const FriendList = ({loggedInUser}) => {
+const FriendList = ({ loggedInUser, getUserInfo, onOpenChat }) => {
   const [friendList, setFriendList] = useState([]);
-  const [friendStatus, setFriendStatus] = useState("");
-  const [requestId, setRequestId] = useState("");
-  
+  const [selectedFriend, setSelectedFriend] = useState();
+
+
   useEffect(() => {
-    console.log("From the friends list " + loggedInUser.id);
-    // get friends list here.
-    fetch(`http://localhost:8080/friendlist/${loggedInUser.id}?userId=${loggedInUser.id}`)
+    fetch(`http://localhost:8080/friendlist/${loggedInUser.id}`)
       .then((response) => response.json())
-      .then((data) => {
-        setFriendList(data);
-      });
+      .then((data) => setFriendList(data));
+  }, [loggedInUser]);
+
+
+  const friendClicked = async (clickedFriend) => {
+    const friendIndex = friendList.findIndex((friend) => friend.id === clickedFriend);
+    if (friendIndex !== -1) {
+      const selectedFriend = friendList[friendIndex];
+      setSelectedFriend(selectedFriend); 
+      console.log(selectedFriend);
+      const response = await fetch(
+        `http://localhost:8080/chat/chatid?sender=${loggedInUser.id}&receiver=${selectedFriend.friends.id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       
-  }, []);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const chatId = await response.text();
 
-  const handleAccept = async (id) => {
-    try {
-      const acceptResponse = await fetch(
-        "http://localhost:8080/friendlist/respond-request",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            requestId: id,
-            status: "ACCEPTED",
-          }),
-        }
-      );
-    } catch (error) {}
+      console.log(`this is the data ${chatId}`);
+      if (chatId) {
+        
+        onOpenChat(chatId); 
+      }
+     else {
+      console.error("Friend not found!");
+    }
+  }
   };
 
-  const handleDecline = async (id) => {
-    try {
-      const acceptResponse = await fetch(
-        "http://localhost:8080/friendlist/respond-request",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            requestId: id,
-            status: "REJECTED",
-          }),
-        }
-      );
-    } catch (error) {}
-  };
 
   return (
-    <Dropdown>
-      <DropdownButton variant="warning" title="Friends">
-        {friendList.map((friend) => (
-          <Dropdown.Item key={friend.id}>
-            <div>
-              User: {friend.friends.username} Status: {friend.status} Request ID: {friend.requestId}
-            </div>
-            {friend.status === "PENDING" && (
-              <div>
-                <button onClick={() => handleAccept(friend.requestId)}>Accept</button>
-                <button onClick={() => handleDecline(friend.requestId)}>
-                  Decline
-                </button>
-              </div>
-            )}
-          </Dropdown.Item>
-        ))}
-        <DropdownDivider />
-        <FindFriend loggedInUser={loggedInUser}/>
-      </DropdownButton>
-    </Dropdown>
+    <>
+    <div className="friend-container">
+      {friendList.map((friend) => (
+        <div key={friend.id}>
+          <button onClick={() => friendClicked(friend.id)}>
+            {friend.friends.username}
+          </button>
+        </div>
+      ))}
+      </div>
+    </>
   );
 };
 

@@ -10,8 +10,6 @@ public class Chat extends AbstractClass {
 
     private String chatId;
 
-
-
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "sender_id", nullable = false)
     private User sender;

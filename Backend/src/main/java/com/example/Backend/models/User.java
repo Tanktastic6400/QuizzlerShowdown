@@ -1,6 +1,9 @@
 package com.example.Backend.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
@@ -10,7 +13,11 @@ public class User extends AbstractClass {
     private String email;
     private String password;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JsonManagedReference
+    @JoinColumn(name = "profile_id", referencedColumnName = "id")
+    //@NotNull
+    //@Valid  //WILL THESE TWO ANNOTATIONS FIX IT?
     private UserProfile userProfile;
 
     //Added encoder
@@ -22,9 +29,8 @@ public class User extends AbstractClass {
         
         this.username = username;
         this.email = email;
-        //changed it so user's given password is encoded
-        //this.password = password;
         this.password = encoder.encode(password);
+        this.userProfile = new UserProfile();
     }
 
     public User(Long senderId) {
@@ -35,7 +41,7 @@ public class User extends AbstractClass {
         return username;
     }
 
-    //Do we need a setter for this? Want folks to be able to change their accounts username?
+    //Do we need a setter for this? Want folks to be able to change their account's username?
     public void setUsername(String username) {
         this.username = username;
     }
@@ -54,5 +60,11 @@ public class User extends AbstractClass {
         return encoder.matches(password, this.password);
     }
 
-    //Deleted getter and setter for password. Don't want them.
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
+
+    public void setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
+    }
 }
