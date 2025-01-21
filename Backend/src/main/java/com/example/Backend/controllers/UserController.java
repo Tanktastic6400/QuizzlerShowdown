@@ -34,6 +34,11 @@ public class UserController {
     @Autowired
     private AuthenticationService authenticationService;
 
+    @GetMapping("/search/users")
+    public List<User> searchUsers(@RequestParam String username) {
+        return userRepository.findByUsernameContaining(username);
+    }
+
     @PostMapping("/updateScore")
     public ResponseEntity<String> attemptUpdateScore(@RequestParam User user, @RequestParam int score, @RequestParam boolean add){
 

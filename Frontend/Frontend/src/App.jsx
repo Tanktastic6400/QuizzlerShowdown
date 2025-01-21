@@ -15,6 +15,7 @@ import FriendList from './components/FriendList';
 import UserBar from './components/UserBar';
 import ScorePage from './pages/ScorePage';
 import ChatContainer from './components/ChatContainer';
+import ProfilePage from './pages/ProfilePage';
 
 function App() {
   const [loggedInUser, setUser] = useState(null);
@@ -62,8 +63,8 @@ function App() {
       <Route path="/quizselector" element={<QuizSelector/>} />
       <Route path="/scores" element={<ScorePage loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>} />
       <Route path="/chat" element={<Chatbox loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>} />
-      <Route path="profile/FILLER" element={<UserProfile />} />
-                                {/*<Route path="user/:username" element={<UserProfile />} />*/}
+      <Route path="/profile/FILLER" element={<ProfilePage/>} />
+                                {/*<Route path="user/:username" element={<ProfilePage/>} />*/}
     </Routes>
     <UserBar loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>
     {loggedInUser?(<ChatContainer loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>):<div></div>}
