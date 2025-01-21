@@ -27,12 +27,19 @@ public class ScoreController {
     private UserProfileRepository userProfileRepository;
 
     //WiP
-    @PostMapping("/getScore")
-    public ResponseEntity<String> getScore(HttpSession session, @RequestBody UserInfoDTO request){
-        //Get the given user from the database via their ID
-        Optional<User> scoreUser = userRepository.findById(request.getId());
+
+    // @GetMapping("/{id}")
+    //    @ResponseBody
+    //    public User getUser(@PathVariable Long id){
+    //        return userService.getUserById(id);
+    //    }
+
+    //@PostMapping("/getScore/{id}")
+    @GetMapping("/getScore/{id}")
+    public ResponseEntity<Integer> getScore(HttpSession session, @PathVariable long id){
+        int scoreUser = userRepository.findById(id).getUserProfile().getScore();
         //userProfileRepository
-        return ResponseEntity.ok("FILLER");
+        return ResponseEntity.ok(scoreUser);
     }
 
     @GetMapping("/getTopScores")

@@ -35,7 +35,7 @@ public class UserController {
     private AuthenticationService authenticationService;
 
     @PostMapping("/updateScore")
-    public ResponseEntity<String> attemptUpdateScore(@RequestParam User user, @RequestParam int score){
+    public ResponseEntity<String> attemptUpdateScore(@RequestParam User user, @RequestParam int score, @RequestParam boolean add){
 
 //        //JUST A TEST PLACEHOLDER
 //        public ResponseEntity<String> attemptUpdateScore(){
@@ -54,15 +54,18 @@ public class UserController {
 //        } else
 //            return ResponseEntity.status(401).body("User not found");
 //
+        int sentScore = score;
+
         UserProfile profileToUpdate = user.getUserProfile();
-//
+        //
 //        System.out.println("TRYING TO GET USER INFO FROM USER PROFILE");
 //        System.out.println(profileToUpdate.getUser().getUsername());
 //        System.out.println("DID WE GET IT?");
+        if(add){
+            sentScore += profileToUpdate.getScore();
+        }
 
-
-
-        profileToUpdate.setScore(score);
+        profileToUpdate.setScore(sentScore);
         userService.updateUserProfile(profileToUpdate);
         return ResponseEntity.ok("Score updated");
     }
@@ -83,6 +86,8 @@ public class UserController {
         User currentUser= authenticationService.getUserFromSession(session);
 
         UserInfoDTO userInfo = new UserInfoDTO();
+
+        currentUser.getUserProfile().getScore();
 
         if(currentUser == null){
             //Return the empty DTO, but since the error code is 401 it won't ever be used?
