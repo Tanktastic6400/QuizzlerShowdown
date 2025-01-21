@@ -54,16 +54,18 @@ public class UserController {
 //        } else
 //            return ResponseEntity.status(401).body("User not found");
 //
+        int sentScore = score;
+
         UserProfile profileToUpdate = user.getUserProfile();
         //
 //        System.out.println("TRYING TO GET USER INFO FROM USER PROFILE");
 //        System.out.println(profileToUpdate.getUser().getUsername());
 //        System.out.println("DID WE GET IT?");
         if(add){
-            score += profileToUpdate.getScore();
+            sentScore += profileToUpdate.getScore();
         }
 
-        profileToUpdate.setScore(score);
+        profileToUpdate.setScore(sentScore);
         userService.updateUserProfile(profileToUpdate);
         return ResponseEntity.ok("Score updated");
     }
