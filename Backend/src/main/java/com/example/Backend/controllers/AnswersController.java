@@ -21,9 +21,9 @@ public class AnswersController {
     public void updateScore(@RequestParam String username){
        User user = userRepo.findByUsername(username);
        UserProfile profile;
-       if(){
+//       if(){
 
-       }
+//       }
 
 
 
