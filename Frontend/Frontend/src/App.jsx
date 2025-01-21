@@ -62,6 +62,8 @@ function App() {
       <Route path="/quizselector" element={<QuizSelector/>} />
       <Route path="/scores" element={<ScorePage loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>} />
       <Route path="/chat" element={<Chatbox loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>} />
+      <Route path="profile/FILLER" element={<UserProfile />} />
+                                {/*<Route path="user/:username" element={<UserProfile />} />*/}
     </Routes>
     <UserBar loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>
     {loggedInUser?(<ChatContainer loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>):<div></div>}
