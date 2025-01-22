@@ -24,9 +24,13 @@ public class UserService {
         return user.orElseThrow(() -> new RuntimeException("No user with ID found"));
     }
 
-//    public Optional<User> getUserByUsername(String username) {
-//        return userRepository.findByUsername(username);
-//    }
+    public Optional<User> getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public Optional<User> getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
 
     public void updateUserProfile(UserProfile userProfile){
         userProfileRepository.save(userProfile);
