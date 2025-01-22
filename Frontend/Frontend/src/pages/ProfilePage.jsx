@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import ProfileView from "../components/ProfileView";
+
 
 function ProfilePage () {
 
     return (
         <div>
-            <h1>ProfilePage</h1>
+            <ProfileView/>
         </div>
     );
 }

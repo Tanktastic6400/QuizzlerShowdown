@@ -16,12 +16,15 @@ public class UserProfile extends AbstractClass {
     private int score = 0; //Have score start at 0?
     //private int score;
 
+    //private String bio;
+    //private String name;
+    //private String location;
+    //private String occupation;
+
     @OneToMany(mappedBy = "userProfile")
     private List<AnsweredQuestion> answeredQuestions;
 
     public UserProfile() {}
-
-
 
     public User getUser() {
         return user;
@@ -46,4 +49,7 @@ public class UserProfile extends AbstractClass {
     public void setAnsweredQuestions(List<AnsweredQuestion> answeredQuestions) {
         this.answeredQuestions = answeredQuestions;
     }
+
+
+
 }
