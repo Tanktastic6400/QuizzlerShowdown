@@ -85,8 +85,8 @@ function App() {
       
       <Route path="/scores" element={<ScorePage loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>} />
       <Route path="/chat" element={<Chatbox loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>} />
-      <Route path="/profile/FILLER" element={<ProfilePage/>} />
-                                {/*<Route path="user/:username" element={<ProfilePage/>} />*/}
+      {/*}<Route path="/profile/FILLER" element={<ProfilePage/>} />*/}
+                                <Route path="profile/:username" element={<ProfilePage/>} />
     </Routes>
     <UserBar loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>
     {loggedInUser?(<ChatContainer loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>):<div></div>}

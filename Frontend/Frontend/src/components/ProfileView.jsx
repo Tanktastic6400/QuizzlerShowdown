@@ -6,10 +6,10 @@ function ProfileView(){
     const [profileUserScore, setProfileUserScore] = useState(0);
 
     const name = "Filber Fillerton IV"
-    const email = "filler1@filler.com"
+    const email = "filler4@filler.com"
     const bio = "This is a simple test of a user-made biography.";
-    const pageUsername = "FILLER1";
-    const location = "Middle Earth";
+    const pageUsername = "FILLER4";
+    const location = "4% Street";
     const occupation = "Parasite";
 
        useEffect(() => {
@@ -32,16 +32,16 @@ function ProfileView(){
          <table>
                     <tbody>
                          <tr>
-                             <p1>Name: {name}</p1>
+                             <p>Name: {name}</p>
                          </tr>
                         <tr>
-                             <p1>Email: {email}</p1>
+                             <p>Email: {email}</p>
                          </tr>
                         <tr>
-                             <p1>Location: {location} </p1>
+                             <p>Location: {location} </p>
                          </tr>
                         <tr>
-                             <p1>Occupation: {occupation}</p1>
+                             <p>Occupation: {occupation}</p>
                         </tr>
                     </tbody>
          </table>);        }
@@ -72,7 +72,6 @@ function ProfileView(){
 
            <h2>{profileUserScore}</h2>
            <textarea>
-               TESTING
             </textarea>
             <p> {bio} </p>
         </div>
