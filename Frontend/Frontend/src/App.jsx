@@ -96,7 +96,7 @@ function App() {
 
     </Routes>
     <UserBar loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>
-    <Scoreboard/>
+    <Scoreboard loggedInUser={loggedInUser}/>
     {loggedInUser?(<ChatContainer loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>):<div></div>}
   
 
