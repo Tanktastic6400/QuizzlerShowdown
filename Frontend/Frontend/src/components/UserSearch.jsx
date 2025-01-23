@@ -20,6 +20,7 @@ function UserSearch({loggedInUser}) {
         });
     }
 
+
   const handleSendRequest = async (index) => {
     const user = users[index];
     setFriend(user);

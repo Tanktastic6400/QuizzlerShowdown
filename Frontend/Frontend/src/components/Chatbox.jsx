@@ -12,7 +12,10 @@ const Chatbox = ({ loggedInUser, chatId, onClose, selectedFriend, chatInfo}) => 
   const [messageReceiver, setMessageReceiver] = useState(null);
  
   const stompClient = useRef(null);
+
+
   const scrollContainerRef = useRef(null);
+
 
   const getMessages = async () => {
     try {

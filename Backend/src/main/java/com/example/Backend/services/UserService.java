@@ -7,7 +7,11 @@ import com.example.Backend.models.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
+
+import java.util.Optional;
+
 
 @Service
 public class UserService {
@@ -17,6 +21,16 @@ public class UserService {
 
     @Autowired
     private UserProfileRepository userProfileRepository;
+
+
+    public User getUserByID(long id) {
+        Optional<User> user = userRepository.findById(id);
+        return user.orElseThrow(() -> new RuntimeException("No user with ID found"));
+    }
+
+//    public Optional<User> getUserByUsername(String username) {
+//        return userRepository.findByUsername(username);
+//    }
 
     public void updateUserProfile(UserProfile userProfile){
         userProfileRepository.save(userProfile);

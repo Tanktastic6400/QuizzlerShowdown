@@ -1,13 +1,19 @@
-import "./QuizDisplay.css";
+import "../CSS/QuizDisplay.css"
 import React, { useState, useEffect } from "react";
 
 import axios from "axios";
 
-function QuizDisplay() {
+
+function QuizDisplay({loggedInUser}) {
   
     const [questionData, setQuestionsData] = useState(null);
     const [selectedAnswers, setSelectedAnswers] = useState({});
     const [correctAnswers, setCorrectAnswers] = useState({})
+
+    const [score, setScore] = useState(10);
+    const [username, setUsername] = useState(loggedInUser.username);
+    const [userid, setUserId] = useState(loggedInUser.id);
+    const [add, setAdd] = useState(true);
 
     useEffect(() =>{
 
@@ -63,11 +69,17 @@ function QuizDisplay() {
         console.log('Selected Answers:', selectedAnswers)
         console.log(correctAnswers);
         console.log('\n Correct Answers:', checkAnswers())
-        axios.post('http://localhost:8080/graded-answers', {
-            // numberOfCorrectAnswers: parseInt(checkAnswers(), 10)
+        // axios.post('http://localhost:8080/graded-answers', {
+        axios.post('http://localhost:8080/updateScore', null, { params: {
+            
+            username: username,
+            score: score,
+            userId: userid,
+            add: add
 
-            numberOfCorrectAnswers: checkAnswers()
-        }).then(response => {
+
+            // numberOfCorrectAnswers: checkAnswers()
+        }}).then(response => {
            
         }).catch(error => {
             console.error("There was an issue grading answers", error);
@@ -76,8 +88,10 @@ function QuizDisplay() {
     }
 
     return (
-        <div>
+        <div className="tableSurround">
             <h1> Quiz Questions</h1>
+            {/* <h1>{loggedInUser.username}</h1> */}
+            
             <table border="1">
                 <thead>
                     <tr style={{}}>
@@ -122,7 +136,7 @@ function QuizDisplay() {
 
             </table>
 
-                    <button id= "submitAnswers" name="submitAnswers" onClick={handleSubmit}>Submit Answers</button>
+                    <button class="submitButton" id= "submitAnswers" name="submitAnswers" onClick={handleSubmit}>Submit Answers</button>
 
         </div>
     )

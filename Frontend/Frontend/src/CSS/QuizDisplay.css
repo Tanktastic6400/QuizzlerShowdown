@@ -22,6 +22,7 @@
 table{
     width: 100%;
     background-color: darkgoldenrod;
+   
 }
 
 .answerLabel {
@@ -35,7 +36,18 @@ table{
   margin-right: 5px;
 }
 
-table {
+.table {
   width: 100%;
+  padding-bottom: ;
+}
+
+.tableSurround{
+  padding-top: 20%;
+  
+
+}
+
+.submitButton{
+  padding-top: ;
 }
 
