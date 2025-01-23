@@ -70,6 +70,8 @@ function QuizDisplay({ loggedInUser }) {
         if (numberOfCorrectAnswers >= passingThreshold) {
             setScore(numberOfCorrectAnswers * 10);
 
+        }else{
+            setScore((numberOfCorrectAnswers*10) /2)
         }
 
     }
@@ -84,7 +86,7 @@ function QuizDisplay({ loggedInUser }) {
     const handleSubmit = () => {
 
         checkAnswers();
-        setTimeout(() => {
+       
         const allProps = {
             questionData: questionData,
             selectedAnswers: selectedAnswers,
@@ -103,13 +105,13 @@ function QuizDisplay({ loggedInUser }) {
             }
         }).then(response => {
 
+            navigate("/answerDisplay", {state: allProps});
         }).catch(error => {
             console.error("There was an issue grading answers", error);
         });
 
-      navigate("/answerDisplay", {state: allProps});
 
-    }, 100)};
+    };
 
 
     return (
