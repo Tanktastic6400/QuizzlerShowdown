@@ -21,7 +21,7 @@ function Scoreboard() {
   return (
     <div className="score-container">
       <h2> Top 10 </h2>
-      <table class="table table-striped">
+      <table className="table table-striped">
         <thead>
           <tr>
             <th>Rank</th>
@@ -31,7 +31,7 @@ function Scoreboard() {
         </thead>
         <tbody>
           {highScores.map((player, index) => (
-            <tr>
+            <tr key={index}>
               <td>{index + 1}</td>
               <td>{player.username}</td>
               <td>{player.score}</td>

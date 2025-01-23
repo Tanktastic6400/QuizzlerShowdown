@@ -4,17 +4,26 @@ import Button from "react-bootstrap/esm/Button";
 function UserSearch({loggedInUser}) {
   const [username, setUsername] = useState("");
   const [users, setUsers] = useState([]);
+  const [sender, setSender] = useState();
+  const [friendUser, setFriend] = useState();
   
-
   function usersSearch() {
-    fetch(`http://localhost:8080/userservice/searchusers?username=${username}`)
-    .then((response) => response.json())
-    .then((data) => setUsers(data));
-    
-  }
+    fetch(`http://localhost:8080/userservice/search/users?username=${username}`)
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) {
+            setUsers(data);
+        })
+        .catch(function(error) {
+            console.error('Error fetching data:', error);
+        });
+    }
 
   const handleSendRequest = async (index) => {
     const user = users[index];
+    setFriend(user);
+    setSender(loggedInUser);
     const userId = loggedInUser.id;
     const friendId = user.id;
 

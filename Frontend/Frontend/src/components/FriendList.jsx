@@ -23,8 +23,8 @@ const FriendList = ({ loggedInUser, getUserInfo, onOpenChat }) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            requestId: id,
-            status: "ACCEPTED",
+            requestId: id, 
+            status: "ACCEPTED", 
           }),
         }
       );
@@ -33,7 +33,7 @@ const FriendList = ({ loggedInUser, getUserInfo, onOpenChat }) => {
 
   const handleDecline = async (id) => {
     try {
-      const acceptResponse = await fetch(
+      const declineResponse = await fetch(
         "http://localhost:8080/friendlist/respond-request",
         {
           method: "POST",
@@ -56,7 +56,7 @@ const FriendList = ({ loggedInUser, getUserInfo, onOpenChat }) => {
       setSelectedFriend(selectedFriend); 
       console.log(selectedFriend);
       const response = await fetch(
-        `http://localhost:8080/chat/chatid?sender=${loggedInUser.id}&receiver=${selectedFriend.friends.id}`,
+        `http://localhost:8080/chat/chatid?user1=${loggedInUser.id}&user2=${selectedFriend.friends.id}`,
         {
           method: "GET",
           headers: {
@@ -70,6 +70,7 @@ const FriendList = ({ loggedInUser, getUserInfo, onOpenChat }) => {
       }
       const chatId = await response.text();
       if (chatId) {
+        console.log(chatId);
         onOpenChat(chatId); 
       }
      else {

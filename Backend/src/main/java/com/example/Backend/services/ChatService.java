@@ -34,40 +34,42 @@ public class ChatService {
         return user.orElseThrow(() -> new RuntimeException("User not found"));
     }
 
-    public String getOrCreateChatId(Long senderId, Long recipientId) {
+    public String getOrCreateChatId(Long user1Id, Long user2Id) {
 
-        User sender = userRepository.findById(senderId)
+        User user1 = userRepository.findById(user1Id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        User receiver = userRepository.findById(recipientId)
+        User user2 = userRepository.findById(user2Id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        Chat chat = chatRepository.findBySenderIdAndReceiverId(senderId, recipientId);
-        if(chat == null){
+
+        Chat testChat = chatRepository.findChatsBetweenUsers(user1Id, user2Id);
+        if(testChat == null){
             String newChatId = UUID.randomUUID().toString();
             if (!chatRepository.existsByChatId(newChatId)) {
                 Chat newChat = new Chat();
-                newChat.setSender(sender);
-                newChat.setReceiver(receiver);
+                newChat.setUser1(user1);
+                newChat.setUser2(user2);
                 newChat.setChatId(newChatId);
                 chatRepository.save(newChat);
             }
         }
+        System.out.println(testChat.toString());
 
-        return chat.getChatId();
+        return testChat.getChatId();
 
     }
 
-    public void sendMessage(Long senderId, Long recipientId, String content) {
+    public void sendMessage(Long user1Id, Long user2Id, String content) {
         Message message = new Message();
-        User sender = userRepository.findById(senderId)
+        User user1 = userRepository.findById(user1Id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        User receiver = userRepository.findById(recipientId)
+        User user2 = userRepository.findById(user2Id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        String chatId = getOrCreateChatId(senderId, recipientId);
+        String chatId = getOrCreateChatId(user1Id, user2Id);
 
-        message.setSender(sender);
-        message.setRecipient(receiver);
+        message.setUser1(user1);
+        message.setUser2(user2);
         message.setChatId(chatId);
         message.setContent(content);
         LocalDateTime now = LocalDateTime.now();
@@ -80,10 +82,15 @@ public class ChatService {
 
     public Chat getMessages(Long senderId, Long receiverId) {
         System.out.println("Called from chat service, Sender: " + senderId + " Receiver: " + senderId);
-        return chatRepository.findBySenderIdAndReceiverId(senderId, receiverId);
+        return chatRepository.findChatsBetweenUsers(senderId, receiverId);
     }
 
     public List<Message> getChat(String chatId) {
         return messageRepository.findByChatId(chatId);
+    }
+
+    public Chat getChatInfo(String chatId){
+        System.out.println("The information for ChatID: " + chatId);
+        return chatRepository.findByChatId(chatId);
     }
 }
