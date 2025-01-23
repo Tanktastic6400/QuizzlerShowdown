@@ -25,6 +25,10 @@ table{
    
 }
 
+tr{
+  border: 1px solid black;
+}
+
 .answerLabel {
   margin-bottom: 5px;
   margin-right: 50px;
@@ -38,7 +42,7 @@ table{
 
 .table {
   width: 100%;
-  padding-bottom: ;
+  padding-bottom: 5px;
 }
 
 .tableSurround{
@@ -48,6 +52,6 @@ table{
 }
 
 .submitButton{
-  padding-top: ;
+  padding-top: 5px ;
 }
 

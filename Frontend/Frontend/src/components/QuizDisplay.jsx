@@ -1,43 +1,50 @@
 import "../CSS/QuizDisplay.css"
 import React, { useState, useEffect } from "react";
-
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import AnswerDisplay from "./AnswerDisplay";
 
 
-function QuizDisplay({loggedInUser}) {
-  
+function QuizDisplay({ loggedInUser }) {
+
     const [questionData, setQuestionsData] = useState(null);
     const [selectedAnswers, setSelectedAnswers] = useState({});
-    const [correctAnswers, setCorrectAnswers] = useState({})
-
-    const [score, setScore] = useState(10);
-    const [username, setUsername] = useState(loggedInUser.username);
+    const [correctAnswers, setCorrectAnswers] = useState({});
+    const [passingThreshold, setThreshold] = useState(0);
     const [userid, setUserId] = useState(loggedInUser.id);
     const [add, setAdd] = useState(true);
+    const navigate = useNavigate();
+    const [numberOfQuestions, setNumberOfQuestions] = useState(0);
+    const [numberOfCorrectAnswers, setNumberOfCorrectAnswers] = useState(0);
+    const [score, setScore] = useState(0);
 
-    useEffect(() =>{
+    function createAllProps(){
+   
+    };
 
-    axios.get('http://localhost:8080/questions')
-    .then(response => {
-        setQuestionsData(response.data);
-        const correctAnswers = response.data.results.reduce((acc,question,index) =>{
-            acc[index] = question.correct_answer;
-            return acc;
-        }, {});
-        setCorrectAnswers(correctAnswers);
+    useEffect(() => {
 
-    })
-    .catch((error) => {
-        console.error("There was an error when getting questions from 'http://localhost:8080/questions'", error);
-    });
+        axios.get('http://localhost:8080/questions')
+            .then(response => {
+                setQuestionsData(response.data);
 
-}, []);
+                const correctAnswers = response.data.results.reduce((acc, question, index) => {
+                    acc[index] = question.correct_answer;
 
+                    return acc;
+                }, {});
+                setCorrectAnswers(correctAnswers);
 
+            })
+            .catch((error) => {
+                console.error("There was an error when getting questions from 'http://localhost:8080/questions'", error);
+            });
+
+    }, []);
 
     const mixAnswers = (questions, questionIndex) => {
         let answers = [...questions.incorrect_answers, questions.correct_answer];
-      
+
         if (questions.type === "boolean") {
             return answers.sort().reverse();
         } else {
@@ -47,51 +54,69 @@ function QuizDisplay({loggedInUser}) {
     };
 
     const checkAnswers = () => {
+
         let numberOfCorrectAnswers = 0;
-        Object.keys(correctAnswers).forEach((index)=>
-        {
-            if(selectedAnswers[index] === correctAnswers[index]){
+        let temp = 0;
+        Object.keys(correctAnswers).forEach((index) => {
+            temp++;
+            if (selectedAnswers[index] === correctAnswers[index]) {
                 numberOfCorrectAnswers = numberOfCorrectAnswers + 1;
             }
         })
+        setThreshold(temp / 2);
+        setNumberOfQuestions(temp);
+        setNumberOfCorrectAnswers(numberOfCorrectAnswers);
 
-       return numberOfCorrectAnswers;
+        if (numberOfCorrectAnswers >= passingThreshold) {
+            setScore(numberOfCorrectAnswers * 10);
+
+        }
+
     }
 
-    const handleAnswerChange = (questionIndex, answer) =>{
+    const handleAnswerChange = (questionIndex, answer) => {
         setSelectedAnswers((prevState) => ({
             ...prevState,
             [questionIndex]: answer,
         }));
     }
 
-    const handleSubmit = () =>{
-        console.log('Selected Answers:', selectedAnswers)
-        console.log(correctAnswers);
-        console.log('\n Correct Answers:', checkAnswers())
-        // axios.post('http://localhost:8080/graded-answers', {
-        axios.post('http://localhost:8080/updateScore', null, { params: {
-            
-            username: username,
+    const handleSubmit = () => {
+
+        checkAnswers();
+        setTimeout(() => {
+        const allProps = {
+            questionData: questionData,
+            selectedAnswers: selectedAnswers,
+            correctAnswers: correctAnswers,
+            passingThreshold: passingThreshold,
             score: score,
-            userId: userid,
-            add: add
+            numberOfQuestions: numberOfQuestions,
+            numberOfCorrectAnswers: numberOfCorrectAnswers,
+            userid: userid,
+          };
 
+        axios.post('http://localhost:8080/userservice/updateScore', null, {
+            params: {
+                ID: userid, score: score, add: add
 
-            // numberOfCorrectAnswers: checkAnswers()
-        }}).then(response => {
-           
+            }
+        }).then(response => {
+
         }).catch(error => {
             console.error("There was an issue grading answers", error);
         });
 
-    }
+      navigate("/answerDisplay", {state: allProps});
+
+    }, 100)};
+
 
     return (
         <div className="tableSurround">
             <h1> Quiz Questions</h1>
-            {/* <h1>{loggedInUser.username}</h1> */}
-            
+           
+
             <table border="1">
                 <thead>
                     <tr style={{}}>
@@ -106,26 +131,26 @@ function QuizDisplay({loggedInUser}) {
                 <tbody>
                     {questionData && questionData.results.map((question, questionIndex) => (
                         <tr key={questionIndex}>
-                            <td class="questionStats">Number: {questionIndex +1}</td>
+                            <td class="questionStats">Number: {questionIndex + 1}</td>
                             <td class="questionStats">{question.difficulty}</td>
                             <td class="questionStats">{question.category}</td>
                             <td class="questionStats" dangerouslySetInnerHTML={{ __html: question.question }} />
                             <td class="questionStats">{mixAnswers(question, questionIndex).map((answers, answersIndex) => (
-                                
-                                <div style={{display: "flex"}} key={answersIndex}>
-                                    <input 
-                                    type="radio" 
-                                    key={answersIndex} 
-                                    id={answersIndex} 
-                                    name={'Answer' + questionIndex} 
-                                     class="answerRadio" 
-                                     onChange={() => handleAnswerChange(questionIndex, answers)}></input>
 
-                                    <label 
-                                    htmlFor={answersIndex}
-                                     class="answerLabel" 
-                                     dangerouslySetInnerHTML={{__html: answers}}
-                                     />
+                                <div style={{ display: "flex" }} key={answersIndex}>
+                                    <input
+                                        type="radio"
+                                        key={answersIndex}
+                                        id={answersIndex}
+                                        name={'Answer' + questionIndex}
+                                        class="answerRadio"
+                                        onChange={() => handleAnswerChange(questionIndex, answers)}></input>
+
+                                    <label
+                                        htmlFor={answersIndex}
+                                        class="answerLabel"
+                                        dangerouslySetInnerHTML={{ __html: answers }}
+                                    />
                                 </div>
                             ))}</td>
 
@@ -136,7 +161,7 @@ function QuizDisplay({loggedInUser}) {
 
             </table>
 
-                    <button class="submitButton" id= "submitAnswers" name="submitAnswers" onClick={handleSubmit}>Submit Answers</button>
+            <button class="submitButton" id="submitAnswers" name="submitAnswers" onClick={handleSubmit}>Submit Answers</button>
 
         </div>
     )

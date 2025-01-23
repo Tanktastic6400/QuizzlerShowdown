@@ -16,6 +16,7 @@ import FriendList from './components/FriendList';
 import UserBar from './components/UserBar';
 import ScorePage from './pages/ScorePage';
 import ChatContainer from './components/ChatContainer';
+import AnswerDisplay from './components/AnswerDisplay';
 
 import Scoreboard from './components/Scoreboard';
 
@@ -88,6 +89,7 @@ function App() {
       
       <Route path="/quizdisplay" element={<QuizDisplay loggedInUser={loggedInUser} />} />
       <Route path="/quizselector" element={<QuizSelector loggedInUser={loggedInUser} />}/>
+      <Route path="/answerDisplay" element={<AnswerDisplay/>}/>
       
       <Route path="/scores" element={<ScorePage loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>} />
       <Route path="/chat" element={<Chatbox loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>} />
