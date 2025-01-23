@@ -17,7 +17,7 @@ public class OpenTBDService {
         this.restTemplate = restTemplate;
         this.rateLimiter = new RateLimiter(1);
     }
-
+//
     public OpenTBDResponse fetchTriviaQuestions(Integer amountOfQuestions, Integer valueOfCategory, String type, String difficulty){
         String baseUrl = "https://opentdb.com/api.php?";
         String url;
