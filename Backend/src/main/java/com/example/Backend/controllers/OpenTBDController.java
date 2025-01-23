@@ -41,14 +41,14 @@ public void gradedAnswers(@RequestBody String numberOfAnswersCorrect){
     return createRandomQuiz(Integer.parseInt(this.amount), Integer.parseInt(this.category),type,difficulty);
 }
 
-@PostMapping("/questions")
-    public OpenTBDResponse setQuestions(@RequestBody QuestionDTO questionRequest){
+@PostMapping("/set-questions")
+    public void setQuestions(@RequestBody QuestionDTO questionRequest){
     try {
         this.amount = questionRequest.getAmount();
         this.category = questionRequest.getValueOfCategory();
         this.type = questionRequest.getType();
         this.difficulty = questionRequest.getDifficulty();
-        return getTriviaQuestions();
+
     }catch (Exception e) {
         e.printStackTrace();
         throw new RuntimeException("Failed to process request: " + e.getMessage());

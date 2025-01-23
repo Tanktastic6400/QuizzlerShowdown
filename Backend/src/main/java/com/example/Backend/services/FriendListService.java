@@ -37,15 +37,16 @@ public class FriendListService {
     }
 
     public void respondToRequest(String requestId, FriendStatus status) {
+        System.out.println("Got the service on accept request");
         FriendList friendlist = friendListRepository.findByRequestId(requestId);
         Long friendId = friendlist.getFriends().getId();
         Long userId = friendlist.getUser().getId();
+        System.out.println(status);
         friendlist.setStatus(status);
         if(friendlist.getStatus() == FriendStatus.ACCEPTED) {
             chatService.getOrCreateChatId(userId, friendId);
         }
         friendListRepository.save(friendlist);
-
     }
 
     public List<User> findUser(String username) {
