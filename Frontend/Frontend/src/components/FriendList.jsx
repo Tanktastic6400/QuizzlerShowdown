@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 const FriendList = ({ loggedInUser, getUserInfo, onOpenChat }) => {
   const [friendList, setFriendList] = useState([]);
   const [selectedFriend, setSelectedFriend] = useState();
+  const [requestId, setRequestId] = useState("");
 
 
   useEffect(() => {
@@ -12,6 +13,41 @@ const FriendList = ({ loggedInUser, getUserInfo, onOpenChat }) => {
       .then((data) => setFriendList(data));
   }, [loggedInUser]);
 
+  const handleAccept = async (id) => {
+    try {
+      const acceptResponse = await fetch(
+        "http://localhost:8080/friendlist/respond-request",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            requestId: id, 
+            status: "ACCEPTED", 
+          }),
+        }
+      );
+    } catch (error) {}
+  };
+
+  const handleDecline = async (id) => {
+    try {
+      const declineResponse = await fetch(
+        "http://localhost:8080/friendlist/respond-request",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            requestId: id,
+            status: "REJECTED",
+          }),
+        }
+      );
+    } catch (error) {}
+  };
 
   const friendClicked = async (clickedFriend) => {
     const friendIndex = friendList.findIndex((friend) => friend.id === clickedFriend);
@@ -20,7 +56,7 @@ const FriendList = ({ loggedInUser, getUserInfo, onOpenChat }) => {
       setSelectedFriend(selectedFriend); 
       console.log(selectedFriend);
       const response = await fetch(
-        `http://localhost:8080/chat/chatid?sender=${loggedInUser.id}&receiver=${selectedFriend.friends.id}`,
+        `http://localhost:8080/chat/chatid?user1=${loggedInUser.id}&user2=${selectedFriend.friends.id}`,
         {
           method: "GET",
           headers: {
@@ -33,10 +69,8 @@ const FriendList = ({ loggedInUser, getUserInfo, onOpenChat }) => {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const chatId = await response.text();
-
-      console.log(`this is the data ${chatId}`);
       if (chatId) {
-        
+        console.log(chatId);
         onOpenChat(chatId); 
       }
      else {
@@ -48,16 +82,26 @@ const FriendList = ({ loggedInUser, getUserInfo, onOpenChat }) => {
 
   return (
     <>
-    <div className="friend-container">
-      {friendList.map((friend) => (
-        <div key={friend.id}>
-          <button onClick={() => friendClicked(friend.id)}>
+  <div className="friend-container">
+    {friendList.map((friend) => (
+      <div key={friend.id}>
+        {friend.status === "ACCEPTED" && (
+          <div>
             {friend.friends.username}
-          </button>
-        </div>
-      ))}
+            <button onClick={() => friendClicked(friend.id)}>Chat</button>
+          </div>
+        )}
+        {friend.status === "PENDING" && (
+          <div>
+            {friend.friends.username}
+            <button onClick={() => handleAccept(friend.requestId)}>Accept</button>
+            <button onClick={() => handleDecline(friend.requestId)}>Decline</button>
+          </div>
+        )}
       </div>
-    </>
+    ))}
+  </div>
+</>
   );
 };
 

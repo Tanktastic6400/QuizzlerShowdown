@@ -47,6 +47,16 @@
   width: 300px;
 }
 
+.score-container {
+  position: fixed;
+  background-color: darkkhaki;
+  border: solid;
+  border-radius: 25px;
+  border-color: goldenrod;
+  left: 10px;
+  top: 125px;
+}
+
 .friend-container{
   width: 250px;
   background-color:lightgoldenrodyellow;

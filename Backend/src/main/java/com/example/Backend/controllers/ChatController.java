@@ -1,5 +1,6 @@
 package com.example.Backend.controllers;
 
+import com.example.Backend.models.Chat;
 import com.example.Backend.models.Message;
 import com.example.Backend.models.User;
 import com.example.Backend.models.data.MessageRepository;
@@ -41,11 +42,11 @@ public class ChatController {
         if (!chatService.isValidChat(chatId)) {
             throw new IllegalArgumentException("Invalid chatId");
         }
-        User messageSender = chatService.getUserById(message.getSender().getId());
-        User messageReceiver = chatService.getUserById(message.getRecipient().getId());
+        User messageSender = chatService.getUserById(message.getUser1().getId());
+        User messageReceiver = chatService.getUserById(message.getUser2().getId());
 
-        message.setSender(messageSender);
-        message.setRecipient(messageReceiver);
+        message.setUser1(messageSender);
+        message.setUser2(messageReceiver);
         System.out.println(message.toString());
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -64,13 +65,24 @@ public class ChatController {
     }
 
     @GetMapping("/chatid")
-    public ResponseEntity<String> getChatId(@RequestParam Long sender, @RequestParam Long receiver) {
+    public ResponseEntity<String> getChatId(@RequestParam Long user1, @RequestParam Long user2) {
 
         try {
-            String ChatUUID = chatService.getOrCreateChatId(sender, receiver);
+            String ChatUUID = chatService.getOrCreateChatId(user1, user2);
             System.out.println("The chatId is : " + ChatUUID);
             return ResponseEntity.ok(ChatUUID);
         } catch (Exception e) {
+            System.err.println("Error in finding chat id: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/chatinfo")
+    public ResponseEntity<Chat> getChatInfo(@RequestParam String chatid){
+        try{
+            Chat chatinfo = chatService.getChatInfo(chatid);
+            return ResponseEntity.ok(chatinfo);
+        } catch (Exception e){
             System.err.println("Error in finding chat id: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }

@@ -21,6 +21,7 @@ public class FriendList extends AbstractClass {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    @Column(nullable = true)
     private String requestId;
 
     public FriendList(User user, User friend, FriendStatus status, LocalDateTime createdAt, String requestId) {

@@ -11,11 +11,11 @@ public class Message extends AbstractClass {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "sender_id", nullable = true)
-    private User sender;
+    private User user1;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "recipient_id", nullable = true)
-    private User recipient;
+    private User user2;
 
     @Column(nullable = false)
     private String content;
@@ -25,9 +25,9 @@ public class Message extends AbstractClass {
 
     private String chatId;
 
-    public Message(User sender, User recipient, String content, String timestamp, String chatId) {
-        this.sender = sender;
-        this.recipient = recipient;
+    public Message(User user1, User user2, String content, String timestamp, String chatId) {
+        this.user1 = user1;
+        this.user2 = user2;
         this.content = content;
         this.timestamp = timestamp;
         this.chatId = chatId;
@@ -44,20 +44,20 @@ public class Message extends AbstractClass {
         this.chatId = chatId;
     }
 
-    public User getSender() {
-        return sender;
+    public User getUser1() {
+        return user1;
     }
 
-    public void setSender(User sender) {
-        this.sender = sender;
+    public void setUser1(User user1) {
+        this.user1 = user1;
     }
 
-    public User getRecipient() {
-        return recipient;
+    public User getUser2() {
+        return user2;
     }
 
-    public void setRecipient(User recipient) {
-        this.recipient = recipient;
+    public void setUser2(User user2) {
+        this.user2 = user2;
     }
 
     public String getContent() {
@@ -79,8 +79,8 @@ public class Message extends AbstractClass {
     @Override
     public String toString() {
         return "Message{" +
-                "sender=" + sender +
-                ", recipient=" + recipient +
+                "sender=" + user1 +
+                ", recipient=" + user2 +
                 ", content='" + content + '\'' +
                 ", timestamp=" + timestamp +
                 ", chatId='" + chatId + '\'' +

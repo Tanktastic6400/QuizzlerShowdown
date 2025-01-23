@@ -1,67 +1,46 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
-function Scoreboard (){
+function Scoreboard() {
+  const [highScores, setHighScores] = useState([]);
 
-    const [highScores, setHighScores] = useState([]);
+  useEffect(() => {
+    const fetchSpecifications = {
+      method: "GET",
+    };
+    fetch(
+      "http://localhost:8080/scoreservice/getTopScores",
+      fetchSpecifications
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setHighScores(data);
+      });
+  }, []);
 
-    const numbers = [1,2,3,4,5];
-    const listItems = numbers.map((number) => <td>{number}</td>);
-
-    useEffect(() => {
-
-         const fetchSpecifications = {
-                             method: "GET",
-                             }
-          fetch("http://localhost:8080/scoreservice/getAllScores", fetchSpecifications)
-          .then((response) => response.json())
-          .then((data) => {setHighScores(data);
-              });
-
-          console.log(highScores);
-
-      }, []);
-
-                 /*const fetchSpecifications = {
-                     method: "GET",
-                     }
-
-                 fetch("http://localhost:8080/scoreservice/getAllScores", fetchSpecifications)
-                 .then((response) => response.json())
-                       .then((data) => {
-                         setHighScores(data);
-                       });
-                   }, []);*/
-
-    //useEffect(() => {
-    //      getHighScores(); //
-    //    }, []);
-
-
-    return (
-        <div>
-            <h2> Scoreboard </h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Rank</th>
-                        <th>User</th>
-                        <th>Score</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {highScores.map( (player) => (
-                        <tr>
-                            <td>FILLER</td>
-                            <td>FILLER</td>
-                            <td>{player.score}</td>
-
-                        </tr>
-                        ))}
-                </tbody>
-            </table>
-        </div>
-    );
+  return (
+    <div className="score-container">
+      <h2> Top 10 </h2>
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>User</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          {highScores.map((player, index) => (
+            <tr key={index}>
+              <td>{index + 1}</td>
+              <td>{player.username}</td>
+              <td>{player.score}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
 }
 
-export default Scoreboard
+export default Scoreboard;
