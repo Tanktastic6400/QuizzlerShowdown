@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../CSS/QuizSelector.css"
 import axios from "axios";
-
+import throttle from "lodash.throttle";
 function QuizSelector({loggedInUser}) {
 
     const [value, setValue] = useState('');
@@ -34,28 +34,52 @@ function QuizSelector({loggedInUser}) {
         setDifficulty(event.target.value);
     }
 
-    const handleSubmit = () => {
-
-        if (isValid && value) {
-            axios.post('http://localhost:8080/questions', {
-                amount: value,
-                valueOfCategory: category,
-                type: type,
-                difficulty: difficulty
-            })
-            navigate("/quizdisplay")
-            .then(response => {
-                    
-                    // alert(response.data);
-                })
-                .catch(error => {
-                    console.error("There was an issue submitting quiz customization data", error);
-                });
-
-        } else {
-            alert("Please enter desired amount of questions!");
+    const throttledSubmit = throttle(async (quizData) => {
+        try {
+          await axios.post("http://localhost:8080/set-questions", quizData);
+          navigate("/quizdisplay");
+        } catch (error) {
+          console.error(
+            "There was an issue submitting quiz customization data",
+            error
+          );
         }
-    };
+      }, 2000);
+
+    const handleSubmit = () => {
+        if (isValid && value) {
+            const quizData = {
+              amount: value,
+              valueOfCategory: category,
+              type: type,
+              difficulty: difficulty,
+            };
+            throttledSubmit(quizData);
+          } else {
+            alert("Please enter a valid number of questions!");
+          }
+        };
+
+    //     if (isValid && value) {
+    //         axios.post('http://localhost:8080/set-questions', {
+    //             amount: value,
+    //             valueOfCategory: category,
+    //             type: type,
+    //             difficulty: difficulty
+    //         })
+    //         navigate("/quizdisplay")
+    //         .then(response => {
+                    
+    //                 // alert(response.data);
+    //             })
+    //             .catch(error => {
+    //                 console.error("There was an issue submitting quiz customization data", error);
+    //             });
+
+    //     } else {
+    //         alert("Please enter desired amount of questions!");
+    //     }
+    // };
 
 
     useEffect(() => {
@@ -87,7 +111,7 @@ function QuizSelector({loggedInUser}) {
 
                     <label class="labels" htmlFor="Category">Category of Questions: </label>
 
-                    <select class="selectorFields" name="category" id="category" onChange={() => handleCategoryChange}>
+                    <select class="selectorFields" name="category" id="category" onChange={handleCategoryChange}>
                         {categoryData && categoryData.trivia_categories.map((category, index) => (
                             <option key={category.id} value={category.id}>{category.name}</option>
 
@@ -100,7 +124,7 @@ function QuizSelector({loggedInUser}) {
 
                     <label class="labels" htmlFor="Type">Type of Questions: </label>
 
-                    <select class="selectorFields" name="type" id="type" onChange={() => handleTypeChange}>
+                    <select class="selectorFields" name="type" id="type" onChange={handleTypeChange}>
                         <option value="multiple">Multiple Choice</option>
                         <option value="boolean">True or False</option>
                     </select>
@@ -110,7 +134,7 @@ function QuizSelector({loggedInUser}) {
 
                     <label class="labels" htmlFor="Difficulty">Difficulty: </label>
 
-                    <select class="selectorFields" name="difficulty" id="difficulty" onChange={() => handleDifficultyChange}>
+                    <select class="selectorFields" name="difficulty" id="difficulty" onChange={handleDifficultyChange}>
                         <option value="easy">Easy</option>
                         <option value="medium">Medium</option>
                         <option value="hard">Hard</option>
