@@ -18,7 +18,7 @@ function ReviewPage() {
     }
 
     return (
-        <div>
+        <div className="main-content">
             <h2>All Reviews</h2>
             <ReviewList reviews={reviews} />
             <h2>Leave Your Review:</h2>
