@@ -34,9 +34,13 @@ public class UserController {
     @Autowired
     private AuthenticationService authenticationService;
 
-    @PostMapping("/updateScore")
+    @GetMapping("/search/users")
+    public List<User> searchUsers(@RequestParam String username) {
+        return userRepository.findByUsernameContaining(username);
+    }
 
-    public ResponseEntity<String> attemptUpdateScore(@RequestParam User user, @RequestParam int score, @RequestParam boolean add){
+    @PostMapping("/updateScore")
+    public ResponseEntity<String> attemptUpdateScore(@RequestParam long  ID, @RequestParam int score, @RequestParam boolean add){
 //        //JUST A TEST PLACEHOLDER
 //        public ResponseEntity<String> attemptUpdateScore(){
 //        //HARDCORED PLACEHOLDRS FOR NOW
@@ -55,7 +59,7 @@ public class UserController {
 //            return ResponseEntity.status(401).body("User not found");
 //
         int sentScore = score;
-
+        User user = userService.getUserByID(ID);
         UserProfile profileToUpdate = user.getUserProfile();
         //
 //        System.out.println("TRYING TO GET USER INFO FROM USER PROFILE");
@@ -105,13 +109,13 @@ public class UserController {
     @GetMapping("/lookUpUserByProfile")
     public ResponseEntity<UserInfoDTO> lookUpUserByProfile(@RequestParam long profileID){
 
-
         UserInfoDTO userInfo = new UserInfoDTO();
         User lookedUpUser;
 
         //This works because User and UserProfile always share the same ID
         if(userProfileRepository.findById(profileID).isPresent()){
-            lookedUpUser = userRepository.findById(profileID);
+            lookedUpUser = userService.getUserByID(profileID);
+            //lookedUpUser = userRepository.findById(profileID);
         } else
             return ResponseEntity.status(401).body(userInfo);
 

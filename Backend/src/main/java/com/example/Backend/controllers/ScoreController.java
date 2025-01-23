@@ -6,6 +6,7 @@ import com.example.Backend.models.User;
 import com.example.Backend.models.UserProfile;
 import com.example.Backend.models.data.UserProfileRepository;
 import com.example.Backend.models.data.UserRepository;
+import com.example.Backend.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +27,10 @@ public class ScoreController {
     @Autowired
     private UserProfileRepository userProfileRepository;
 
+    @Autowired
+    private UserService userService;
+
+
     //WiP
 
     // @GetMapping("/{id}")
@@ -37,7 +42,8 @@ public class ScoreController {
     //@PostMapping("/getScore/{id}")
     @GetMapping("/getScore/{id}")
     public ResponseEntity<Integer> getScore(HttpSession session, @PathVariable long id){
-        int scoreUser = userRepository.findById(id).getUserProfile().getScore();
+        //int scoreUser = userRepository.findById(id).getUserProfile().getScore();
+        int scoreUser = userService.getUserByID(id).getUserProfile().getScore(); //Invalid???
         //userProfileRepository
         return ResponseEntity.ok(scoreUser);
     }
