@@ -8,6 +8,7 @@ import com.example.Backend.services.AuthenticationService;
 import com.example.Backend.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.Backend.models.data.UserRepository;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -125,4 +127,20 @@ public class UserController {
         return ResponseEntity.ok(userInfo);
     }
 
+    @GetMapping("/searchusers")
+    public ResponseEntity<List<User>> findUser(@RequestParam String username){
+        try {
+            List<User> friends = userService.findUser(username);
+            if (friends.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(Collections.emptyList());
+            }
+            return ResponseEntity.ok(friends);
+        } catch (Exception e) {
+            System.err.println("Error in finding friends: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Collections.emptyList());
+        }
+    }
+    
 }

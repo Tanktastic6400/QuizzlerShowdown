@@ -1,11 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+
 
 function Scoreboard ({loggedInUser, getUserInfo}){
 
     const [currentUserScore, setCurrentUserScore] = useState(0);
 
-    const [highScores, setHighScores] = useState([]);
+
+  useEffect(() => {
+    const fetchSpecifications = {
+      method: "GET",
+    };
+    fetch(
+      "http://localhost:8080/scoreservice/getTopScores",
+      fetchSpecifications
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setHighScores(data);
+      });
+  }, []);
+
 
     //console.log("COMPONENT")
     //console.log(loggedInUser.id)
@@ -72,6 +87,7 @@ function Scoreboard ({loggedInUser, getUserInfo}){
 
         </div>
     );
+
 }
 
-export default Scoreboard
+export default Scoreboard;

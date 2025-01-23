@@ -3,11 +3,14 @@ import { Modal, Button } from "react-bootstrap";
 import { Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 
-const Chatbox = ({ loggedInUser, chatId, onClose }) => {
+const Chatbox = ({ loggedInUser, chatId, onClose, selectedFriend, chatInfo}) => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [messageSender, setMessageSender] = useState(null);
+  const [messageReceiver, setMessageReceiver] = useState(null);
+ 
   const stompClient = useRef(null);
 
 
@@ -23,7 +26,9 @@ const Chatbox = ({ loggedInUser, chatId, onClose }) => {
         throw new Error(`Error fetching chat messages: ${response.statusText}`);
       }
       const data = await response.json();
+      console.log(data);
       setMessages(data);
+
     } catch (err) {
       setError(err.message);
     } finally {
@@ -32,6 +37,7 @@ const Chatbox = ({ loggedInUser, chatId, onClose }) => {
   };
   
   useEffect(() => {
+    
     const socket = new SockJS("http://localhost:8080/ws");
     stompClient.current = Stomp.over(socket);
 
@@ -40,6 +46,7 @@ const Chatbox = ({ loggedInUser, chatId, onClose }) => {
         const receivedMessage = JSON.parse(message.body);
         setMessages((prevMessages) => [...prevMessages, receivedMessage]);
       });
+      
       getMessages();
     });
     
@@ -48,7 +55,20 @@ const Chatbox = ({ loggedInUser, chatId, onClose }) => {
         stompClient.current.disconnect();
       }
     };
-  }, [chatId]);
+  }, [chatId, chatInfo]);
+
+  useEffect(() => {
+    if (chatInfo) {
+      console.log("Chat Info:", chatInfo);
+      setMessageSender(loggedInUser);
+      if(chatInfo.user1 == loggedInUser){
+        setMessageReceiver(chatInfo.user2);
+      }else{
+        setMessageReceiver(chatInfo.user1);
+      }
+    }
+
+  }, [chatInfo]);
 
   useEffect(() => {
     
@@ -56,13 +76,15 @@ const Chatbox = ({ loggedInUser, chatId, onClose }) => {
       scrollContainerRef.current.scrollTop =
         scrollContainerRef.current.scrollHeight;
     }
+    console.log(messageSender);
+    console.log(messageReceiver);
   }, [messages]);
 
   const sendMessage = () => {
     if (message.trim() !== "") {
       const messageObj = {
-        sender: loggedInUser,
-        recipient: loggedInUser, // Friend object needs to be passed into here. 
+        user1: loggedInUser,
+        user2: messageReceiver, // Friend object needs to be passed into here. 
         content: message.trim(),
       };
       setMessages((prevMessages) => [
@@ -91,7 +113,7 @@ const Chatbox = ({ loggedInUser, chatId, onClose }) => {
         {messages.map((message) => (
                 <div className="card-body" key={message.id}>
                   <div>
-                    {message.recipient.username}:{" "}
+                    {}:{" "}
                     {message.content}
                   </div>
                 </div>

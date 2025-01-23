@@ -7,7 +7,11 @@ import com.example.Backend.models.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+import java.util.List;
+
 import java.util.Optional;
+
 
 @Service
 public class UserService {
@@ -42,4 +46,7 @@ public class UserService {
         userRepository.deleteById(user.getId());
     }
 
+    public List<User> findUser(String username) {
+        return userRepository.findByUsernameContaining(username); // Adjust repository method as needed
+    }
 }

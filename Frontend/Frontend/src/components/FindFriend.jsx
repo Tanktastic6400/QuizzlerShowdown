@@ -50,8 +50,7 @@ const FindFriend = ({loggedInUser}) => {
             },
             body: JSON.stringify({
               userId,
-              friendId,
-              requestId
+              friendId
             }), 
         })
     }
