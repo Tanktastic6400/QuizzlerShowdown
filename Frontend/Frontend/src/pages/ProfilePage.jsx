@@ -5,27 +5,29 @@ import ProfileView from "../components/ProfileView";
 
 function ProfilePage () {
 
+    const [pageUserName, setPageUserName] = useState("");
+
     let params = useParams();
 
     useEffect(() => {
-
-                    //const id = loggedInUser.id; //Keeps on becoming null. Ugh. Stay. I'm logged in!
-//                    const fetchSpecifications = {
-//                                         method: "GET",
-//                                         }                                 //Hard coded 7 for a test.
-//                        fetch(`http://localhost:8080/scoreservice/getScore/${7}`, fetchSpecifications)
-//                      .then((response) => response.json())
-//                      .then((data) =>
-//                            {
-    //                               console.log(data);
-//                            setProfileUserScore(data);
-//                          });
+        const username = params.username
+        const fetchSpecifications = {
+            method: "GET",
+            }
+        fetch(`http://localhost:8080/userservice/findUser?username=${username}`, fetchSpecifications)
+        .then((response) => response.json())
+        .then((data) =>
+        {
+            console.log(data);
+            setPageUserName(data.username)
+        });
                   },[]);
 
-    console.log(params.username)
+    //console.log(params.username)
 
     return (
         <div>
+            <p> {pageUserName} </p>
             <ProfileView/>
         </div>
     );

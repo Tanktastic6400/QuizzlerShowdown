@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/userservice") //74?
@@ -37,6 +38,21 @@ public class UserController {
     @GetMapping("/search/users")
     public List<User> searchUsers(@RequestParam String username) {
         return userRepository.findByUsernameContaining(username);
+    }
+
+    //AS IS THIS IS GET USER INFO BUT BY PROFILE NAME INSTEAD OF THE JUST THE LOGGED IN USER VIA SESSION
+    @GetMapping("/findUser")
+    public ResponseEntity<UserInfoDTO> attemptFindUser(@RequestParam String username){
+        UserInfoDTO userInfo = new UserInfoDTO();
+        Optional <User> tryFindUser = userService.getUserByUsername(username);
+        if(tryFindUser.isEmpty()){
+            return ResponseEntity.status(401).body(userInfo);
+        }
+        User foundUser = tryFindUser.get();
+        userInfo.setId(foundUser.getId());
+        userInfo.setUsername(foundUser.getUsername());
+        userInfo.setEmail(foundUser.getEmail());
+        return ResponseEntity.ok(userInfo);
     }
 
     @PostMapping("/updateScore")
