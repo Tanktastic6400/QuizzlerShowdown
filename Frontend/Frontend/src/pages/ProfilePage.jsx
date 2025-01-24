@@ -3,13 +3,19 @@ import { useNavigate, useParams  } from 'react-router-dom';
 import ProfileView from "../components/ProfileView";
 
 
-function ProfilePage () {
-
+function ProfilePage ( { loggedInUser, getUserInfo } ) {
     const [pageUserName, setPageUserName] = useState("");
+    const [pageEmail, setPageEmail] = useState("");
+
+    const [ownerPage, setOwnerPage] = useState(false);
+
+    //Let's hope this works. ^^;
+    const [editMode, setEditMode] = useState(false);
 
     let params = useParams();
 
     useEffect(() => {
+
         const username = params.username
         const fetchSpecifications = {
             method: "GET",
@@ -20,15 +26,45 @@ function ProfilePage () {
         {
             console.log(data);
             setPageUserName(data.username)
+            setPageEmail(data.email)
         });
-                  },[]);
+
+        //console.log("IS THERE A USER LOGGED IN?")
+
+        if (loggedInUser) {
+            //console.log("LOGGED IN USER IS");
+            //console.log(loggedInUser);
+            //console.log("IS THIS YOUR PAGE?")
+            if(loggedInUser.username === pageUserName){
+                setOwnerPage(true);
+                }
+            else{
+                setOwnerPage(false);
+                }
+        }
+         //         },[]);
+           }, [loggedInUser]); //Why this versus []?
+
+    function EnableEditMode(){
+        setEditMode(true)
+        console.log("YOU CLICKED ME")
+        }
+
+    //Tester
+    function DisableEditMode(){
+        setEditMode(false)
+        }
 
     //console.log(params.username)
 
     return (
         <div>
+            {editMode? (<button type ="button" onClick={DisableEditMode} > Finish </button>):<div>
             <p> {pageUserName} </p>
-            <ProfileView/>
+             <p> {pageEmail} </p>
+                {ownerPage?(<button type ="button" onClick={EnableEditMode} > Edit Page </button>):<div></div>}
+                </div>}
+            {/*}<ProfileView passedUsername={pageUserName}/>*/}
         </div>
     );
 }
