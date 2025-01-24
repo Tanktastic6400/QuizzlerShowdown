@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams  } from 'react-router-dom';
 import ProfileView from "../components/ProfileView";
-
+import ProfileForm from "../components/ProfileForm";
 
 function ProfilePage ( { loggedInUser, getUserInfo } ) {
     const [pageUserName, setPageUserName] = useState("");
@@ -59,11 +59,17 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
 
     return (
         <div>
-            {editMode? (<button type ="button" onClick={DisableEditMode} > Finish </button>):<div>
+            {editMode? (<div>
+                <button type ="button" onClick={DisableEditMode} > Finish </button>
+                <ProfileForm />
+            </div>)
+            :
+            <div>
             <p> {pageUserName} </p>
              <p> {pageEmail} </p>
                 {ownerPage?(<button type ="button" onClick={EnableEditMode} > Edit Page </button>):<div></div>}
-                </div>}
+                </div>
+             }
             {/*}<ProfileView passedUsername={pageUserName}/>*/}
         </div>
     );
