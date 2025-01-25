@@ -15,11 +15,11 @@ public class UserProfile extends AbstractClass {
 
     private int score = 0; //Have score start at 0?
     //private int score;
-
-    //private String bio;
-    //private String name;
-    //private String location;
-    //private String occupation;
+                          //CHANGE BACK LATER!!!
+    private String bio = "DEFAULT FOR TEST"; //Should this start with a default value of empty string? Or just exist and not be initialized?
+    private String name = "";
+    private String location ="";
+    private String occupation ="";
 
     @OneToMany(mappedBy = "userProfile")
     private List<AnsweredQuestion> answeredQuestions;
@@ -50,6 +50,35 @@ public class UserProfile extends AbstractClass {
         this.answeredQuestions = answeredQuestions;
     }
 
+    public String getBio() {
+        return bio;
+    }
 
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getOccupation() {
+        return occupation;
+    }
+
+    public void setOccupation(String occupation) {
+        this.occupation = occupation;
+    }
 }

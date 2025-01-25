@@ -57,6 +57,20 @@ public class UserController {
         return ResponseEntity.ok(userInfo);
     }
 
+    //JUST BIO RIGHT NOW.
+    @GetMapping("/findProfile")
+    public ResponseEntity<String> attemptFindProfile(@RequestParam long id){
+        User profileUser = userService.getUserByID(id);
+        String testBio = profileUser.getUserProfile().getBio();
+        return ResponseEntity.ok(testBio);
+    }
+
+    //JUST BIO RIGHT NOW
+    @PostMapping("/updateProfile")
+    public ResponseEntity<String> attemptUpdateProfile(@RequestBody String request){ //WILL CHANGE TO SOME KIND OF DTO LATER
+        return ResponseEntity.ok("FILLER");
+    }
+
     @PostMapping("/updateScore")
     public ResponseEntity<String> attemptUpdateScore(@RequestParam long  ID, @RequestParam int score, @RequestParam boolean add){
         int sentScore = score;
