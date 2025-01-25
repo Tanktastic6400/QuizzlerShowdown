@@ -26,9 +26,15 @@
   display: flex;
 }
 
+
 .user-friend-container{
   padding: 3px;
+}
+
+.friend-row{
+  padding: 3px;
   border-style: solid;
+  
   border-width: 1px;
 }
 

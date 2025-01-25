@@ -94,9 +94,8 @@ const FriendList = ({ loggedInUser, getUserInfo, onOpenChat }) => {
           return (
             <div className="user-friend-container" key={friend.id}>
               {friend.status === "ACCEPTED" && (
-                <div>
-                  {displayedUsername}
-                  <button onClick={() => friendClicked(friend.id)}>Chat</button>
+                <div className="friend-row">
+                  <button onClick={() => friendClicked(friend.id)}>{displayedUsername}</button>
                 </div>
               )}
               {friend.status === "PENDING" && (
