@@ -52,7 +52,7 @@ function App() {
   return (
     <>
     <Routes>
-      <Route path="/" element={<MainPage />} />
+      <Route path="/" element={<MainPage loggedInUser={loggedInUser}/>} />
       <Route path="/reviews" element={<ReviewPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage getUserInfo={getUserInfo} />} />

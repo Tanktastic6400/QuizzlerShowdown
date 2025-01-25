@@ -5,8 +5,6 @@ function UserSearch({loggedInUser}) {
   const [username, setUsername] = useState("");
   const [users, setUsers] = useState([]);
   
-
-  
   function usersSearch() {
     fetch(`http://localhost:8080/userservice/search/users?username=${username}`)
         .then(function(response) {
@@ -18,15 +16,15 @@ function UserSearch({loggedInUser}) {
         .catch(function(error) {
             console.error('Error fetching data:', error);
         });
-    }
+    };
 
 
   const handleSendRequest = async (index) => {
-    
     const user = users[index];
     console.log("this is the friend: ", user);
     const user2Id = user.id;
     console.log("this is the FID: ", user2Id);
+    console.log("logged in user :", loggedInUser);
     const sender = loggedInUser;
     console.log("this is the logged in user : ", sender);
     const user1Id = sender.id;
