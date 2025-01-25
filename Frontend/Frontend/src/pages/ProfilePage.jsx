@@ -39,20 +39,15 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
             return fetch(`http://localhost:8080/userservice/findProfile?id=${data.id}`, fetchSpecifications);
         })
                                     //change to response.json when it's back to DTO
-        .then((response) => response.text())
+        .then((response) => response.json())
         .then((data) =>
         {
-            setPageBio(data); //change to .data once it's not just bio.
-            //console.log(data)
+            setPageBio(data.bio); //change to .data once it's not just bio.
+            setPageLocation(data.location);
             })
     ;
 
-        //console.log("IS THERE A USER LOGGED IN?")
-
         if (loggedInUser) {
-            //console.log("LOGGED IN USER IS");
-            //console.log(loggedInUser);
-            //console.log("IS THIS YOUR PAGE?")
             if(loggedInUser.username === pageUserName){
                 setOwnerPage(true);
                 }
@@ -65,7 +60,6 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
 
     function EnableEditMode(){
         setEditMode(true)
-        //console.log("YOU CLICKED ME")
         }
 
     //Tester
@@ -78,7 +72,6 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
         //Try to get this to update "in real time" rather than a refresh.
         }
 
-    //console.log(params.username)
 
     return (
         <div>

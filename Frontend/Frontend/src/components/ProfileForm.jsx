@@ -5,14 +5,9 @@ function ProfileForm(props){
 
     const [formBio, setFormBio] = useState (props.bio);
     const [formLocation, setFormLocation] = useState (props.location);
-    //setFormBio(props.bio);
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log(formBio);
-        //console.log(type(formBio));
-
-        console.log(props.username);
 
         const profileFormData =
         {

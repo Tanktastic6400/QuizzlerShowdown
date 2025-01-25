@@ -58,19 +58,20 @@ public class UserController {
         return ResponseEntity.ok(userInfo);
     }
 
-    //JUST BIO RIGHT NOW.
+    //JUST BIO AND LOCATION RIGHT NOW.
     @GetMapping("/findProfile")
-    public ResponseEntity<String> attemptFindProfile(@RequestParam long id){
+    public ResponseEntity<ProfileFormDTO> attemptFindProfile(@RequestParam long id){
+        ProfileFormDTO profileForm = new ProfileFormDTO();
         User profileUser = userService.getUserByID(id);
-        String testBio = profileUser.getUserProfile().getBio();
-        return ResponseEntity.ok(testBio);
+        profileForm.setBio(profileUser.getUserProfile().getBio());
+        profileForm.setLocation(profileUser.getUserProfile().getLocation());
+        return ResponseEntity.ok(profileForm);
+        //return ResponseEntity.ok(testBio);
     }
 
-    //JUST BIO RIGHT NOW
+    //UPDATE TO INCLUDE (ALMOST) ALL PROFILE ATTRIBUTES ONCE FRONT END'S COOL
     @PostMapping("/updateProfile")
-    public ResponseEntity<String> attemptUpdateProfile(@RequestBody ProfileFormDTO request){ //WILL CHANGE TO SOME KIND OF DTO LATER
-        //THIS IS HARD CODED JUST FOR TESTING!
-        //System.out.println("GOT INSIDE UPDATE PROFILE");
+    public ResponseEntity<String> attemptUpdateProfile(@RequestBody ProfileFormDTO request){
         Optional <User> tryFindUser = userService.getUserByUsername(request.getUsername());
         if(tryFindUser.isEmpty()){
             return ResponseEntity.status(401).body("Error, could not update profile");
