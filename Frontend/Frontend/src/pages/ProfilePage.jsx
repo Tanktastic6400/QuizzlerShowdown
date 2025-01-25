@@ -10,10 +10,11 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
     const [ownerPage, setOwnerPage] = useState(false);
     const [editMode, setEditMode] = useState(false);
 
-    const [pageBio, setPageBio] = useState(""); //FOR TESTING
+    const [pageBio, setPageBio] = useState("");
     const [pageName, setPageName] = useState("");
     const [pageLocation, setPageLocation] = useState("");
     const [pageOccupation, setPageOccupation] = useState("");
+
     const [pageScore, setPageScore] = useState(0);
 
     const navigate = useNavigate();
@@ -83,7 +84,9 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
         <div>
             {editMode? (<div>
                 <button type ="button" onClick={DisableEditMode} > Finish </button>
-                <ProfileForm onEditSubmitted={handleEdit} bio={pageBio} username={pageUserName} location={pageLocation} />
+                <ProfileForm onEditSubmitted={handleEdit} username={pageUserName} bio={pageBio} name={pageName}
+                location={pageLocation} occupation={pageOccupation}
+                />
             </div>)
             :
             <div>

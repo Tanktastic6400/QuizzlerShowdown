@@ -43,7 +43,7 @@ public class UserController {
         return userRepository.findByUsernameContaining(username);
     }
 
-    //AS IS THIS IS GET USER INFO BUT BY PROFILE NAME INSTEAD OF THE JUST THE LOGGED IN USER VIA SESSION
+    //AS IS THIS IS GET USER INFO BUT BY PROFILE NAME INSTEAD OF JUST THE LOGGED-IN USER VIA SESSION
     @GetMapping("/findUser")
     public ResponseEntity<UserInfoDTO> attemptFindUser(@RequestParam String username){
         UserInfoDTO userInfo = new UserInfoDTO();
@@ -79,10 +79,12 @@ public class UserController {
             return ResponseEntity.status(401).body("Error, could not update profile");
         }
         UserProfile profiletoUpdate = tryFindUser.get().getUserProfile();
+        profiletoUpdate.setName(request.getName());
         profiletoUpdate.setBio(request.getBio());
         profiletoUpdate.setLocation(request.getLocation());
+        profiletoUpdate.setOccupation(request.getOccupation());
         userService.updateUserProfile(profiletoUpdate);
-        return ResponseEntity.ok("UPDATED PROFILE BIO AND LOCATION");
+        return ResponseEntity.ok("Profile fields updated");
     }
 
     @PostMapping("/updateScore")

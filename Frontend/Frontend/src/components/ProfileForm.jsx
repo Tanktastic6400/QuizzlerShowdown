@@ -3,24 +3,29 @@ import { Link, useNavigate } from "react-router-dom";
 
 function ProfileForm(props){
 
+    const [formName, setFormName] = useState (props.name);
     const [formBio, setFormBio] = useState (props.bio);
     const [formLocation, setFormLocation] = useState (props.location);
+    const [formOccupation, setFormOccupation] = useState(props.occupation);
 
     function handleSubmit(e) {
+
         e.preventDefault();
 
         const profileFormData =
         {
             username: props.username,
+            name: formName,
             bio: formBio,
-            location: formLocation
+            location: formLocation,
+            occupation: formOccupation
         }
 
         fetch("http://localhost:8080/userservice/updateProfile", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(profileFormData),
-        })           //CHANGE TO JSON STRINGIFY WHEN MORE THAN ONE
+        })           //CHANGE TO JSON STRINGIFY WHEN MORE THAN ONE?
         .then((response) => response.text())
         .then((data) =>
         {
@@ -40,7 +45,26 @@ function ProfileForm(props){
     return(
         <form onSubmit={handleSubmit}>
 
+                <div>
+                    <label className="form-label">
+                      Name:
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={formName}
+                      onChange={function (e) {
+                        setFormName(e.target.value);
+                      }}
+                      placeholder={formName}
+                      required
+                    />
+                  </div>
+
             <div>
+                <label>
+                    Bio
+                </label>
                 <textarea
                 className="form-control"
                 value={formBio}
@@ -68,6 +92,21 @@ function ProfileForm(props){
                     />
                   </div>
 
+                <div>
+                    <label className="form-label">
+                      Occupation:
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={formOccupation}
+                      onChange={function (e) {
+                        setFormOccupation(e.target.value);
+                      }}
+                      placeholder={formOccupation}
+                      required
+                    />
+                  </div>
 
 
             <button type="submit">
