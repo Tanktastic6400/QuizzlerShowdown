@@ -56,7 +56,7 @@ function Scoreboard({ loggedInUser, getUserInfo }) {
           ))}
         </tbody>
       </table>
-      {currentUserScore}
+      <strong>Your Top Score: </strong>{currentUserScore}
       {}
     </div>
   );

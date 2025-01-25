@@ -141,7 +141,7 @@ const Chatbox = ({ loggedInUser, chatId, onClose }) => {
                   borderRadius: "10px",
                   backgroundColor:
                     message.user1.id === loggedInUser.id
-                      ? "#d1f7c4"
+                      ? "#ffc107"
                       : "#f1f0f0",
                 }}
               >

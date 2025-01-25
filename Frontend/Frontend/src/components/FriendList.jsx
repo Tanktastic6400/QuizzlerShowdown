@@ -92,7 +92,7 @@ const FriendList = ({ loggedInUser, getUserInfo, onOpenChat }) => {
               : friend.user1.username;
 
           return (
-            <div key={friend.id}>
+            <div className="user-friend-container" key={friend.id}>
               {friend.status === "ACCEPTED" && (
                 <div>
                   {displayedUsername}
