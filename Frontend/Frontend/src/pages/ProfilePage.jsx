@@ -63,7 +63,7 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
                 }
         }
          //         },[]);
-           }, [loggedInUser]); //Why this versus []?
+           }, [loggedInUser, editMode]); //Why this versus []?
 
     function EnableEditMode(){
         setEditMode(true)
