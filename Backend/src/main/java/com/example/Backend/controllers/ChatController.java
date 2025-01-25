@@ -66,10 +66,9 @@ public class ChatController {
 
     @GetMapping("/chatid")
     public ResponseEntity<String> getChatId(@RequestParam Long user1, @RequestParam Long user2) {
-
         try {
             String ChatUUID = chatService.getOrCreateChatId(user1, user2);
-            System.out.println("The chatId is : " + ChatUUID);
+            System.out.println("CHATCONTROLLER - The chatId is : " + ChatUUID);
             return ResponseEntity.ok(ChatUUID);
         } catch (Exception e) {
             System.err.println("Error in finding chat id: " + e.getMessage());

@@ -3,14 +3,15 @@ import Button from "react-bootstrap/Button";
 
 const FriendList = ({ loggedInUser, getUserInfo, onOpenChat }) => {
   const [friendList, setFriendList] = useState([]);
-  const [selectedFriend, setSelectedFriend] = useState();
-  const [requestId, setRequestId] = useState("");
+
+
 
 
   useEffect(() => {
     fetch(`http://localhost:8080/friendlist/${loggedInUser.id}`)
       .then((response) => response.json())
       .then((data) => setFriendList(data));
+      console.log("Friend list opened");
   }, [loggedInUser]);
 
   const handleAccept = async (id) => {
@@ -48,15 +49,20 @@ const FriendList = ({ loggedInUser, getUserInfo, onOpenChat }) => {
       );
     } catch (error) {}
   };
+  
+   
 
   const friendClicked = async (clickedFriend) => {
+    
     const friendIndex = friendList.findIndex((friend) => friend.id === clickedFriend);
     if (friendIndex !== -1) {
       const selectedFriend = friendList[friendIndex];
-      setSelectedFriend(selectedFriend); 
-      console.log(selectedFriend);
+      console.log("Before setting the select friend", selectedFriend);
+      const friend = selectedFriend.user1.id === loggedInUser.id ? selectedFriend.user2 : selectedFriend.user1;
+      console.log("This user should not be the logged in user: ", friend);
+      
       const response = await fetch(
-        `http://localhost:8080/chat/chatid?user1=${loggedInUser.id}&user2=${selectedFriend.friends.id}`,
+        `http://localhost:8080/chat/chatid?user1=${loggedInUser.id}&user2=${friend.id}`,
         {
           method: "GET",
           headers: {
@@ -82,26 +88,34 @@ const FriendList = ({ loggedInUser, getUserInfo, onOpenChat }) => {
 
   return (
     <>
-  <div className="friend-container">
-    {friendList.map((friend) => (
-      <div key={friend.id}>
-        {friend.status === "ACCEPTED" && (
-          <div>
-            {friend.friends.username}
-            <button onClick={() => friendClicked(friend.id)}>Chat</button>
-          </div>
-        )}
-        {friend.status === "PENDING" && (
-          <div>
-            {friend.friends.username}
-            <button onClick={() => handleAccept(friend.requestId)}>Accept</button>
-            <button onClick={() => handleDecline(friend.requestId)}>Decline</button>
-          </div>
-        )}
+      <div className="friend-container">
+        {friendList.map((friend) => {
+          // Determine which username to display based on the logged-in user
+          const displayedUsername =
+            loggedInUser.username === friend.user1.username
+              ? friend.user2.username
+              : friend.user1.username;
+  
+          return (
+            <div key={friend.id}>
+              {friend.status === "ACCEPTED" && (
+                <div>
+                  {displayedUsername}
+                  <button onClick={() => friendClicked(friend.id)}>Chat</button>
+                </div>
+              )}
+              {friend.status === "PENDING" && (
+                <div>
+                  {displayedUsername}
+                  <button onClick={() => handleAccept(friend.requestId)}>Accept</button>
+                  <button onClick={() => handleDecline(friend.requestId)}>Decline</button>
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
-    ))}
-  </div>
-</>
+    </>
   );
 };
 

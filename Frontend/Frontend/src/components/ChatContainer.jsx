@@ -20,7 +20,7 @@ const getChatUsers = async () => {
         throw new Error(`Error fetching chat messages: ${response.statusText}`);
       }
       const data = await response.json();
-      console.log(data);
+      
       setChatInfo(data);
     }  catch (err) {
       setError(err.message);
@@ -73,7 +73,7 @@ const getChatUsers = async () => {
         <Chatbox
           loggedInUser={loggedInUser}
           chatId={chatId}
-          chatInfo={chatInfo}
+          
           onClose={() => setShowChat(false)}
         />
       )}

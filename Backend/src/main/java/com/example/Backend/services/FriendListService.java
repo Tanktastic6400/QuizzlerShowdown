@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FriendListService {
@@ -22,26 +23,27 @@ public class FriendListService {
     private ChatService chatService;
 
     public List<FriendList> getFriends(Long userId) {
-        return friendListRepository.findByUserIdOrFriendId(userId, userId);
+        Optional<User> user = userRepository.findById(userId);
+        Long id = user.get().getId();
+        return friendListRepository.findByUser1IdOrUser2Id(id, id);
     }
 
     public void sendFriendRequest(Long userId, Long friendId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         User friend = userRepository.findById(friendId).orElseThrow(() -> new RuntimeException("Friend not found"));
         FriendList friendlist = new FriendList();
-        friendlist.setUser(user);
-        friendlist.setFriends(friend);
+        friendlist.setUser1(user);
+        friendlist.setUser2(friend);
         friendlist.setRequestId(userId.toString()+"-"+friendId.toString());
         friendlist.setStatus(FriendStatus.PENDING);
         friendListRepository.save(friendlist);
     }
 
     public void respondToRequest(String requestId, FriendStatus status) {
-        System.out.println("Got the service on accept request");
+
         FriendList friendlist = friendListRepository.findByRequestId(requestId);
-        Long friendId = friendlist.getFriends().getId();
-        Long userId = friendlist.getUser().getId();
-        System.out.println(status);
+        Long friendId = friendlist.getUser2().getId();
+        Long userId = friendlist.getUser1().getId();
         friendlist.setStatus(status);
         if(friendlist.getStatus() == FriendStatus.ACCEPTED) {
             chatService.getOrCreateChatId(userId, friendId);

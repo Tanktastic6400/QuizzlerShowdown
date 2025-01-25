@@ -80,7 +80,7 @@ function App() {
 
 
     <Routes>
-      <Route path="/" element={<MainPage />} />
+      <Route path="/" element={<MainPage loggedInUser={loggedInUser}/>} />
       <Route path="/reviews" element={<ReviewPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage getUserInfo={getUserInfo} />} />
@@ -92,7 +92,7 @@ function App() {
       <Route path="/scores" element={<ScorePage loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>} />
       <Route path="/chat" element={<Chatbox loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>} />
       {/*}<Route path="/profile/FILLER" element={<ProfilePage/>} />*/}
-                                <Route path="profile/:username" element={<ProfilePage/>} />
+      <Route path="profile/:username" element={<ProfilePage/>} />
     </Routes>
     <UserBar loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>
     <Scoreboard loggedInUser={loggedInUser}/>

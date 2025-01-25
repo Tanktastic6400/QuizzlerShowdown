@@ -46,7 +46,7 @@ function UserBar({ loggedInUser, getUserInfo }) {
           )}
           <Nav.Link as={Link} to="/register">Register</Nav.Link>
         </Nav>
-        <MainPage loggedInUser={loggedInUser}/>
+        {/* <MainPage loggedInUser={loggedInUser}/> */}
       </Container>
     </Navbar>
   );

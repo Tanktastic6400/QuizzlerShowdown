@@ -8,12 +8,12 @@ import java.time.LocalDateTime;
 public class FriendList extends AbstractClass {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "user_id", nullable = false) // References the user who owns the friend list
-    private User user;
+    @JoinColumn(name = "user1_id", nullable = false)
+    private User user1;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "friend_id", nullable = false) // This will create the friend_id column
-    private User friend;
+    @JoinColumn(name = "user2_id", nullable = false)
+    private User user2;
 
     @Enumerated(EnumType.STRING)
     private FriendStatus status = FriendStatus.PENDING;
@@ -24,9 +24,9 @@ public class FriendList extends AbstractClass {
     @Column(nullable = true)
     private String requestId;
 
-    public FriendList(User user, User friend, FriendStatus status, LocalDateTime createdAt, String requestId) {
-        this.user = user;
-        this.friend = friend;
+    public FriendList(User user1, User user2, FriendStatus status, LocalDateTime createdAt, String requestId) {
+        this.user1 = user1;
+        this.user2 = user2;
         this.status = status;
         this.createdAt = createdAt;
         this.requestId = requestId;
@@ -35,20 +35,20 @@ public class FriendList extends AbstractClass {
     public FriendList() {
     }
 
-    public User getUser() {
-        return user;
+    public User getUser1() {
+        return user1;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser1(User user1) {
+        this.user1 = user1;
     }
 
-    public User getFriends() {
-        return friend;
+    public User getUser2() {
+        return user2;
     }
 
-    public void setFriends(User friend) {
-        this.friend = friend;
+    public void setUser2(User user2) {
+        this.user2 = user2;
     }
 
     public FriendStatus getStatus() {

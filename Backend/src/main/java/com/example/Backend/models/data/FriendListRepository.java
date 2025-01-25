@@ -8,9 +8,9 @@ import java.util.List;
 
 
 public interface FriendListRepository extends JpaRepository<FriendList, Long> {
-    List<FriendList> findByUserId(Long userId);
-    List<FriendList> findByUserIdOrFriendId(Long userId, Long friendId);
-    List<FriendList> findByFriendIdAndStatus(Long friendId, FriendStatus status);
+    //List<FriendList> findByUserId(Long user1Id);
+    List<FriendList> findByUser1IdOrUser2Id(Long user1Id, Long user2Id);
+    //List<FriendList> findByFriendIdAndStatus(Long friendId, FriendStatus status);
     FriendList findByRequestId(String requestId);
 
 }
