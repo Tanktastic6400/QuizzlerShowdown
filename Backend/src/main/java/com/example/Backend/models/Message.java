@@ -1,5 +1,9 @@
 package com.example.Backend.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -7,6 +11,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.*;
 
 @Entity
+
 public class Message extends AbstractClass {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
