@@ -84,7 +84,7 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
         <div>
             {editMode? (<div>
                 <button type ="button" onClick={DisableEditMode} > Finish </button>
-                <ProfileForm onEditSubmitted={handleEdit}/>
+                <ProfileForm onEditSubmitted={handleEdit} bio={pageBio} username={pageUserName} />
             </div>)
             :
             <div>

@@ -3,12 +3,15 @@ import { Link, useNavigate } from "react-router-dom";
 
 function ProfileForm(props){
 
-    const [formBio, setFormBio] = useState ("")
+    const [formBio, setFormBio] = useState (props.bio);
+    //setFormBio(props.bio);
 
     function handleSubmit(e) {
         e.preventDefault();
         console.log(formBio);
         //console.log(type(formBio));
+
+        console.log(props.username);
 
         const profileFormData =
         {
@@ -46,7 +49,7 @@ function ProfileForm(props){
                 onChange={function (e) {
                     setFormBio(e.target.value);
                   }}
-              placeholder="Write a little about yourself"
+              placeholder={formBio}
               required
                 ></textarea>
             </div>
