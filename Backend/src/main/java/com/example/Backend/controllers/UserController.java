@@ -58,18 +58,20 @@ public class UserController {
         return ResponseEntity.ok(userInfo);
     }
 
-    //JUST BIO AND LOCATION RIGHT NOW.
     @GetMapping("/findProfile")
     public ResponseEntity<ProfileFormDTO> attemptFindProfile(@RequestParam long id){
         ProfileFormDTO profileForm = new ProfileFormDTO();
         User profileUser = userService.getUserByID(id);
         profileForm.setBio(profileUser.getUserProfile().getBio());
+        profileForm.setName(profileUser.getUserProfile().getName());
         profileForm.setLocation(profileUser.getUserProfile().getLocation());
+        profileForm.setOccupation(profileUser.getUserProfile().getOccupation());
+        profileForm.setScore(profileUser.getUserProfile().getScore());
         return ResponseEntity.ok(profileForm);
         //return ResponseEntity.ok(testBio);
     }
 
-    //UPDATE TO INCLUDE (ALMOST) ALL PROFILE ATTRIBUTES ONCE FRONT END'S COOL
+    //TODO UPDATE TO INCLUDE (ALMOST) ALL PROFILE ATTRIBUTES ONCE FRONT END'S COOL
     @PostMapping("/updateProfile")
     public ResponseEntity<String> attemptUpdateProfile(@RequestBody ProfileFormDTO request){
         Optional <User> tryFindUser = userService.getUserByUsername(request.getUsername());
@@ -80,7 +82,7 @@ public class UserController {
         profiletoUpdate.setBio(request.getBio());
         profiletoUpdate.setLocation(request.getLocation());
         userService.updateUserProfile(profiletoUpdate);
-        return ResponseEntity.ok("UPDATED PROFILE BIO");
+        return ResponseEntity.ok("UPDATED PROFILE BIO AND LOCATION");
     }
 
     @PostMapping("/updateScore")

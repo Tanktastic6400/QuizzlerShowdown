@@ -11,7 +11,10 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
     const [editMode, setEditMode] = useState(false);
 
     const [pageBio, setPageBio] = useState(""); //FOR TESTING
+    const [pageName, setPageName] = useState("");
     const [pageLocation, setPageLocation] = useState("");
+    const [pageOccupation, setPageOccupation] = useState("");
+    const [pageScore, setPageScore] = useState(0);
 
     const navigate = useNavigate();
 
@@ -43,7 +46,10 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
         .then((data) =>
         {
             setPageBio(data.bio); //change to .data once it's not just bio.
+            setPageName(data.name);
             setPageLocation(data.location);
+            setPageOccupation(data.occupation);
+            setPageScore(data.score);
             })
     ;
 
@@ -83,10 +89,11 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
             <div>
             <p> Username: {pageUserName} </p>
              <p> Email: {pageEmail} </p>
-             <p> Name: </p>
+             <p> Name: {pageName}</p>
              <p> Bio: {pageBio} </p>
              <p> Location: {pageLocation}</p>
-             <p> Occupation: </p>
+             <p> Occupation: {pageOccupation}</p>
+             <p> High Score: {pageScore}</p>
                 {ownerPage?(<button type ="button" onClick={EnableEditMode} > Edit Page </button>):<div></div>}
                 </div>
              }
