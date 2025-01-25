@@ -11,7 +11,9 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
     //Let's hope this works. ^^;
     const [editMode, setEditMode] = useState(false);
 
-    const [pageBio, setPageBio] = useState("FILLER BIO"); //FOR TESTING
+    const [pageBio, setPageBio] = useState(""); //FOR TESTING
+
+    const navigate = useNavigate();
 
     let params = useParams();
 
@@ -22,14 +24,27 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
             method: "GET",
             }
         fetch(`http://localhost:8080/userservice/findUser?username=${username}`, fetchSpecifications)
-        .then((response) => response.json())
+        .then((response) =>
+        {
+            if (!response.ok) { //If it's not a real user navigate away to homepage.
+                navigate("/");
+            }
+            return response.json()})
+        //}
         .then((data) =>
         {
             console.log(data);
             setPageUserName(data.username)
             setPageEmail(data.email)
+            return fetch(`http://localhost:8080/userservice/findProfile?id=${data.id}`, fetchSpecifications);
         })
-
+                                    //change to response.json when it's back to DTO
+        .then((response) => response.text())
+        .then((data) =>
+        {
+            setPageBio(data); //change to .data once it's not just bio.
+            //console.log(data)
+            })
     ;
 
         //console.log("IS THERE A USER LOGGED IN?")
@@ -58,8 +73,10 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
         setEditMode(false)
         }
 
+    //Update to be more than just bio
     function handleEdit(profileData){
-        setPageBio(profileData); //This works, but doesn't "stick" once you navigate away from the page.
+        setPageBio(profileData);
+        //Try to get this to update "in real time" rather than a refresh.
         }
 
     //console.log(params.username)

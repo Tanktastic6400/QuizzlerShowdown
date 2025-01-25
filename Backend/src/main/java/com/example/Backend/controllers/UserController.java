@@ -68,7 +68,12 @@ public class UserController {
     //JUST BIO RIGHT NOW
     @PostMapping("/updateProfile")
     public ResponseEntity<String> attemptUpdateProfile(@RequestBody String request){ //WILL CHANGE TO SOME KIND OF DTO LATER
-        return ResponseEntity.ok("FILLER");
+        //THIS IS HARD CODED JUST FOR TESTING!
+        //System.out.println("GOT INSIDE UPDATE PROFILE");
+        UserProfile profiletoUpdate = userService.getUserByID(3).getUserProfile();
+        profiletoUpdate.setBio(request);
+        userService.updateUserProfile(profiletoUpdate);
+        return ResponseEntity.ok("UPDATED PROFILE BIO");
     }
 
     @PostMapping("/updateScore")

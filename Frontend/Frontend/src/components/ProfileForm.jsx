@@ -8,8 +8,25 @@ function ProfileForm(props){
     function handleSubmit(e) {
         e.preventDefault();
         console.log(formBio);
+
+        fetch("http://localhost:8080/userservice/updateProfile", {
+              method: "POST",
+              body: formBio,
+        })           //CHANGE TO JSON STRINGIFY WHEN MORE THAN ONE
+        .then((response) => response.text())
+        .then((data) =>
+        {
+            return formBio;
+            //setFormBio(data);
+            //return data;
+            //console.log(data);
+            })
+
+
         //setFormBio(""); //This just for testing for now.
-        props.onEditSubmitted(formBio); //This just formBio for now for testing
+        //props.onEditSubmitted(formBio); //This just formBio for now for testing
+
+
     }
 
     return(
