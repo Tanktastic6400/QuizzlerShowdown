@@ -17,12 +17,10 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
+
 
 @RestController
 @RequestMapping("/chat")
@@ -39,8 +37,7 @@ public class ChatController {
     @MessageMapping("/chat.private.{chatId}")
     @SendTo("/topic/private.{chatId}")
     public Message handlePrivateChat(@DestinationVariable String chatId, @Payload Message message) {
-        System.out.println("YOU SHOULD HAVE RECEIVED A MESSAGE!!!");
-        System.out.println(message);
+
 
         if (!chatService.isValidChat(chatId)) {
             throw new IllegalArgumentException("Invalid chatId");

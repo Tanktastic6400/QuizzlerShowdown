@@ -11,7 +11,7 @@ const ChatContainer = ({ loggedInUser, getUserInfo }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-const getChatUsers = async () => {
+  const getChatUsers = async () => {
     try {
       const response = await fetch(
         `http://localhost:8080/chat/chatinfo?chatid=${chatId}`
@@ -20,14 +20,14 @@ const getChatUsers = async () => {
         throw new Error(`Error fetching chat messages: ${response.statusText}`);
       }
       const data = await response.json();
-      
+
       setChatInfo(data);
-    }  catch (err) {
+    } catch (err) {
       setError(err.message);
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
     if (chatId) {
@@ -36,9 +36,9 @@ const getChatUsers = async () => {
   }, [chatId]);
 
   const handleOpenChat = (chatId) => {
-    setChatId(chatId); // Set the chatId
-    setShowPopover(false); // Close the popover
-    setShowChat(true); // Open the chat modal
+    setChatId(chatId);
+    setShowPopover(false);
+    setShowChat(true);
   };
 
   const popover = (
@@ -48,8 +48,7 @@ const getChatUsers = async () => {
         <FriendList
           loggedInUser={loggedInUser}
           getUserInfo={getUserInfo}
-          onOpenChat={handleOpenChat} // Pass the handler to FriendList
-          
+          onOpenChat={handleOpenChat}
         />
       </Popover.Body>
     </Popover>
@@ -57,23 +56,24 @@ const getChatUsers = async () => {
 
   return (
     <>
-    <div className="chatbox-container">
-      <OverlayTrigger
-        trigger="click"
-        placement="top"
-        overlay={popover}
-        show={showPopover}
-        onToggle={() => setShowPopover(!showPopover)}
-      >
-        <Button className="friend-button" variant="success">Friends</Button>
-      </OverlayTrigger>
+      <div className="chatbox-container">
+        <OverlayTrigger
+          trigger="click"
+          placement="top"
+          overlay={popover}
+          show={showPopover}
+          onToggle={() => setShowPopover(!showPopover)}
+        >
+          <Button className="friend-button" variant="success">
+            Friends
+          </Button>
+        </OverlayTrigger>
       </div>
-      {/* Chat Modal */}
+
       {showChat && (
         <Chatbox
           loggedInUser={loggedInUser}
           chatId={chatId}
-          
           onClose={() => setShowChat(false)}
         />
       )}

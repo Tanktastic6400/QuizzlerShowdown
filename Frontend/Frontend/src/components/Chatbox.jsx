@@ -36,20 +36,24 @@ const Chatbox = ({ loggedInUser, chatId, onClose }) => {
     console.log("Initializing WebSocket connection...");
     const socket = new SockJS("http://localhost:8080/ws");
     stompClient.current = Stomp.over(socket);
-  
-    stompClient.current.connect({}, () => {
-      console.log("WebSocket connected successfully");
-      stompClient.current.subscribe(`/topic/private.${chatId}`, (message) => {
-        const receivedMessage = JSON.parse(message.body);
-        console.log("Received message: ", receivedMessage);
-        setMessages((prevMessages) => [...prevMessages, receivedMessage]);
-      });
-  
-      getMessages();
-    }, (error) => {
-      console.error("WebSocket connection failed:", error);
-    });
-  
+
+    stompClient.current.connect(
+      {},
+      () => {
+        console.log("WebSocket connected successfully");
+        stompClient.current.subscribe(`/topic/private.${chatId}`, (message) => {
+          const receivedMessage = JSON.parse(message.body);
+          console.log("Received message: ", receivedMessage);
+          setMessages((prevMessages) => [...prevMessages, receivedMessage]);
+        });
+
+        getMessages();
+      },
+      (error) => {
+        console.error("WebSocket connection failed:", error);
+      }
+    );
+
     return () => {
       if (stompClient.current) {
         console.log("Disconnecting WebSocket...");
@@ -91,7 +95,7 @@ const Chatbox = ({ loggedInUser, chatId, onClose }) => {
     if (message.trim() !== "") {
       const messageObj = {
         user1: loggedInUser,
-        user2: messageReceiver, 
+        user2: messageReceiver,
         content: message.trim(),
       };
       stompClient.current.send(
@@ -109,40 +113,50 @@ const Chatbox = ({ loggedInUser, chatId, onClose }) => {
         {loading ? (
           <Modal.Title>Loading...</Modal.Title>
         ) : (
-          <Modal.Title>Chat with {messageReceiver.username}</Modal.Title>
+          <Modal.Title>{messageReceiver.username}</Modal.Title>
         )}
       </Modal.Header>
-      
+
       <Modal.Body>
-  <div style={{ maxHeight: "300px", overflowY: "auto" }} ref={scrollContainerRef}>
-    {messages.map((message) => (
-      <div
-        key={message.id}
-        style={{
-          display: "flex",
-          justifyContent: message.user1.id === loggedInUser.id ? "flex-start" : "flex-end",
-          margin: "10px 0",
-        }}
-      >
         <div
-          style={{
-            maxWidth: "70%",
-            padding: "10px",
-            borderRadius: "10px",
-            backgroundColor: message.user1.id === loggedInUser.id ? "#d1f7c4" : "#f1f0f0",
-          }}
+          style={{ maxHeight: "300px", overflowY: "auto" }}
+          ref={scrollContainerRef}
         >
-          <strong>
-            {message.user1.id === loggedInUser.id
-              ? loggedInUser.username
-              : messageReceiver?.username}
-          </strong>
-          <div>{message.content}</div>
+          {messages.map((message) => (
+            <div
+              key={message.id}
+              style={{
+                display: "flex",
+                justifyContent:
+                  message.user1.id === loggedInUser.id
+                    ? "flex-start"
+                    : "flex-end",
+                margin: "10px 0",
+              }}
+            >
+              <div
+                style={{
+                  maxWidth: "70%",
+                  padding: "10px",
+                  borderRadius: "10px",
+                  backgroundColor:
+                    message.user1.id === loggedInUser.id
+                      ? "#d1f7c4"
+                      : "#f1f0f0",
+                }}
+              >
+                <strong>
+                  {message.user1.id === loggedInUser.id
+                    ? loggedInUser.username
+                    : messageReceiver?.username}
+                </strong>
+                <p className="time">{message.timestamp}</p>
+                <div>{message.content}</div>
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
-    ))}
-  </div>
-</Modal.Body>
+      </Modal.Body>
       <Modal.Footer>
         <input
           type="text"
