@@ -17,10 +17,10 @@ public class UserProfile extends AbstractClass {
     private int score = 0; //Have score start at 0?
     //private int score;
 
-    //private String bio;
-    //private String name;
-    //private String location;
-    //private String occupation;
+    private String bio = "TEST";
+    private String name = "TEST";
+    private String location ="TEST";
+    private String occupation ="TEST";
 
     //@JsonBackReference
     @JsonManagedReference
@@ -52,4 +52,37 @@ public class UserProfile extends AbstractClass {
     public void setAnsweredQuestions(List<AnsweredQuestion> answeredQuestions) {
         this.answeredQuestions = answeredQuestions;
     }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getOccupation() {
+        return occupation;
+    }
+
+    public void setOccupation(String occupation) {
+        this.occupation = occupation;
+    }
+
 }

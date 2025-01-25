@@ -15,6 +15,7 @@ import com.example.Backend.models.data.UserRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.example.Backend.DTO.ProfileFormDTO;
 
 import java.util.Collections;
 import java.util.List;
@@ -42,7 +43,7 @@ public class UserController {
         return userRepository.findByUsernameContaining(username);
     }
 
-    //AS IS THIS IS GET USER INFO BUT BY PROFILE NAME INSTEAD OF THE JUST THE LOGGED IN USER VIA SESSION
+    //AS IS THIS IS GET USER INFO BUT BY PROFILE NAME INSTEAD OF JUST THE LOGGED-IN USER VIA SESSION
     @GetMapping("/findUser")
     public ResponseEntity<UserInfoDTO> attemptFindUser(@RequestParam String username){
         UserInfoDTO userInfo = new UserInfoDTO();
@@ -55,6 +56,35 @@ public class UserController {
         userInfo.setUsername(foundUser.getUsername());
         userInfo.setEmail(foundUser.getEmail());
         return ResponseEntity.ok(userInfo);
+    }
+
+    @GetMapping("/findProfile")
+    public ResponseEntity<ProfileFormDTO> attemptFindProfile(@RequestParam long id){
+        ProfileFormDTO profileForm = new ProfileFormDTO();
+        User profileUser = userService.getUserByID(id);
+        profileForm.setBio(profileUser.getUserProfile().getBio());
+        profileForm.setName(profileUser.getUserProfile().getName());
+        profileForm.setLocation(profileUser.getUserProfile().getLocation());
+        profileForm.setOccupation(profileUser.getUserProfile().getOccupation());
+        profileForm.setScore(profileUser.getUserProfile().getScore());
+        return ResponseEntity.ok(profileForm);
+        //return ResponseEntity.ok(testBio);
+    }
+
+    //TODO UPDATE TO INCLUDE (ALMOST) ALL PROFILE ATTRIBUTES ONCE FRONT END'S COOL
+    @PostMapping("/updateProfile")
+    public ResponseEntity<String> attemptUpdateProfile(@RequestBody ProfileFormDTO request){
+        Optional <User> tryFindUser = userService.getUserByUsername(request.getUsername());
+        if(tryFindUser.isEmpty()){
+            return ResponseEntity.status(401).body("Error, could not update profile");
+        }
+        UserProfile profiletoUpdate = tryFindUser.get().getUserProfile();
+        profiletoUpdate.setName(request.getName());
+        profiletoUpdate.setBio(request.getBio());
+        profiletoUpdate.setLocation(request.getLocation());
+        profiletoUpdate.setOccupation(request.getOccupation());
+        userService.updateUserProfile(profiletoUpdate);
+        return ResponseEntity.ok("Profile fields updated");
     }
 
     @PostMapping("/updateScore")

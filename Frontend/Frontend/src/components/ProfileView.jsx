@@ -1,18 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-function ProfileView(){
+function ProfileView( {passedUsername} ){
 
     const [profileUserScore, setProfileUserScore] = useState(0);
+    const [profileEmail, setProfileEmail] = useState("");
+
+    //console.log(passedUsername);
+
+    //const [profileUsername, setProfileUsername] useState("");
+
+    //setProfileUsername(passedUsername);
+
 
     const name = "Filber Fillerton IV"
-    const email = "filler4@filler.com"
+    //const email = "filler4@filler.com"
     const bio = "This is a simple test of a user-made biography.";
     const pageUsername = "FILLER4";
     const location = "4% Street";
     const occupation = "Parasite";
 
        useEffect(() => {
+
+                //console.log("SHOW USERNAME HERE")
+                //console.log(passedUsername);
+
 
                 //const id = loggedInUser.id; //Keeps on becoming null. Ugh. Stay. I'm logged in!
                 const fetchSpecifications = {
@@ -22,7 +34,7 @@ function ProfileView(){
                   .then((response) => response.json())
                   .then((data) =>
                         {
-                            console.log(data);
+                            //console.log(data);
                         setProfileUserScore(data);
                       });
               },[]);
@@ -35,7 +47,7 @@ function ProfileView(){
                              <p>Name: {name}</p>
                          </tr>
                         <tr>
-                             <p>Email: {email}</p>
+                             <p>Email: {profileEmail}</p>
                          </tr>
                         <tr>
                              <p>Location: {location} </p>
