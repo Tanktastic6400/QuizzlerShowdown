@@ -15,6 +15,7 @@ import com.example.Backend.models.data.UserRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.example.Backend.DTO.ProfileFormDTO;
 
 import java.util.Collections;
 import java.util.List;
@@ -67,11 +68,11 @@ public class UserController {
 
     //JUST BIO RIGHT NOW
     @PostMapping("/updateProfile")
-    public ResponseEntity<String> attemptUpdateProfile(@RequestBody String request){ //WILL CHANGE TO SOME KIND OF DTO LATER
+    public ResponseEntity<String> attemptUpdateProfile(@RequestBody ProfileFormDTO request){ //WILL CHANGE TO SOME KIND OF DTO LATER
         //THIS IS HARD CODED JUST FOR TESTING!
         //System.out.println("GOT INSIDE UPDATE PROFILE");
         UserProfile profiletoUpdate = userService.getUserByID(3).getUserProfile();
-        profiletoUpdate.setBio(request);
+        profiletoUpdate.setBio(request.getBio());
         userService.updateUserProfile(profiletoUpdate);
         return ResponseEntity.ok("UPDATED PROFILE BIO");
     }

@@ -73,9 +73,8 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
         setEditMode(false)
         }
 
-    //Update to be more than just bio
     function handleEdit(profileData){
-        setPageBio(profileData);
+        setPageBio(profileData);     //Update to be more than just bio
         //Try to get this to update "in real time" rather than a refresh.
         }
 

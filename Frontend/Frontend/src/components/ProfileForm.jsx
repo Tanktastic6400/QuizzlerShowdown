@@ -8,15 +8,22 @@ function ProfileForm(props){
     function handleSubmit(e) {
         e.preventDefault();
         console.log(formBio);
+        //console.log(type(formBio));
+
+        const profileFormData =
+        {
+            bio: formBio
+        }
 
         fetch("http://localhost:8080/userservice/updateProfile", {
               method: "POST",
-              body: formBio,
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(profileFormData),
         })           //CHANGE TO JSON STRINGIFY WHEN MORE THAN ONE
         .then((response) => response.text())
         .then((data) =>
         {
-            return formBio;
+            return formBio; //*Do* I need to return this/everything later?
             //setFormBio(data);
             //return data;
             //console.log(data);
