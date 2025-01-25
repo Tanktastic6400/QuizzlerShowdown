@@ -28,7 +28,7 @@ public class FriendListController {
     public void sendFriendRequest(@RequestBody FriendRequestDTO request) {
         Long user1Id = request.getUser1Id();
         Long user2Id = request.getUser2Id();
-        System.out.println("FriendDTO info - user1Id: " + user1Id + "user2Id: " + user2Id);
+
         friendListService.sendFriendRequest(user1Id, user2Id);
     }
 
@@ -56,24 +56,4 @@ public class FriendListController {
         }
     }
 
-
-    //commented out below to verify that it is not needed. Search user is handling now.
-
-
-//    @GetMapping("/findfriends")
-//    public ResponseEntity<List<User>> findFriends(@RequestParam String username) {
-//
-//        try {
-//            List<User> friends = friendListService.findUser(username);
-//            if (friends.isEmpty()) {
-//                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-//                        .body(Collections.emptyList());
-//            }
-//            return ResponseEntity.ok(friends);
-//        } catch (Exception e) {
-//            System.err.println("Error in finding friends: " + e.getMessage());
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body(Collections.emptyList());
-//        }
-//    }
 }

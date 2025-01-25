@@ -4,14 +4,10 @@ import Button from "react-bootstrap/Button";
 const FriendList = ({ loggedInUser, getUserInfo, onOpenChat }) => {
   const [friendList, setFriendList] = useState([]);
 
-
-
-
   useEffect(() => {
     fetch(`http://localhost:8080/friendlist/${loggedInUser.id}`)
       .then((response) => response.json())
       .then((data) => setFriendList(data));
-      console.log("Friend list opened");
   }, [loggedInUser]);
 
   const handleAccept = async (id) => {
@@ -24,8 +20,8 @@ const FriendList = ({ loggedInUser, getUserInfo, onOpenChat }) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            requestId: id, 
-            status: "ACCEPTED", 
+            requestId: id,
+            status: "ACCEPTED",
           }),
         }
       );
@@ -49,18 +45,19 @@ const FriendList = ({ loggedInUser, getUserInfo, onOpenChat }) => {
       );
     } catch (error) {}
   };
-  
-   
 
   const friendClicked = async (clickedFriend) => {
-    
-    const friendIndex = friendList.findIndex((friend) => friend.id === clickedFriend);
+    const friendIndex = friendList.findIndex(
+      (friend) => friend.id === clickedFriend
+    );
     if (friendIndex !== -1) {
       const selectedFriend = friendList[friendIndex];
-      console.log("Before setting the select friend", selectedFriend);
-      const friend = selectedFriend.user1.id === loggedInUser.id ? selectedFriend.user2 : selectedFriend.user1;
-      console.log("This user should not be the logged in user: ", friend);
-      
+
+      const friend =
+        selectedFriend.user1.id === loggedInUser.id
+          ? selectedFriend.user2
+          : selectedFriend.user1;
+
       const response = await fetch(
         `http://localhost:8080/chat/chatid?user1=${loggedInUser.id}&user2=${friend.id}`,
         {
@@ -70,32 +67,28 @@ const FriendList = ({ loggedInUser, getUserInfo, onOpenChat }) => {
           },
         }
       );
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const chatId = await response.text();
       if (chatId) {
-        console.log(chatId);
-        onOpenChat(chatId); 
+        onOpenChat(chatId);
+      } else {
+        console.error("Friend not found!");
       }
-     else {
-      console.error("Friend not found!");
     }
-  }
   };
-
 
   return (
     <>
       <div className="friend-container">
         {friendList.map((friend) => {
-          // Determine which username to display based on the logged-in user
           const displayedUsername =
             loggedInUser.username === friend.user1.username
               ? friend.user2.username
               : friend.user1.username;
-  
+
           return (
             <div key={friend.id}>
               {friend.status === "ACCEPTED" && (
@@ -107,8 +100,12 @@ const FriendList = ({ loggedInUser, getUserInfo, onOpenChat }) => {
               {friend.status === "PENDING" && (
                 <div>
                   {displayedUsername}
-                  <button onClick={() => handleAccept(friend.requestId)}>Accept</button>
-                  <button onClick={() => handleDecline(friend.requestId)}>Decline</button>
+                  <button onClick={() => handleAccept(friend.requestId)}>
+                    Accept
+                  </button>
+                  <button onClick={() => handleDecline(friend.requestId)}>
+                    Decline
+                  </button>
                 </div>
               )}
             </div>

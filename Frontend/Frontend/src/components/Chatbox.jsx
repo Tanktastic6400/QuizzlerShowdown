@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
@@ -14,35 +14,7 @@ const Chatbox = ({ loggedInUser, chatId, onClose }) => {
   const stompClient = useRef(null);
   const scrollContainerRef = useRef(null);
 
-  const getChatInfo = async (chatId) => {
-    try {
-      const response = await fetch(
-        `http://localhost:8080/chat/chatinfo?chatid=${chatId}`
-      );
-      if (!response.ok) {
-        throw new Error(
-          `Failed to get chat information: ${response.statusText}`
-        );
-      }
-      const info = await response.json();
-      console.log("getChatInfo: ", info);
-      console.log("Logged in user: ", loggedInUser);
-      setMessageSender(loggedInUser);
-      const receiver =
-        loggedInUser.id === info.user1.id ? info.user2 : info.user1;
-      console.log(
-        "Receiver var. should not be logged in user information. ",
-        receiver
-      );
-      setMessageReceiver(receiver);
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const getMessages = async () => {
+  const getMessages = useCallback(async () => {
     try {
       const response = await fetch(
         `http://localhost:8080/chat/messages?chatId=${chatId}`
@@ -57,28 +29,34 @@ const Chatbox = ({ loggedInUser, chatId, onClose }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [chatId]);
 
   useEffect(() => {
     getChatInfo(chatId);
+    console.log("Initializing WebSocket connection...");
     const socket = new SockJS("http://localhost:8080/ws");
     stompClient.current = Stomp.over(socket);
-
+  
     stompClient.current.connect({}, () => {
+      console.log("WebSocket connected successfully");
       stompClient.current.subscribe(`/topic/private.${chatId}`, (message) => {
         const receivedMessage = JSON.parse(message.body);
+        console.log("Received message: ", receivedMessage);
         setMessages((prevMessages) => [...prevMessages, receivedMessage]);
       });
-
+  
       getMessages();
+    }, (error) => {
+      console.error("WebSocket connection failed:", error);
     });
-
+  
     return () => {
       if (stompClient.current) {
+        console.log("Disconnecting WebSocket...");
         stompClient.current.disconnect();
       }
     };
-  }, [chatId]);
+  }, [chatId, getMessages]);
 
   useEffect(() => {
     if (scrollContainerRef.current) {
@@ -87,25 +65,41 @@ const Chatbox = ({ loggedInUser, chatId, onClose }) => {
     }
   }, [messages]);
 
+  const getChatInfo = async (chatId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/chat/chatinfo?chatid=${chatId}`
+      );
+      if (!response.ok) {
+        throw new Error(
+          `Failed to get chat information: ${response.statusText}`
+        );
+      }
+      const info = await response.json();
+      setMessageSender(loggedInUser);
+      const receiver =
+        loggedInUser.id === info.user1.id ? info.user2 : info.user1;
+      setMessageReceiver(receiver);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const sendMessage = () => {
     if (message.trim() !== "") {
       const messageObj = {
         user1: loggedInUser,
-        user2: messageReceiver, // Friend object needs to be passed into here.
+        user2: messageReceiver, 
         content: message.trim(),
       };
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        {
-          id: Date.now(), // Temporary ID for UI purposes
-          ...messageObj,
-        },
-      ]);
       stompClient.current.send(
         `/app/chat.private.${chatId}`,
         {},
         JSON.stringify(messageObj)
       );
+      
       setMessage("");
     }
   };
@@ -119,20 +113,7 @@ const Chatbox = ({ loggedInUser, chatId, onClose }) => {
           <Modal.Title>Chat with {messageReceiver.username}</Modal.Title>
         )}
       </Modal.Header>
-      {/* <Modal.Body>
-        <div
-          style={{ maxHeight: "300px", overflowY: "auto" }}
-          ref={scrollContainerRef}
-        >
-          {messages.map((message) => (
-            <div className="card-body" key={message.id}>
-              <div>
-                {}: {message.content}
-              </div>
-            </div>
-          ))}
-        </div>
-      </Modal.Body> */}
+      
       <Modal.Body>
   <div style={{ maxHeight: "300px", overflowY: "auto" }} ref={scrollContainerRef}>
     {messages.map((message) => (
