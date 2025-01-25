@@ -17,10 +17,10 @@ public class UserProfile extends AbstractClass {
     private int score = 0; //Have score start at 0?
     //private int score;
 
-    private String bio = "TEST";
-    private String name = "TEST";
-    private String location ="TEST";
-    private String occupation ="TEST";
+    private String bio = "";
+    private String name = "";
+    private String location ="";
+    private String occupation ="";
 
     //@JsonBackReference
     @JsonManagedReference
