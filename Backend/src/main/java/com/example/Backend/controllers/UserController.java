@@ -71,7 +71,11 @@ public class UserController {
     public ResponseEntity<String> attemptUpdateProfile(@RequestBody ProfileFormDTO request){ //WILL CHANGE TO SOME KIND OF DTO LATER
         //THIS IS HARD CODED JUST FOR TESTING!
         //System.out.println("GOT INSIDE UPDATE PROFILE");
-        UserProfile profiletoUpdate = userService.getUserByID(3).getUserProfile();
+        Optional <User> tryFindUser = userService.getUserByUsername(request.getUsername());
+        if(tryFindUser.isEmpty()){
+            return ResponseEntity.status(401).body("Error, could not update profile");
+        }
+        UserProfile profiletoUpdate = tryFindUser.get().getUserProfile();
         profiletoUpdate.setBio(request.getBio());
         userService.updateUserProfile(profiletoUpdate);
         return ResponseEntity.ok("UPDATED PROFILE BIO");

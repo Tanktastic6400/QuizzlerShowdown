@@ -15,6 +15,7 @@ function ProfileForm(props){
 
         const profileFormData =
         {
+            username: props.username,
             bio: formBio
         }
 
