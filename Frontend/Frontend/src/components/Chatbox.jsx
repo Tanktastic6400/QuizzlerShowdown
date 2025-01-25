@@ -14,7 +14,7 @@ const Chatbox = ({ loggedInUser, chatId, onClose }) => {
   const stompClient = useRef(null);
   const scrollContainerRef = useRef(null);
 
-  const getMessages = useCallback(async () => {
+  const getMessages = async () => {
     try {
       const response = await fetch(
         `http://localhost:8080/chat/messages?chatId=${chatId}`
@@ -29,7 +29,7 @@ const Chatbox = ({ loggedInUser, chatId, onClose }) => {
     } finally {
       setLoading(false);
     }
-  }, [chatId]);
+  };
 
   useEffect(() => {
     getChatInfo(chatId);
@@ -56,7 +56,7 @@ const Chatbox = ({ loggedInUser, chatId, onClose }) => {
         stompClient.current.disconnect();
       }
     };
-  }, [chatId, getMessages]);
+  }, [chatId]);
 
   useEffect(() => {
     if (scrollContainerRef.current) {
@@ -99,7 +99,6 @@ const Chatbox = ({ loggedInUser, chatId, onClose }) => {
         {},
         JSON.stringify(messageObj)
       );
-      
       setMessage("");
     }
   };

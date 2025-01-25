@@ -19,8 +19,9 @@ public class FriendListController {
     @Autowired
     private FriendListService friendListService;
 
-    @GetMapping("/{userId}")
-    public List<FriendList> getFriends(@PathVariable Long userId) {
+    @GetMapping("/currentuser")
+    public List<FriendList> fetchFriends(@RequestParam Long userId) {
+
         return friendListService.getFriends(userId);
     }
 
@@ -45,7 +46,6 @@ public class FriendListController {
             } catch (IllegalArgumentException e) {
                 return ResponseEntity.badRequest().body("Invalid status: " + status);
             }
-
 
             friendListService.respondToRequest(requestId, friendshipStatus);
             return ResponseEntity.ok("Friend request updated successfully.");

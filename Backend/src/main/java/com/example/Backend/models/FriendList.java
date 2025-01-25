@@ -1,5 +1,9 @@
 package com.example.Backend.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -7,9 +11,11 @@ import java.time.LocalDateTime;
 @Entity
 public class FriendList extends AbstractClass {
 
+
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user1_id", nullable = false)
     private User user1;
+
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user2_id", nullable = false)

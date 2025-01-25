@@ -1,6 +1,7 @@
 package com.example.Backend.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -21,6 +22,8 @@ public class UserProfile extends AbstractClass {
     //private String location;
     //private String occupation;
 
+    //@JsonBackReference
+    @JsonManagedReference
     @OneToMany(mappedBy = "userProfile")
     private List<AnsweredQuestion> answeredQuestions;
 
@@ -49,7 +52,4 @@ public class UserProfile extends AbstractClass {
     public void setAnsweredQuestions(List<AnsweredQuestion> answeredQuestions) {
         this.answeredQuestions = answeredQuestions;
     }
-
-
-
 }

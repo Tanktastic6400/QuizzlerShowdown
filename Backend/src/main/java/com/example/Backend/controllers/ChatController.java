@@ -39,6 +39,9 @@ public class ChatController {
     @MessageMapping("/chat.private.{chatId}")
     @SendTo("/topic/private.{chatId}")
     public Message handlePrivateChat(@DestinationVariable String chatId, @Payload Message message) {
+        System.out.println("YOU SHOULD HAVE RECEIVED A MESSAGE!!!");
+        System.out.println(message);
+
         if (!chatService.isValidChat(chatId)) {
             throw new IllegalArgumentException("Invalid chatId");
         }
@@ -47,13 +50,11 @@ public class ChatController {
 
         message.setUser1(messageSender);
         message.setUser2(messageReceiver);
-        System.out.println(message.toString());
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDate = now.format(formatter);
         message.setTimestamp(formattedDate);
         message.setChatId(chatId);
-
         messageRepository.save(message);
         System.out.println(message.toString());
         return message;

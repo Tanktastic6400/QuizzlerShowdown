@@ -1,5 +1,6 @@
 package com.example.Backend.services;
 
+import com.example.Backend.DTO.UserInfoDTO;
 import com.example.Backend.models.FriendList;
 import com.example.Backend.models.FriendStatus;
 import com.example.Backend.models.User;
@@ -25,6 +26,7 @@ public class FriendListService {
     public List<FriendList> getFriends(Long userId) {
         Optional<User> user = userRepository.findById(userId);
         Long id = user.get().getId();
+
         return friendListRepository.findByUser1IdOrUser2Id(id, id);
     }
 

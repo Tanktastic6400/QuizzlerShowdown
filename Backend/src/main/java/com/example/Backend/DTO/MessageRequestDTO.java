@@ -1,11 +1,21 @@
 package com.example.Backend.DTO;
 
 public class MessageRequestDTO {
+    private Long id;
     private Long senderId;
     private Long recipientId;
     private String content;
 
     // Getters and Setters
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Long getSenderId() {
         return senderId;
     }

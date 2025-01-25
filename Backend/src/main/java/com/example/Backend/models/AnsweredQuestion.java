@@ -1,14 +1,18 @@
 package com.example.Backend.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "answered_questions")
 public class AnsweredQuestion extends AbstractClass {
 
+
     @ManyToOne
     @JoinColumn(name = "user_profile_id", nullable = false)
+    @JsonBackReference
     private UserProfile userProfile;
 
     @Column(nullable = false)

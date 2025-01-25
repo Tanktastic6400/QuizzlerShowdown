@@ -5,7 +5,7 @@ const FriendList = ({ loggedInUser, getUserInfo, onOpenChat }) => {
   const [friendList, setFriendList] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/friendlist/${loggedInUser.id}`)
+    fetch(`http://localhost:8080/friendlist/currentuser?userId=${loggedInUser.id}`)
       .then((response) => response.json())
       .then((data) => setFriendList(data));
   }, [loggedInUser]);
