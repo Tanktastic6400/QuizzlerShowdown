@@ -65,13 +65,6 @@ function App() {
     <UserBar loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>
     <Scoreboard loggedInUser={loggedInUser}/>
     {loggedInUser?(<ChatContainer loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>):<div></div>}
-
-      <Scoreboard loggedInUser={loggedInUser} />
-      {loggedInUser ? (
-        <ChatContainer loggedInUser={loggedInUser} getUserInfo={getUserInfo} />
-      ) : (
-        <div></div>
-      )}
     </>
   );
 }
