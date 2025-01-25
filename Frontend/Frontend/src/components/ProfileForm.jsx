@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 function ProfileForm(props){
 
     const [formBio, setFormBio] = useState (props.bio);
+    const [formLocation, setFormLocation] = useState (props.location);
     //setFormBio(props.bio);
 
     function handleSubmit(e) {
@@ -16,7 +17,8 @@ function ProfileForm(props){
         const profileFormData =
         {
             username: props.username,
-            bio: formBio
+            bio: formBio,
+            location: formLocation
         }
 
         fetch("http://localhost:8080/userservice/updateProfile", {
@@ -55,6 +57,21 @@ function ProfileForm(props){
                 ></textarea>
             </div>
 
+             <div>
+                    <label className="form-label">
+                      Location:
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={formLocation}
+                      onChange={function (e) {
+                        setFormLocation(e.target.value);
+                      }}
+                      placeholder={formLocation}
+                      required
+                    />
+                  </div>
 
 
 

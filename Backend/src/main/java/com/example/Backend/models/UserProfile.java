@@ -15,8 +15,8 @@ public class UserProfile extends AbstractClass {
 
     private int score = 0; //Have score start at 0?
     //private int score;
-                          //CHANGE BACK LATER!!!
-    private String bio = "DEFAULT FOR TEST"; //Should this start with a default value of empty string? Or just exist and not be initialized?
+
+    private String bio = "";
     private String name = "";
     private String location ="";
     private String occupation ="";

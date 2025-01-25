@@ -77,6 +77,7 @@ public class UserController {
         }
         UserProfile profiletoUpdate = tryFindUser.get().getUserProfile();
         profiletoUpdate.setBio(request.getBio());
+        profiletoUpdate.setLocation(request.getLocation());
         userService.updateUserProfile(profiletoUpdate);
         return ResponseEntity.ok("UPDATED PROFILE BIO");
     }

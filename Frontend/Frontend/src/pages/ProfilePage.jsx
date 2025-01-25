@@ -6,12 +6,12 @@ import ProfileForm from "../components/ProfileForm";
 function ProfilePage ( { loggedInUser, getUserInfo } ) {
     const [pageUserName, setPageUserName] = useState("");
     const [pageEmail, setPageEmail] = useState("");
-    const [ownerPage, setOwnerPage] = useState(false);
 
-    //Let's hope this works. ^^;
+    const [ownerPage, setOwnerPage] = useState(false);
     const [editMode, setEditMode] = useState(false);
 
     const [pageBio, setPageBio] = useState(""); //FOR TESTING
+    const [pageLocation, setPageLocation] = useState("");
 
     const navigate = useNavigate();
 
@@ -84,13 +84,16 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
         <div>
             {editMode? (<div>
                 <button type ="button" onClick={DisableEditMode} > Finish </button>
-                <ProfileForm onEditSubmitted={handleEdit} bio={pageBio} username={pageUserName} />
+                <ProfileForm onEditSubmitted={handleEdit} bio={pageBio} username={pageUserName} location={pageLocation} />
             </div>)
             :
             <div>
-            <p> {pageUserName} </p>
-             <p> {pageEmail} </p>
-             <p> {pageBio} </p>
+            <p> Username: {pageUserName} </p>
+             <p> Email: {pageEmail} </p>
+             <p> Name: </p>
+             <p> Bio: {pageBio} </p>
+             <p> Location: {pageLocation}</p>
+             <p> Occupation: </p>
                 {ownerPage?(<button type ="button" onClick={EnableEditMode} > Edit Page </button>):<div></div>}
                 </div>
              }
