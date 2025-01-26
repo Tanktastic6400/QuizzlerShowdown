@@ -53,20 +53,21 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
             setPageLocation(data.location);
             setPageOccupation(data.occupation);
             setPageScore(data.score);
+
             })
 
-        /*
-         return fetch(`http://localhost:8080/friendlist/currentuser?userId=1`, fetchSpecifications);  //Except can't use data here because data is the Profile info now... ^^; Hardcoded for test right now`
+    ;
 
-                    })
-
-                     .then((response) => response.json())
-                     .then((data) => {setPageFriendList(data);
+        fetch(`http://localhost:8080/friendlist/currentuser?userId=1`, fetchSpecifications)  //Except can't use data here because data is the Profile info now... ^^; Hardcoded for test right now`
+        .then((response) => response.json())
+        .then((data) => {setPageFriendList(data);
                          console.log(data[0].user2.username); //For testing. This works, so why not showing up down there?
-                         console.log(pageFriendList[0].user2.username); //These are identical to the above.
-                         })*/
+                         //console.log(pageFriendList[0].user2.username); //These are identical to the above.
+                         })
 
     ;
+
+        console.log("LIST LEGNTH IS "+pageFriendList.length);
 
         if (loggedInUser) {
             if(loggedInUser.username === pageUserName){
@@ -88,6 +89,7 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
         setEditMode(false)
         }
 
+    //THIS IS OUTDATED! And possibly not even doing anything?
     function handleEdit(profileData){
         setPageBio(profileData);     //Update to be more than just bio
         //Try to get this to update "in real time" rather than a refresh.
