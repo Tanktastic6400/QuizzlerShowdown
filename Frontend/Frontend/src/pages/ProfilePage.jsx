@@ -117,9 +117,11 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
              <ul>
                  {pageFriendList.filter(friend=> friend.status === "ACCEPTED")
                      .map( (friend) => (
-                     <a href={`http://localhost:5173/profile/${friend.user2.username}`} key={friend.id}>
+                         <li key={friend.id}>
+                     <a href={`http://localhost:5173/profile/${friend.user2.username}`}>
                          {friend.user2.username}
                     </a>
+                    </li>
                  ))}
             </ul>
                 {ownerPage?(<button type ="button" onClick={EnableEditMode} > Edit Page </button>):<div></div>}
