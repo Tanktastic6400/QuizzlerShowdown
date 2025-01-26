@@ -115,9 +115,10 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
              <p> High Score: {pageScore}</p>
             <p> Friends </p>
              <ul>
-                 {pageFriendList.map( (friend) => (
+                 {pageFriendList.filter(friend=> friend.status === "ACCEPTED")
+                     .map( (friend) => (
                      <li key={friend.id}>
-                         <p> {friend.user2.username}</p>
+                         {friend.user2.username}
                     </li>
                  ))}
             </ul>
@@ -128,5 +129,7 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
         </div>
     );
 }
+
+//friend.status === "ACCEPTED"
 
 export default ProfilePage;
