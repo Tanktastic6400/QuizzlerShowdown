@@ -17,6 +17,8 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
 
     const [pageScore, setPageScore] = useState(0);
 
+    const [pageFriendList, setPageFriendList] = useState([]);
+
     const navigate = useNavigate();
 
     let params = useParams();
@@ -42,16 +44,28 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
             setPageEmail(data.email)
             return fetch(`http://localhost:8080/userservice/findProfile?id=${data.id}`, fetchSpecifications);
         })
-                                    //change to response.json when it's back to DTO
+
         .then((response) => response.json())
         .then((data) =>
         {
-            setPageBio(data.bio); //change to .data once it's not just bio.
+            setPageBio(data.bio);
             setPageName(data.name);
             setPageLocation(data.location);
             setPageOccupation(data.occupation);
             setPageScore(data.score);
             })
+
+        /*
+         return fetch(`http://localhost:8080/friendlist/currentuser?userId=1`, fetchSpecifications);  //Except can't use data here because data is the Profile info now... ^^; Hardcoded for test right now`
+
+                    })
+
+                     .then((response) => response.json())
+                     .then((data) => {setPageFriendList(data);
+                         console.log(data[0].user2.username); //For testing. This works, so why not showing up down there?
+                         console.log(pageFriendList[0].user2.username); //These are identical to the above.
+                         })*/
+
     ;
 
         if (loggedInUser) {
