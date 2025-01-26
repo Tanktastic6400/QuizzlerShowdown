@@ -113,6 +113,14 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
              <p> Location: {pageLocation}</p>
              <p> Occupation: {pageOccupation}</p>
              <p> High Score: {pageScore}</p>
+            <p> Friends </p>
+             <ul>
+                 {pageFriendList.map( (friend) => (
+                     <li key={friend.id}>
+                         <p> {friend.user2.username}</p>
+                    </li>
+                 ))}
+            </ul>
                 {ownerPage?(<button type ="button" onClick={EnableEditMode} > Edit Page </button>):<div></div>}
                 </div>
              }
