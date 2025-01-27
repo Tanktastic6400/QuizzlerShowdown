@@ -4,6 +4,7 @@ import ProfileView from "../components/ProfileView";
 import ProfileForm from "../components/ProfileForm";
 
 function ProfilePage ( { loggedInUser, getUserInfo } ) {
+
     const [pageUserName, setPageUserName] = useState("");
     const [pageEmail, setPageEmail] = useState("");
 
@@ -39,9 +40,10 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
         //}
         .then((data) =>
         {
-            console.log(data);
+            //console.log(data);
             setPageUserName(data.username);
             setPageEmail(data.email);
+
             return fetch(`http://localhost:8080/userservice/findProfile?id=${data.id}`, fetchSpecifications);
         })
 
@@ -57,17 +59,12 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
             })
 
     ;
-
-        fetch(`http://localhost:8080/friendlist/currentuser?userId=1`, fetchSpecifications)  //Except can't use data here because data is the Profile info now... ^^; Hardcoded for test right now`
+        fetch(`http://localhost:8080/friendlist/username?username=${username}`, fetchSpecifications)
         .then((response) => response.json())
         .then((data) => {setPageFriendList(data);
-                         //console.log(data[0].user2.username); //For testing. This works, so why not showing up down there?
-                         //console.log(pageFriendList[0].user2.username); //These are identical to the above.
                          })
 
     ;
-
-        //console.log("LIST LENGTH IS "+pageFriendList.length);
 
         if (loggedInUser) {
             if(loggedInUser.username === pageUserName){
@@ -92,8 +89,7 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
     //THIS IS OUTDATED! And possibly not even doing anything?
     function handleEdit(profileData){
         DisableEditMode();
-        console.log("EDIT MODE DISABLED");
-        setPageBio(profileData);     //Update to be more than just bio
+        //setPageBio(profileData);     //Update to be more than just bio
         //Try to get this to update "in real time" rather than a refresh.
         }
 
