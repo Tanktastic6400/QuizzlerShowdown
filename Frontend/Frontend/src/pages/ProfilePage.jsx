@@ -40,8 +40,8 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
         .then((data) =>
         {
             console.log(data);
-            setPageUserName(data.username)
-            setPageEmail(data.email)
+            setPageUserName(data.username);
+            setPageEmail(data.email);
             return fetch(`http://localhost:8080/userservice/findProfile?id=${data.id}`, fetchSpecifications);
         })
 
@@ -61,13 +61,13 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
         fetch(`http://localhost:8080/friendlist/currentuser?userId=1`, fetchSpecifications)  //Except can't use data here because data is the Profile info now... ^^; Hardcoded for test right now`
         .then((response) => response.json())
         .then((data) => {setPageFriendList(data);
-                         console.log(data[0].user2.username); //For testing. This works, so why not showing up down there?
+                         //console.log(data[0].user2.username); //For testing. This works, so why not showing up down there?
                          //console.log(pageFriendList[0].user2.username); //These are identical to the above.
                          })
 
     ;
 
-        console.log("LIST LEGNTH IS "+pageFriendList.length);
+        //console.log("LIST LENGTH IS "+pageFriendList.length);
 
         if (loggedInUser) {
             if(loggedInUser.username === pageUserName){
@@ -91,22 +91,22 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
 
     //THIS IS OUTDATED! And possibly not even doing anything?
     function handleEdit(profileData){
+        DisableEditMode();
+        console.log("EDIT MODE DISABLED");
         setPageBio(profileData);     //Update to be more than just bio
         //Try to get this to update "in real time" rather than a refresh.
         }
 
-
     return (
         <div>
             {editMode? (<div>
-                <button type ="button" onClick={DisableEditMode} > Finish </button>
                 <ProfileForm onEditSubmitted={handleEdit} username={pageUserName} bio={pageBio} name={pageName}
                 location={pageLocation} occupation={pageOccupation}
                 />
             </div>)
             :
             <div>
-            <p> Username: {pageUserName} </p>
+            <p> Username: {params.username} </p>
              <p> Email: {pageEmail} </p>
              <p> Name: {pageName}</p>
              <p> Bio: {pageBio} </p>
@@ -118,9 +118,13 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
                  {pageFriendList.filter(friend=> friend.status === "ACCEPTED")
                      .map( (friend) => (
                          <li key={friend.id}>
-                     <a href={`http://localhost:5173/profile/${friend.user2.username}`}>
+                     {friend.user1.username===params.username?
+                     (<a href={`http://localhost:5173/profile/${friend.user2.username}`}>
                          {friend.user2.username}
-                    </a>
+                    </a>):
+                    <a href={`http://localhost:5173/profile/${friend.user1.username}`}>
+                        {friend.user1.username}
+                    </a>}
                     </li>
                  ))}
             </ul>
@@ -131,11 +135,5 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
         </div>
     );
 }
-
-
-//<a href="http://localhost:5173/reviews">link text</a>
-
-
-//friend.status === "ACCEPTED"
 
 export default ProfilePage;
