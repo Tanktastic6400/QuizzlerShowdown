@@ -28,7 +28,6 @@ public class FriendListController {
 
     @GetMapping("username")
     public List<FriendList>fetchFriendsFromName(@RequestParam String username){
-        System.out.println(username);
         Optional<User> tryFindUser = userService.getUserByUsername(username);
         if(tryFindUser.isEmpty()) {
             try {
