@@ -6,18 +6,40 @@ import com.example.Backend.models.FriendList;
 import com.example.Backend.models.FriendStatus;
 import com.example.Backend.models.User;
 import com.example.Backend.services.FriendListService;
+import com.example.Backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.persistence.EntityNotFoundException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/friendlist")
 public class FriendListController {
     @Autowired
     private FriendListService friendListService;
+
+    @Autowired
+    private UserService userService;
+
+    @GetMapping("username")
+    public List<FriendList>fetchFriendsFromName(@RequestParam String username){
+        System.out.println(username);
+        Optional<User> tryFindUser = userService.getUserByUsername(username);
+        if(tryFindUser.isEmpty()) {
+            try {
+                throw new RuntimeException();
+            } catch (RuntimeException e) {
+                e.printStackTrace();
+            }
+        }
+        long userId = tryFindUser.get().getId();
+        return friendListService.getFriends(userId);
+    }
 
     @GetMapping("/currentuser")
     public List<FriendList> fetchFriends(@RequestParam Long userId) {

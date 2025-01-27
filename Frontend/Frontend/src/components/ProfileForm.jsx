@@ -29,6 +29,7 @@ function ProfileForm(props){
         .then((response) => response.text())
         .then((data) =>
         {
+            props.onEditSubmitted(data);
             return formBio; //*Do* I need to return this/everything later?
             //setFormBio(data);
             //return data;
