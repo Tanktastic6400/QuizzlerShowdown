@@ -27,10 +27,10 @@ function QuizDisplay({ loggedInUser }) {
         numberOfQuestions: numberOfQuestions,
         numberOfCorrectAnswers: numberOfCorrectAnswers,
         userid: userid,
-      };
+    };
 
-    function createAllProps(){
-   
+    function createAllProps() {
+
     };
 
     useEffect(() => {
@@ -75,23 +75,23 @@ function QuizDisplay({ loggedInUser }) {
         Object.keys(correctAnswers).forEach((index) => {
             temp++;
             if (selectedAnswers[index] === correctAnswers[index]) {
-                
+
                 numberOfCorrectAnswers = numberOfCorrectAnswers + 1;
             }
         })
 
-       
+
 
         setThreshold(temp / 2);
         setNumberOfQuestions(temp);
-        
+
         setNumberOfCorrectAnswers(numberOfCorrectAnswers);
 
         if (numberOfCorrectAnswers >= passingThreshold) {
             setScore(numberOfCorrectAnswers * 10);
 
-        }else{
-            setScore((numberOfCorrectAnswers*10) /2)
+        } else {
+            setScore((numberOfCorrectAnswers * 10) / 2)
         }
 
     }
@@ -106,9 +106,9 @@ function QuizDisplay({ loggedInUser }) {
     const handleSubmit = () => {
 
         checkAnswers();
-       
-       
-          
+
+
+
 
         axios.post('http://localhost:8080/userservice/updateScore', null, {
             params: {
@@ -116,10 +116,8 @@ function QuizDisplay({ loggedInUser }) {
 
             }
         }).then(response => {
-             // This ensures navigation happens only after the score is updated
-            
+            // This ensures navigation happens only after the score is updated
 
-            
         }).catch(error => {
             console.error("There was an issue grading answers", error);
         });
@@ -147,7 +145,7 @@ function QuizDisplay({ loggedInUser }) {
     return (
         <div className="tableSurround">
             <h1> Quiz Questions</h1>
-           
+
 
             <table border="1">
                 <thead>

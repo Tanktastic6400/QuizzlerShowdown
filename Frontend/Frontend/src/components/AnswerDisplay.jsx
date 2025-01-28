@@ -4,7 +4,7 @@ import "../CSS/AnswerDisplay.css"
 
 // function AnswerDisplay({loggedInUser, numberOfQuestions, score}){
 function AnswerDisplay() {
-    
+
     const location = useLocation();
 
     const {
@@ -26,7 +26,7 @@ function AnswerDisplay() {
 
 
     }
-    
+
     const mixAnswers = (questions, questionIndex) => {
         let answers = [...questions.incorrect_answers, questions.correct_answer];
 
@@ -39,18 +39,18 @@ function AnswerDisplay() {
     };
 
     const getAnswerStyle = (questionIndex, answer) => {
-        if(selectedAnswers[questionIndex] === answer) {
-            return answer === correctAnswers[questionIndex] ? {color: 'green'} : {color: 'red'}
+        if (selectedAnswers[questionIndex] === answer) {
+            return answer === correctAnswers[questionIndex] ? { color: 'green' } : { color: 'red' }
         }
 
-        if (answer === correctAnswers[questionIndex]){
-            return { color: 'green'};
+        if (answer === correctAnswers[questionIndex]) {
+            return { color: 'green' };
         }
         return {};
     }
 
     const handleRetry = () => {
-        Navigate("/quizSelector")
+        navigate("/quizSelector")
     }
 
 
@@ -95,7 +95,7 @@ function AnswerDisplay() {
                                 <td className="questionTableTd">{mixAnswers(question, questionIndex).map((answers, answersIndex) => (
 
                                     <div style={{ display: "flex" }} key={answersIndex}>
-                                        
+
                                         <label
                                             htmlFor={answersIndex}
                                             style={getAnswerStyle(questionIndex, answers)}

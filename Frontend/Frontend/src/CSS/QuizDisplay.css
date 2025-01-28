@@ -3,29 +3,29 @@
 }
 
 
-.answerLabel{
-    margin-bottom: 5px;
-    margin-right: 50px;
-    display: flex;
-    font-family:cursive;
-    font-size: large;
-    
+.answerLabel {
+  margin-bottom: 5px;
+  margin-right: 50px;
+  display: flex;
+  font-family: cursive;
+  font-size: large;
+
 }
 
-.questionStats{
-    padding: 5px;
-    margin-right: 5px;
-    font-family: cursive;
-    font-size: large;
+.questionStats {
+  padding: 5px;
+  margin-right: 5px;
+  font-family: cursive;
+  font-size: large;
 }
 
-table{
-    width: 100%;
-    background-color: darkgoldenrod;
-   
+table {
+  width: 100%;
+  background-color: darkgoldenrod;
+
 }
 
-tr{
+tr {
   border: 1px solid black;
 }
 
@@ -45,13 +45,12 @@ tr{
   padding-bottom: 5px;
 }
 
-.tableSurround{
+.tableSurround {
   padding-top: 20%;
-  
+
 
 }
 
-.submitButton{
-  padding-top: 5px ;
+.submitButton {
+  padding-top: 5px;
 }
-
