@@ -32,7 +32,7 @@ function Scoreboard({ loggedInUser, getUserInfo }) {
     if (loggedInUser) {
       fetchUserTopScore(); 
     }
-  }, [loggedInUser]);
+  }, [loggedInUser, highScores, currentUserScore]);
 
   return (
     <div>
