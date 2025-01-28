@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
 function RegisterForm(props) {
   const [username, setUsername] = useState("");
@@ -84,7 +85,7 @@ function RegisterForm(props) {
         }}
         placeholder="Confirm Password"
       />
-      <button type="submit">Register User</button>
+      <Button variant="primary" type="submit">Register</Button>
     </form>
   );
 }

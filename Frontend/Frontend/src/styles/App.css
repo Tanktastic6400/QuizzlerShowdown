@@ -6,26 +6,58 @@
 
 }
 
+.modalheader{
+  background-color: brown;
+  justify-content: center;
+  text-align: center;
+}
+
  .main-page-container {
-  background-image: url("../src/images/QuizzlerCowboy.jpg");
-  /* background-size: cover; */
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-attachment: scroll;
-  width: 150%;
-  min-height: 100vh;
+  position: fixed;
+  top: 100px;
+  background-color: burlywood;
+  margin-top: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  /* overflow: hidden; */
+  
 } 
+
+.user-search-container{
+  display: flex;
+  justify-content: center;
+}
+
+.search-button{
+  border: solid;
+  border-color: silver;
+  border-width: 2px;
+  border-radius: 16px;
+  background-color: rgba(208, 177, 0, 0.733);
+  color:black;
+}
 
 .navbar {
   display: flex;
+  margin: 0;
+  width: 100vw;
+  border-bottom: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: sienna;
+  
 }
 
+.nav-items{
+  width: 100vw;
+  margin: 0;
+}
+
+.nav
+
+.review-button{
+  padding-left: 10px;
+}
 
 .user-friend-container{
   padding: 3px;

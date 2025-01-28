@@ -6,14 +6,21 @@ import Navbar from "react-bootstrap/Navbar";
 import Dropdown from "react-bootstrap/Dropdown";
 import LogoutButton from "../components/LogoutButton";
 import DeleteButton from "../components/DeleteButton";
+import UserSearch from "./UserSearch";
+import { Button } from "react-bootstrap";
 
 function UserBar({ loggedInUser, getUserInfo }) {
+const navigate = useNavigate();
+    const handleReviewButtonClick = () => {
+        navigate('/reviews');
+    }
+
   return (
-    <Navbar bg="warning" fixed="top" className="navbar">
-      <Container>
+    <Navbar fixed="top" className="navbar">
+      <Container className="nav-items">
         <Navbar.Brand as={Link} to="/">
           <img
-            src="../src/images/QuizzlerCowboy.jpg"
+            src="../src/images/Navbarpictire.jpg"
             width="50"
             height="50"
             className="d-inline-block align-top"
@@ -24,12 +31,13 @@ function UserBar({ loggedInUser, getUserInfo }) {
           <Nav.Link as={Link} to="/">
             Home
           </Nav.Link>
-          {/* <Nav.Link as={Link} to="/reviews">Reviews</Nav.Link> */}
+          <Nav.Link as={Link} to="/reviews">Reviews</Nav.Link>
           <Nav.Link as={Link} to="/quizselector">
             Create Quiz
           </Nav.Link>
         </Nav>
         <Nav>
+          <UserSearch loggedInUser={loggedInUser} /> 
           {loggedInUser ? (
             <div className="d-flex align-items-center">
               <Dropdown autoClose={false}>
@@ -55,7 +63,18 @@ function UserBar({ loggedInUser, getUserInfo }) {
             Register
           </Nav.Link>
         </Nav>
+        <div className="review-button">
+            <Button
+                variant="primary"
+                onClick={handleReviewButtonClick}
+            >
+                <span className="me-2">Reviews</span>
+                <span className="text-warning">★★★★★</span>
+            </Button>
+            </div>
+            {/* {loggedInUser?(<LogoutButton loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>) : <></>} */}
       </Container>
+      
     </Navbar>
   );
 }

@@ -109,7 +109,7 @@ const Chatbox = ({ loggedInUser, chatId, onClose }) => {
 
   return (
     <Modal show={true} onHide={onClose} centered>
-      <Modal.Header closeButton>
+      <Modal.Header  closeButton className="modalheader">
         {loading ? (
           <Modal.Title>Loading...</Modal.Title>
         ) : (

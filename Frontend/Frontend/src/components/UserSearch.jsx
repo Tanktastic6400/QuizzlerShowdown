@@ -1,5 +1,6 @@
 import React, { useState, useEffect} from "react";
-import Button from "react-bootstrap/esm/Button";
+
+import { Button } from "react-bootstrap";
 
 function UserSearch({loggedInUser}) {
   const [username, setUsername] = useState("");
@@ -21,14 +22,10 @@ function UserSearch({loggedInUser}) {
 
   const handleSendRequest = async (index) => {
     const user = users[index];
-    console.log("this is the friend: ", user);
     const user2Id = user.id;
-    console.log("this is the FID: ", user2Id);
-    console.log("logged in user :", loggedInUser);
     const sender = loggedInUser;
-    console.log("this is the logged in user : ", sender);
     const user1Id = sender.id;
-    console.log("this is the logged in user id: ", user1Id);
+    
     
 
     console.log(`Friend ID: ${user2Id} Logged in user ID: ${user1Id}`);
@@ -51,19 +48,20 @@ function UserSearch({loggedInUser}) {
   }
 
   return (
-    <div>
+    <div className="user-search-container">
       <input
         type="text"
         placeholder="Search users..."
         value={username}
         onChange={handleChange}
       />
-      <button onClick={usersSearch}>Search</button>
+      <button className="search-button" onClick={usersSearch}>Search</button>
       <ul>
       {users.map((foundUser, index) => (
           <li key={foundUser.id}>
             {foundUser.username}{" "}
-            <Button onClick={() => handleSendRequest(index)}>Send Request</Button>
+            <Button className="search-button" onClick={() => handleSendRequest(index)}>Send Request</Button>
+            
           </li>
         ))}
       </ul>
