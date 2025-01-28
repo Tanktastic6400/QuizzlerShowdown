@@ -1,7 +1,13 @@
-.answerRadio {
-  margin-bottom: 5px;
+.title {
+  padding: 20px;
+  margin-top: 200px;
+  /* margin-bottom: -100px; */
+  background-color: goldenrod;
 }
 
+.retryButton {
+  margin-top: 20px;
+}
 
 .answerLabel {
   margin-bottom: 5px;
@@ -19,13 +25,22 @@
   font-size: large;
 }
 
-table {
+.tableSurround {
+  margin-top: -150px;
+}
+
+.questionTable {
   width: 100%;
+
   background-color: darkgoldenrod;
 
 }
 
-tr {
+.questionTr {
+  border: 1px solid black;
+}
+
+.questionTableTd {
   border: 1px solid black;
 }
 
@@ -45,11 +60,6 @@ tr {
   padding-bottom: 5px;
 }
 
-.tableSurround {
-  padding-top: 20%;
-
-
-}
 
 .submitButton {
   padding-top: 5px;

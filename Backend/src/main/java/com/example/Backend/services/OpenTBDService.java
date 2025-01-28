@@ -15,7 +15,7 @@ public class OpenTBDService {
 
     public OpenTBDService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
-        this.rateLimiter = new RateLimiter(1);
+        this.rateLimiter = new RateLimiter(5);
     }
 //
     public OpenTBDResponse fetchTriviaQuestions(Integer amountOfQuestions, Integer valueOfCategory, String type, String difficulty){
@@ -37,7 +37,7 @@ public class OpenTBDService {
             urlBuilder.queryParam("category", valueOfCategory);
         }
         if(difficulty != null){
-            urlBuilder.queryParam("difficult", difficulty);
+            urlBuilder.queryParam("difficulty", difficulty);
         }
         if(type != null){
             urlBuilder.queryParam("type", type);

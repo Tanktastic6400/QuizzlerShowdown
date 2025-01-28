@@ -5,13 +5,14 @@ import axios from "axios";
 import throttle from "lodash.throttle";
 function QuizSelector({loggedInUser}) {
 
-    const [value, setValue] = useState('');
+    const [numberOfQuestions, setNumberOfQuestions] = useState('');
     const [isValid, setIsValid] = useState(true);
     const [categoryData, setCategoryData] = useState(null);
     const [category, setCategory] = useState('19');
     const [type, setType] = useState('multiple');
     const [difficulty, setDifficulty] = useState('easy');
     const navigate = useNavigate();
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
 
 
@@ -20,7 +21,7 @@ function QuizSelector({loggedInUser}) {
 
         let isNumber = !isNaN(inputValue && inputValue !== '');
 
-        setValue(inputValue);
+        setNumberOfQuestions(inputValue);
         setIsValid(isNumber);
     }
 
@@ -43,17 +44,20 @@ function QuizSelector({loggedInUser}) {
             "There was an issue submitting quiz customization data",
             error
           );
-        }
+        }finally{setIsSubmitting(false);}
       }, 2000);
 
     const handleSubmit = () => {
-        if (isValid && value) {
+        if(isSubmitting){return;}
+        if (isValid && numberOfQuestions) {
             const quizData = {
-              amount: value,
+              amount: numberOfQuestions,
               valueOfCategory: category,
               type: type,
               difficulty: difficulty,
             };
+
+            setIsSubmitting(true);
             throttledSubmit(quizData);
           } else {
             alert("Please enter a valid number of questions!");
@@ -103,20 +107,20 @@ function QuizSelector({loggedInUser}) {
             
                 <div class="parameters">
 
-                    <label class="labels" htmlFor="amount">Number of Questions: </label>
-                    <input class="inputFields" id="amount" type="text" value={value} onChange={handleAmountChange}></input>
+                    <label className="labels" htmlFor="amount">Number of Questions: </label>
+                    <input className="inputFields" id="amount" type="text" value={numberOfQuestions} onChange={handleAmountChange}></input>
 
                 </div>
                 <div class="parameters">
 
-                    <label class="labels" htmlFor="Category">Category of Questions: </label>
+                    <label className="labels" htmlFor="Category">Category of Questions: </label>
 
-                    <select class="selectorFields" name="category" id="category" onChange={handleCategoryChange}>
+                    <select className="selectorFields" name="category" id="category" onChange={handleCategoryChange}>
                         {categoryData && categoryData.trivia_categories.map((category, index) => (
-                            <option key={category.id} value={category.id}>{category.name}</option>
-
-
-                        ))}
+                            <option key={category.id} value={category.id}>{category.name}</option> ))}
+                          
+                        
+                        
 
                     </select>
                 </div>

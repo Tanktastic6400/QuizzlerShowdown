@@ -28,11 +28,6 @@ public OpenTBDController(OpenTBDService openTBDService){
 }
 
 
-@PostMapping("/graded-answers")
-public void gradedAnswers(@RequestBody String numberOfAnswersCorrect){
-    System.out.println("Quiz created successfully, you got this many right: " + numberOfAnswersCorrect);
-
-}
 
 @GetMapping("/questions")
     public OpenTBDResponse getTriviaQuestions(){

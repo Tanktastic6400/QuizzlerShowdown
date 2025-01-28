@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import "./styles/App.css";
 import QuizDisplay from "./components/QuizDisplay";
@@ -58,6 +59,9 @@ function App() {
       <Route path="/login" element={<LoginPage getUserInfo={getUserInfo} />} />
       <Route path="/quizdisplay" element={<QuizDisplay loggedInUser={loggedInUser} />} />
       <Route path="/quizselector" element={<QuizSelector loggedInUser={loggedInUser} />}/>
+
+      <Route path="/answerDisplay" element={<AnswerDisplay/>}/>
+
       <Route path="/scores" element={<ScorePage loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>} />
       <Route path="/chat" element={<Chatbox loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>} />
       <Route path="profile/:username" element={<ProfilePage loggedInUser={loggedInUser} getUserInfo={getUserInfo} />} />
