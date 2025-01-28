@@ -107,15 +107,13 @@ function QuizDisplay({ loggedInUser }) {
 
         checkAnswers();
 
-
-
-
         axios.post('http://localhost:8080/userservice/updateScore', null, {
             params: {
                 ID: userid, score: score, add: add
 
             }
         }).then(response => {
+            
             // This ensures navigation happens only after the score is updated
 
         }).catch(error => {
