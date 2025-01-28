@@ -27,10 +27,10 @@ function Scoreboard({ loggedInUser, getUserInfo }) {
       }
     };
 
-    fetchTopScores(); // Site wide top 10
+    fetchTopScores(); 
 
     if (loggedInUser) {
-      fetchUserTopScore(); // User's current high score
+      fetchUserTopScore(); 
     }
   }, [loggedInUser]);
 

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-
 const FriendList = ({ loggedInUser, getUserInfo, onOpenChat }) => {
   const [friendList, setFriendList] = useState([]);
 
@@ -10,7 +9,7 @@ const FriendList = ({ loggedInUser, getUserInfo, onOpenChat }) => {
     )
       .then((response) => response.json())
       .then((data) => setFriendList(data));
-  }, [loggedInUser]);
+  }, [loggedInUser, friendList]);
 
   const handleAccept = async (id) => {
     try {
@@ -95,20 +94,27 @@ const FriendList = ({ loggedInUser, getUserInfo, onOpenChat }) => {
             <div className="user-friend-container" key={friend.id}>
               {friend.status === "ACCEPTED" && (
                 <div className="friend-row">
-                  <button onClick={() => friendClicked(friend.id)}>{displayedUsername}</button>
-                </div>
-              )}
-              {friend.status === "PENDING" && (
-                <div>
-                  {displayedUsername}
-                  <button onClick={() => handleAccept(friend.requestId)}>
-                    Accept
-                  </button>
-                  <button onClick={() => handleDecline(friend.requestId)}>
-                    Decline
+                  <button onClick={() => friendClicked(friend.id)}>
+                    {displayedUsername}
                   </button>
                 </div>
               )}
+              {friend.status === "PENDING" &&
+                friend.user1.id !== loggedInUser.id && (
+                  <div>
+                    {displayedUsername}
+                    <button onClick={() => handleAccept(friend.requestId)}>
+                      Accept
+                    </button>
+                    <button onClick={() => handleDecline(friend.requestId)}>
+                      Decline
+                    </button>
+                  </div>
+                )}
+              {friend.status === "PENDING" &&
+                friend.user1.id === loggedInUser.id && (
+                  <div>{displayedUsername} : PENDING </div>
+                )}
             </div>
           );
         })}

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
 function LoginForm({ getUserInfo }) {
   const [username, setUsername] = useState("");
@@ -44,6 +45,8 @@ function LoginForm({ getUserInfo }) {
   }
 
   return (
+    <>
+    
     <form onSubmit={handleSubmit}>
       <input
         type="text"
@@ -70,8 +73,9 @@ function LoginForm({ getUserInfo }) {
         placeholder="Password"
         required //Added for obvious reasons
       />
-      <button type="submit">Login</button>
+      <Button variant="primary" type="submit">Login</Button>
     </form>
+    </>
   );
 }
 
