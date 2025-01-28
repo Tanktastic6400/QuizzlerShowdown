@@ -18,6 +18,17 @@ function QuizDisplay({ loggedInUser }) {
     const [numberOfCorrectAnswers, setNumberOfCorrectAnswers] = useState(0);
     const [score, setScore] = useState(0);
 
+    const allProps = {
+        questionData: questionData,
+        selectedAnswers: selectedAnswers,
+        correctAnswers: correctAnswers,
+        passingThreshold: passingThreshold,
+        score: score,
+        numberOfQuestions: numberOfQuestions,
+        numberOfCorrectAnswers: numberOfCorrectAnswers,
+        userid: userid,
+      };
+
     function createAllProps(){
    
     };
@@ -42,6 +53,8 @@ function QuizDisplay({ loggedInUser }) {
 
     }, []);
 
+
+
     const mixAnswers = (questions, questionIndex) => {
         let answers = [...questions.incorrect_answers, questions.correct_answer];
 
@@ -53,18 +66,25 @@ function QuizDisplay({ loggedInUser }) {
 
     };
 
+
     const checkAnswers = () => {
 
         let numberOfCorrectAnswers = 0;
         let temp = 0;
+
         Object.keys(correctAnswers).forEach((index) => {
             temp++;
             if (selectedAnswers[index] === correctAnswers[index]) {
+                
                 numberOfCorrectAnswers = numberOfCorrectAnswers + 1;
             }
         })
+
+       
+
         setThreshold(temp / 2);
         setNumberOfQuestions(temp);
+        
         setNumberOfCorrectAnswers(numberOfCorrectAnswers);
 
         if (numberOfCorrectAnswers >= passingThreshold) {
@@ -87,16 +107,8 @@ function QuizDisplay({ loggedInUser }) {
 
         checkAnswers();
        
-        const allProps = {
-            questionData: questionData,
-            selectedAnswers: selectedAnswers,
-            correctAnswers: correctAnswers,
-            passingThreshold: passingThreshold,
-            score: score,
-            numberOfQuestions: numberOfQuestions,
-            numberOfCorrectAnswers: numberOfCorrectAnswers,
-            userid: userid,
-          };
+       
+          
 
         axios.post('http://localhost:8080/userservice/updateScore', null, {
             params: {
@@ -104,14 +116,32 @@ function QuizDisplay({ loggedInUser }) {
 
             }
         }).then(response => {
+             // This ensures navigation happens only after the score is updated
+            
 
-            navigate("/answerDisplay", {state: allProps});
+            
         }).catch(error => {
             console.error("There was an issue grading answers", error);
         });
 
 
     };
+
+    useEffect(() => {
+        if (score > 0 || numberOfCorrectAnswers > 0 || numberOfQuestions > 0) {
+            const allProps = {
+                questionData: questionData,
+                selectedAnswers: selectedAnswers,
+                correctAnswers: correctAnswers,
+                passingThreshold: passingThreshold,
+                score: score,
+                numberOfQuestions: numberOfQuestions,
+                numberOfCorrectAnswers: numberOfCorrectAnswers,
+                userid: userid,
+            };
+            navigate("/answerDisplay", { state: allProps });
+        }
+    }, [score, numberOfQuestions, numberOfCorrectAnswers]);
 
 
     return (
@@ -163,7 +193,7 @@ function QuizDisplay({ loggedInUser }) {
 
             </table>
 
-            <button class="submitButton" id="submitAnswers" name="submitAnswers" onClick={handleSubmit}>Submit Answers</button>
+            <button className="submitButton" id="submitAnswers" name="submitAnswers" onClick={handleSubmit}>Submit Answers</button>
 
         </div>
     )

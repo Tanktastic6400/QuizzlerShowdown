@@ -107,44 +107,20 @@ function QuizSelector({loggedInUser}) {
             
                 <div class="parameters">
 
-                    <label class="labels" htmlFor="amount">Number of Questions: </label>
-                    <input class="inputFields" id="amount" type="text" value={numberOfQuestions} onChange={handleAmountChange}></input>
+                    <label className="labels" htmlFor="amount">Number of Questions: </label>
+                    <input className="inputFields" id="amount" type="text" value={numberOfQuestions} onChange={handleAmountChange}></input>
 
                 </div>
                 <div class="parameters">
 
-                    <label class="labels" htmlFor="Category">Category of Questions: </label>
+                    <label className="labels" htmlFor="Category">Category of Questions: </label>
 
-                    <select class="selectorFields" name="category" id="category" onChange={handleCategoryChange}>
-                        {/* {categoryData && categoryData.trivia_categories.map((category, index) => (
-                            <option key={category.id} value={category.id}>{category.name}</option> */}
-                            <option value="9">General Knowledge</option>
-                            <option value="10">Books</option>
-                            <option value="11">Film</option>
-                            <option value="12">Music</option>
-                            <option value="13">Musicals & Theatres</option>
-                            <option value="14">Television</option>
-                            <option value="15">Video Games</option>
-                            <option value="16">Board Games</option>
-                            <option value="17">Science & Nature</option>
-                            <option value="18">Computers</option>
-                            <option value="19">Mathematics</option>
-                            <option value="20">Mythology</option>
-                            <option value="21">Sports</option>
-                            <option value="22">Geography</option>
-                            <option value="23">History</option>
-                            <option value="24">Politics</option>
-                            <option value="25">Art</option>
-                            <option value="26">Celebrities</option>
-                            <option value="27">Animals</option>
-                            <option value="28">Vehicles</option>
-                            <option value="29">Comics</option>
-                            <option value="30">Gadgets</option>
-                            <option value="31">Japanese Anime & Manga</option>
-                            <option value="32">Cartoon & Animations</option>
-
-                        ))
-                        {/* } */}
+                    <select className="selectorFields" name="category" id="category" onChange={handleCategoryChange}>
+                        {categoryData && categoryData.trivia_categories.map((category, index) => (
+                            <option key={category.id} value={category.id}>{category.name}</option> ))}
+                          
+                        
+                        
 
                     </select>
                 </div>

@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useLocation } from "react-router-dom"
 import "../CSS/AnswerDisplay.css"
 
 // function AnswerDisplay({loggedInUser, numberOfQuestions, score}){
 function AnswerDisplay() {
+    
     const location = useLocation();
 
     const {
@@ -17,7 +18,6 @@ function AnswerDisplay() {
         userid,
     } = location.state || {};
 
-    console.log(location.state);
 
     const passed = (score >= passingThreshold);
 
@@ -26,6 +26,7 @@ function AnswerDisplay() {
 
 
     }
+    
     const mixAnswers = (questions, questionIndex) => {
         let answers = [...questions.incorrect_answers, questions.correct_answer];
 
@@ -48,6 +49,10 @@ function AnswerDisplay() {
         return {};
     }
 
+    const handleRetry = () => {
+        Navigate("/quizSelector")
+    }
+
 
     return (
         <>
@@ -61,6 +66,9 @@ function AnswerDisplay() {
                 <h3>Score: {score}</h3>
             </div>
 
+            <div>
+                <button className="retryButton" id="retryButton" name="retryButton" onClick={handleRetry}>Create a different quiz?</button>
+            </div>
 
             <div className="tableSurround">
                 <h1> Quiz Questions</h1>

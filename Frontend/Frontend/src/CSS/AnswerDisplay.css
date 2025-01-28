@@ -1,8 +1,11 @@
 .title{
     padding: 20px;
     margin-top: 200px;
-    margin-bottom: -100px;
+    /* margin-bottom: -100px; */
     background-color: goldenrod;
+}
+.retryButton{
+  margin-top: 20px;
 }
   
   .answerLabel{
@@ -20,9 +23,14 @@
       font-family: cursive;
       font-size: large;
   }
+
+  .tableSurround{
+    margin-top: -150px;
+  }
   
   .questionTable{
       width: 100%;
+      
       background-color: darkgoldenrod;
      
   }

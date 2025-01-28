@@ -37,7 +37,7 @@ public class OpenTBDService {
             urlBuilder.queryParam("category", valueOfCategory);
         }
         if(difficulty != null){
-            urlBuilder.queryParam("difficult", difficulty);
+            urlBuilder.queryParam("difficulty", difficulty);
         }
         if(type != null){
             urlBuilder.queryParam("type", type);
