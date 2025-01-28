@@ -17,6 +17,7 @@ import ChatContainer from "./components/ChatContainer";
 import Scoreboard from "./components/Scoreboard";
 import ProfilePage from "./pages/ProfilePage";
 import LogReg from "./components/LogReg";
+import AnswerDisplay from "./components/AnswerDisplay";
 
 function App() {
   const [loggedInUser, setUser] = useState(null);
