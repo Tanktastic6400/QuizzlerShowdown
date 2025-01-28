@@ -111,6 +111,7 @@ function QuizDisplay({ loggedInUser }) {
 
     };
 
+    
     useEffect(() => {
         if (score > 0 || numberOfCorrectAnswers > 0 || numberOfQuestions > 0) {
             axios.post('http://localhost:8080/userservice/updateScore', null, {
