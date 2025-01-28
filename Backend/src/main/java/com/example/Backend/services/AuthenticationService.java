@@ -20,6 +20,9 @@ public class AuthenticationService {
     @Autowired
     private UserProfileRepository userProfileRepository;
 
+    @Autowired
+    private UserService userService;
+
     private static final String userSessionKey = "user";
 
     public User getUserFromSession(HttpSession session) {
@@ -40,25 +43,28 @@ public class AuthenticationService {
         session.setAttribute(userSessionKey, user.getId());
     }
 
+    //TODO Maybe actually do something with the email. ^^;
     public boolean loginUser(String typedUsername, String typedPassword, HttpSession session){
-        User attemptedUser = userRepository.findByUsername(typedUsername);
-        if(attemptedUser == null){
+        Optional <User> attemptedUser = userService.getUserByUsername(typedUsername);
+        if(attemptedUser.isEmpty()){
             return false;
         }
 
-        if(!attemptedUser.checkMatchingPasswords(typedPassword)){
+        User attemptedUserPassCheck = attemptedUser.get();
+
+        if(!attemptedUserPassCheck.checkMatchingPasswords(typedPassword)){
             return false;
         }
 
-        setUserInSession(session, attemptedUser);
+        setUserInSession(session, attemptedUserPassCheck);
         return true;
     }
 
     public boolean registerUser(User newUser, String passwordVerification){
-        User oldUserName = userRepository.findByUsername(newUser.getUsername());
-        User oldUserEmail = userRepository.findByEmail(newUser.getEmail());
+        Optional <User> oldUserName = userService.getUserByUsername(newUser.getUsername());
+        Optional <User> oldUserEmail = userService.getUserByEmail(newUser.getEmail());
 
-        if(oldUserName != null || oldUserEmail != null){
+        if(oldUserName.isPresent()|| oldUserEmail.isPresent()){
             return false;
         }
 

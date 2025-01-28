@@ -15,7 +15,7 @@ const MainPage = ({loggedInUser}) => {
         //         <div className="position-fixed top-0 end-0 p-3">
         <div>
 
-            <UserSearch />
+            <UserSearch loggedInUser={loggedInUser}/>
             <div className="review-button-position">
             <button
                 className="btn btn-primary float-end mt-5"

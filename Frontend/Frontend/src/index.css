@@ -73,6 +73,7 @@ button:focus-visible {
     top: 40px;
     width: 100%;
     padding-right: 20px; 
+    background-color: rgba(255, 0, 0, 0.108);
 }
 
 .main-content {

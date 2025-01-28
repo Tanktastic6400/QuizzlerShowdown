@@ -19,7 +19,7 @@ public class AnswersController {
 
     @PostMapping("/answers")
     public void updateScore(@RequestParam String username){
-       User user = userRepo.findByUsername(username);
+//       User user = userRepo.findByUsername(username); //Commented this out because of refactoring of userRepo.findByUsername
        UserProfile profile;
 //       if(){
 

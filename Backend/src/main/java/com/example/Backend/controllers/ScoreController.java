@@ -30,15 +30,6 @@ public class ScoreController {
     @Autowired
     private UserService userService;
 
-
-    //WiP
-
-    // @GetMapping("/{id}")
-    //    @ResponseBody
-    //    public User getUser(@PathVariable Long id){
-    //        return userService.getUserById(id);
-    //    }
-
     //@PostMapping("/getScore/{id}")
     @GetMapping("/getScore/{id}")
     public ResponseEntity<Integer> getScore(HttpSession session, @PathVariable long id){

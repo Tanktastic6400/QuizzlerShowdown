@@ -90,7 +90,7 @@ public class ChatService {
     }
 
     public Chat getChatInfo(String chatId){
-        System.out.println("The information for ChatID: " + chatId);
+
         return chatRepository.findByChatId(chatId);
     }
 }
