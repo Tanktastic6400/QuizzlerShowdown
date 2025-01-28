@@ -107,24 +107,28 @@ function QuizDisplay({ loggedInUser }) {
 
         checkAnswers();
 
-        axios.post('http://localhost:8080/userservice/updateScore', null, {
-            params: {
-                ID: userid, score: score, add: add
-
-            }
-        }).then(response => {
-            
-            // This ensures navigation happens only after the score is updated
-
-        }).catch(error => {
-            console.error("There was an issue grading answers", error);
-        });
 
 
     };
 
+    
     useEffect(() => {
         if (score > 0 || numberOfCorrectAnswers > 0 || numberOfQuestions > 0) {
+            axios.post('http://localhost:8080/userservice/updateScore', null, {
+                params: {
+                    ID: userid, score: score, add: add
+    
+                }
+            }).then(response => {
+                
+                // This ensures navigation happens only after the score is updated
+    
+            }).catch(error => {
+                console.error("There was an issue grading answers", error);
+            });
+            
+
+
             const allProps = {
                 questionData: questionData,
                 selectedAnswers: selectedAnswers,
