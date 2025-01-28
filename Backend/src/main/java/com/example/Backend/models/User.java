@@ -1,5 +1,6 @@
 package com.example.Backend.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
@@ -14,7 +15,8 @@ public class User extends AbstractClass {
     private String password;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JsonManagedReference
+    //@JsonManagedReference
+    @JsonBackReference
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
     //@NotNull
     //@Valid  //WILL THESE TWO ANNOTATIONS FIX IT?

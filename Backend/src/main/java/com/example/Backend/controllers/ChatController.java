@@ -17,12 +17,10 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
+
 
 @RestController
 @RequestMapping("/chat")
@@ -39,6 +37,8 @@ public class ChatController {
     @MessageMapping("/chat.private.{chatId}")
     @SendTo("/topic/private.{chatId}")
     public Message handlePrivateChat(@DestinationVariable String chatId, @Payload Message message) {
+
+
         if (!chatService.isValidChat(chatId)) {
             throw new IllegalArgumentException("Invalid chatId");
         }
@@ -47,13 +47,11 @@ public class ChatController {
 
         message.setUser1(messageSender);
         message.setUser2(messageReceiver);
-        System.out.println(message.toString());
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDate = now.format(formatter);
         message.setTimestamp(formattedDate);
         message.setChatId(chatId);
-
         messageRepository.save(message);
         System.out.println(message.toString());
         return message;
@@ -66,10 +64,9 @@ public class ChatController {
 
     @GetMapping("/chatid")
     public ResponseEntity<String> getChatId(@RequestParam Long user1, @RequestParam Long user2) {
-
         try {
             String ChatUUID = chatService.getOrCreateChatId(user1, user2);
-            System.out.println("The chatId is : " + ChatUUID);
+
             return ResponseEntity.ok(ChatUUID);
         } catch (Exception e) {
             System.err.println("Error in finding chat id: " + e.getMessage());

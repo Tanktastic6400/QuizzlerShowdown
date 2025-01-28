@@ -26,10 +26,11 @@ function Scoreboard({ loggedInUser, getUserInfo }) {
         console.error("Error fetching user top score:", error);
       }
     };
-  
+
+    fetchTopScores(); // Site wide top 10
+
     if (loggedInUser) {
-      fetchTopScores();
-      fetchUserTopScore();
+      fetchUserTopScore(); // User's current high score
     }
   }, [loggedInUser]);
 
@@ -54,7 +55,7 @@ function Scoreboard({ loggedInUser, getUserInfo }) {
           ))}
         </tbody>
       </table>
-      {currentUserScore}
+      <strong>Your Top Score: </strong>{currentUserScore}
       {}
     </div>
   );

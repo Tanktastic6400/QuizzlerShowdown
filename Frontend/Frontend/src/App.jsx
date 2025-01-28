@@ -1,27 +1,21 @@
 
-import { useState, useEffect } from 'react'
-//import './App.css'
-import './styles/App.css'
-import QuizDisplay from './components/QuizDisplay'
-import QuizSelector from './components/QuizSelector'
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom'; 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import MainPage from './pages/MainPage'
-import ReviewPage from './pages/ReviewPage'
-import RegisterPage from './pages/RegisterPage'
-import LoginPage from './pages/LoginPage';
-import Chatbox from './components/Chatbox';
-import FriendList from './components/FriendList';
-import UserBar from './components/UserBar';
-import ScorePage from './pages/ScorePage';
-import ChatContainer from './components/ChatContainer';
-import AnswerDisplay from './components/AnswerDisplay';
-
-import Scoreboard from './components/Scoreboard';
-
-import ProfilePage from './pages/ProfilePage';
-
+import { useState, useEffect } from "react";
+import "./styles/App.css";
+import QuizDisplay from "./components/QuizDisplay";
+import QuizSelector from "./components/QuizSelector";
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import MainPage from "./pages/MainPage";
+import ReviewPage from "./pages/ReviewPage";
+import RegisterPage from "./pages/RegisterPage";
+import LoginPage from "./pages/LoginPage";
+import Chatbox from "./components/Chatbox";
+import UserBar from "./components/UserBar";
+import ScorePage from "./pages/ScorePage";
+import ChatContainer from "./components/ChatContainer";
+import Scoreboard from "./components/Scoreboard";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   const [loggedInUser, setUser] = useState(null);
@@ -58,57 +52,23 @@ function App() {
 
   return (
     <>
-
-
-{/*       
-      <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/reviews" element={<ReviewPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/chat" element={<Chatbox />} />
-        
-        <Route
-          path="/login"
-          element={<LoginPage getUserInfo={getUserInfo} />}
-        />
-        <Route path="/quizdisplay" element={<QuizDisplay loggedInUser={loggedInUser} />} />
-        <Route path="/quizselector" element={<QuizSelector loggedInUser={loggedInUser} />} />
-      </Routes>
-      <UserBar loggedInUser={loggedInUser} getUserInfo={getUserInfo} />
-       */}
-
-
-
-
     <Routes>
-      <Route path="/" element={<MainPage />} />
+      <Route path="/" element={<MainPage loggedInUser={loggedInUser}/>} />
       <Route path="/reviews" element={<ReviewPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage getUserInfo={getUserInfo} />} />
-
-      
       <Route path="/quizdisplay" element={<QuizDisplay loggedInUser={loggedInUser} />} />
       <Route path="/quizselector" element={<QuizSelector loggedInUser={loggedInUser} />}/>
+
       <Route path="/answerDisplay" element={<AnswerDisplay/>}/>
-      
+
       <Route path="/scores" element={<ScorePage loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>} />
       <Route path="/chat" element={<Chatbox loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>} />
-      <Route path="/profile/FILLER" element={<ProfilePage/>} />
-                                {/*<Route path="user/:username" element={<ProfilePage/>} />*/}
-
+      <Route path="profile/:username" element={<ProfilePage loggedInUser={loggedInUser} getUserInfo={getUserInfo} />} />
     </Routes>
     <UserBar loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>
     <Scoreboard loggedInUser={loggedInUser}/>
     {loggedInUser?(<ChatContainer loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>):<div></div>}
-  
-
-    {/*}
-    <Chatbox />
-    
-    <QuizSelector/>
-    <QuizDisplay/>
-    </BrowserRouter>*/}
-
     </>
   );
 }

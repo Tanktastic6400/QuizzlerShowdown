@@ -15,9 +15,11 @@ import com.example.Backend.models.data.UserRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.example.Backend.DTO.ProfileFormDTO;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/userservice") //74?
@@ -41,36 +43,58 @@ public class UserController {
         return userRepository.findByUsernameContaining(username);
     }
 
+    //AS IS THIS IS GET USER INFO BUT BY PROFILE NAME INSTEAD OF JUST THE LOGGED-IN USER VIA SESSION
+    @GetMapping("/findUser")
+    public ResponseEntity<UserInfoDTO> attemptFindUser(@RequestParam String username){
+        UserInfoDTO userInfo = new UserInfoDTO();
+        Optional <User> tryFindUser = userService.getUserByUsername(username);
+        if(tryFindUser.isEmpty()){
+            return ResponseEntity.status(401).body(userInfo);
+        }
+        User foundUser = tryFindUser.get();
+        userInfo.setId(foundUser.getId());
+        userInfo.setUsername(foundUser.getUsername());
+        userInfo.setEmail(foundUser.getEmail());
+        return ResponseEntity.ok(userInfo);
+    }
+
+    @GetMapping("/findProfile")
+    public ResponseEntity<ProfileFormDTO> attemptFindProfile(@RequestParam long id){
+        ProfileFormDTO profileForm = new ProfileFormDTO();
+        User profileUser = userService.getUserByID(id);
+        profileForm.setBio(profileUser.getUserProfile().getBio());
+        profileForm.setName(profileUser.getUserProfile().getName());
+        profileForm.setLocation(profileUser.getUserProfile().getLocation());
+        profileForm.setOccupation(profileUser.getUserProfile().getOccupation());
+        profileForm.setScore(profileUser.getUserProfile().getScore());
+        return ResponseEntity.ok(profileForm);
+        //return ResponseEntity.ok(testBio);
+    }
+
+    //TODO UPDATE TO INCLUDE (ALMOST) ALL PROFILE ATTRIBUTES ONCE FRONT END'S COOL
+    @PostMapping("/updateProfile")
+    public ResponseEntity<String> attemptUpdateProfile(@RequestBody ProfileFormDTO request){
+        Optional <User> tryFindUser = userService.getUserByUsername(request.getUsername());
+        if(tryFindUser.isEmpty()){
+            return ResponseEntity.status(401).body("Error, could not update profile");
+        }
+        UserProfile profiletoUpdate = tryFindUser.get().getUserProfile();
+        profiletoUpdate.setName(request.getName());
+        profiletoUpdate.setBio(request.getBio());
+        profiletoUpdate.setLocation(request.getLocation());
+        profiletoUpdate.setOccupation(request.getOccupation());
+        userService.updateUserProfile(profiletoUpdate);
+        return ResponseEntity.ok("Profile fields updated");
+    }
+
     @PostMapping("/updateScore")
     public ResponseEntity<String> attemptUpdateScore(@RequestParam long  ID, @RequestParam int score, @RequestParam boolean add){
-//        //JUST A TEST PLACEHOLDER
-//        public ResponseEntity<String> attemptUpdateScore(){
-//        //HARDCORED PLACEHOLDRS FOR NOW
-//        Long doubleId = (long) 15;
-//        int score = 49000;
-//
-//        //System.out.println("SCORE");
-//        //System.out.println(score);
-//        //System.out.println("SCORE");
-//
-//        //This is all just for pulling up a user for testing. Ugh.
-//        User user;
-//        if(userRepository.findById(doubleId).isPresent()){
-//            user = userRepository.findById(doubleId).get();
-//        } else
-//            return ResponseEntity.status(401).body("User not found");
-//
         int sentScore = score;
         User user = userService.getUserByID(ID);
         UserProfile profileToUpdate = user.getUserProfile();
-        //
-//        System.out.println("TRYING TO GET USER INFO FROM USER PROFILE");
-//        System.out.println(profileToUpdate.getUser().getUsername());
-//        System.out.println("DID WE GET IT?");
         if(add){
             sentScore += profileToUpdate.getScore();
         }
-
         profileToUpdate.setScore(sentScore);
         userService.updateUserProfile(profileToUpdate);
         return ResponseEntity.ok("Score updated");
@@ -79,7 +103,6 @@ public class UserController {
     //Add some checks here in the event of error for some reason?
     @PostMapping("/deleteAccount")
     public ResponseEntity<String> attemptDeletion(HttpSession session){
-
         User deletedUser = authenticationService.getUserFromSession(session);
         userService.deleteUser(deletedUser);
         session.invalidate();
@@ -88,23 +111,17 @@ public class UserController {
 
     @GetMapping("/userinfo")
     public ResponseEntity<UserInfoDTO> getUserInfo(HttpSession session){
-
         User currentUser= authenticationService.getUserFromSession(session);
-
         UserInfoDTO userInfo = new UserInfoDTO();
-
         currentUser.getUserProfile().getScore();
-
         if(currentUser == null){
             //Return the empty DTO, but since the error code is 401 it won't ever be used?
             return ResponseEntity.status(401).body(userInfo);
         }
         String currentUsername = currentUser.getUsername();
-
         userInfo.setId(currentUser.getId());
         userInfo.setUsername(currentUser.getUsername());
         userInfo.setEmail(currentUser.getEmail());
-
         return ResponseEntity.ok(userInfo);
     }
 

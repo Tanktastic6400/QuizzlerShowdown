@@ -13,6 +13,8 @@ function ScorePage({loggedInUser, getUserInfo}) {
 
     //console.log(JSON.stringify(loggedInUser.id));
 
+
+
     return (
         <div>
             <h2>High Scores</h2>
