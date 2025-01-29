@@ -27,7 +27,8 @@ public class AuthenticationController {
     public ResponseEntity<String> attemptLogin(@RequestBody LoginFormDTO request, HttpSession session){
         String typedName = request.getUsername();
         String typedPassword = request.getPassword();
-        if(authenticationService.loginUser(typedName, typedPassword, session)){
+        String typedEmail = request.getEmail();
+        if(authenticationService.loginUser(typedName, typedPassword, typedEmail, session)){
             return ResponseEntity.ok("Sucessfully logged in");
         }
         //setUserInSession(request.getSession(), theUser);
