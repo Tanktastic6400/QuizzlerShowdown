@@ -87,8 +87,10 @@ public class UserController {
         return ResponseEntity.ok("Profile fields updated");
     }
 
+   // ID: userid, score: score, add: add, correctAnswers: numberOfCorrectAnswers, numberOfQuestions: numberOfQuestions
+
     @PostMapping("/updateScore")
-    public ResponseEntity<String> attemptUpdateScore(@RequestParam long  ID, @RequestParam int score, @RequestParam boolean add){
+    public ResponseEntity<String> attemptUpdateScore(@RequestParam long  ID, @RequestParam int score, @RequestParam boolean add, @RequestParam int correctAnswers, @RequestParam int numberOfQuestions ){
         int sentScore = score;
         User user = userService.getUserByID(ID);
         UserProfile profileToUpdate = user.getUserProfile();
