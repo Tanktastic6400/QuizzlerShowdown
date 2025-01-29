@@ -44,7 +44,7 @@ public class AuthenticationService {
     }
 
     //TODO Maybe actually do something with the email. ^^;
-    public boolean loginUser(String typedUsername, String typedPassword, HttpSession session){
+    public boolean loginUser(String typedUsername, String typedPassword, String typedEmail, HttpSession session){
         Optional <User> attemptedUser = userService.getUserByUsername(typedUsername);
         if(attemptedUser.isEmpty()){
             return false;
@@ -53,6 +53,10 @@ public class AuthenticationService {
         User attemptedUserPassCheck = attemptedUser.get();
 
         if(!attemptedUserPassCheck.checkMatchingPasswords(typedPassword)){
+            return false;
+        }
+
+        if(!attemptedUserPassCheck.getEmail().equals(typedEmail)) {
             return false;
         }
 
