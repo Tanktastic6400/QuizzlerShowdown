@@ -28,6 +28,23 @@ public class UserService {
         return user.orElseThrow(() -> new RuntimeException("No user with ID found"));
     }
 
+    public void updateStats(UserProfile statProfile, int correctAnswers, int numberOfQuestions, int newScore, boolean add){
+        int quizzesTaken = statProfile.getQuizzesTaken()+1;
+        int totalCorrect = statProfile.getTotalCorrectAnswers()+correctAnswers;
+        int totalAnswered = statProfile.getQuestionsAnswered()+numberOfQuestions;
+        float correctAnswerPercentage = ( (float) totalCorrect / totalAnswered)*100;
+        int currentScore = statProfile.getScore();
+        if(add){
+            currentScore+= newScore;
+        }
+        statProfile.setScore(currentScore);
+        statProfile.setQuizzesTaken(quizzesTaken);
+        statProfile.setTotalCorrectAnswers(totalCorrect);
+        statProfile.setQuestionsAnswered(totalAnswered);
+        statProfile.setCorrectAnswerPercentage(correctAnswerPercentage);
+        userProfileRepository.save(statProfile);
+    }
+
     public Optional<User> getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }

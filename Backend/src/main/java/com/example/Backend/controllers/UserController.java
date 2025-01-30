@@ -88,15 +88,22 @@ public class UserController {
     }
 
     @PostMapping("/updateScore")
-    public ResponseEntity<String> attemptUpdateScore(@RequestParam long  ID, @RequestParam int score, @RequestParam boolean add){
+    public ResponseEntity<String> attemptUpdateScore(@RequestParam long  ID, @RequestParam int score, @RequestParam boolean add, @RequestParam int correctAnswers, @RequestParam int numberOfQuestions ){
         int sentScore = score;
+
+        //System.out.println("Correct Answers: "+correctAnswers);
+        //System.out.println("Number of Questions: "+numberOfQuestions);
+
         User user = userService.getUserByID(ID);
         UserProfile profileToUpdate = user.getUserProfile();
-        if(add){
-            sentScore += profileToUpdate.getScore();
-        }
-        profileToUpdate.setScore(sentScore);
-        userService.updateUserProfile(profileToUpdate);
+
+        userService.updateStats(profileToUpdate, correctAnswers, numberOfQuestions, score, add);
+
+//        if(add){
+//            sentScore += profileToUpdate.getScore();
+//        }
+//        profileToUpdate.setScore(sentScore);
+//        userService.updateUserProfile(profileToUpdate);
         return ResponseEntity.ok("Score updated");
     }
 
