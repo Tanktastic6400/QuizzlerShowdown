@@ -34,7 +34,7 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
         .then((response) =>
         {
             if (!response.ok) { //If it's not a real user navigate away to homepage.
-                navigate("/");
+                navigate("/error");
             }
             return response.json()})
         //}
