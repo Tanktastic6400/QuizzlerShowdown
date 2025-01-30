@@ -25,18 +25,22 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<String> attemptLogin(@RequestBody LoginFormDTO request, HttpSession session){
-        String typedName = request.getUsername();
+        String typedLoginMethod = request.getUsername();
         String typedPassword = request.getPassword();
-        String typedEmail = request.getEmail();
-        if(authenticationService.loginUser(typedName, typedPassword, typedEmail, session)){
+        //String typedEmail = request.getEmail();
+        //System.out.println(typedEmail.contains("@"));
+        if(authenticationService.loginUser(typedLoginMethod, typedPassword, session)){
             return ResponseEntity.ok("Sucessfully logged in");
         }
         //setUserInSession(request.getSession(), theUser);
-        return ResponseEntity.status(401).body("Incorrect username or password");
+        return ResponseEntity.status(401).body("Incorrect username/email or password");
     }
 
     @PostMapping("/register")
     public ResponseEntity<String> attemptRegistration(@RequestBody RegisterFormDTO request){
+        if(request.getUsername().contains("@")) {
+            return ResponseEntity.status(401).body("Username cannot contain @");
+        }
         User newUser = new User(request.getUsername(), request.getEmail(), request.getPassword());
         String passwordCheck = request.getPasswordVerification();
         if(authenticationService.registerUser(newUser, passwordCheck)) {

@@ -13,6 +13,16 @@ function RegisterForm(props) {
   function handleSubmit(e) {
     e.preventDefault();
 
+    const testUsername = username
+
+    if(testUsername.includes("@")){
+        setUsername("");
+        setEmail("");
+        setPassword("");
+        setConfirmedPassword("");
+        throw new Error("Username may not contain @");
+    }
+
     const registerFormData = {
       username: username,
       password: password,

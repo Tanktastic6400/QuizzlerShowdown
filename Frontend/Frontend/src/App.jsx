@@ -18,6 +18,7 @@ import Scoreboard from "./components/Scoreboard";
 import ProfilePage from "./pages/ProfilePage";
 import LogReg from "./components/LogReg";
 import AnswerDisplay from "./components/AnswerDisplay";
+import ErrorPage from "./pages/ErrorPage";
 
 function App() {
   const [loggedInUser, setUser] = useState(null);
@@ -63,6 +64,9 @@ function App() {
       <Route path="/quizselector" element={<QuizSelector loggedInUser={loggedInUser} />}/>
 
       <Route path="/answerDisplay" element={<AnswerDisplay/>}/>
+
+      <Route path="/error" element={<ErrorPage />} />
+
 
       <Route path="/scores" element={<ScorePage loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>} />
       <Route path="/chat" element={<Chatbox loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>} />
