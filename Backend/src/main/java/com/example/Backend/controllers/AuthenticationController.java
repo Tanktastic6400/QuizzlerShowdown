@@ -25,14 +25,15 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<String> attemptLogin(@RequestBody LoginFormDTO request, HttpSession session){
-        String typedName = request.getUsername();
+        String typedLoginMethod = request.getUsername();
         String typedPassword = request.getPassword();
-        String typedEmail = request.getEmail();
-        if(authenticationService.loginUser(typedName, typedPassword, typedEmail, session)){
+        //String typedEmail = request.getEmail();
+        //System.out.println(typedEmail.contains("@"));
+        if(authenticationService.loginUser(typedLoginMethod, typedPassword, session)){
             return ResponseEntity.ok("Sucessfully logged in");
         }
         //setUserInSession(request.getSession(), theUser);
-        return ResponseEntity.status(401).body("Incorrect username or password");
+        return ResponseEntity.status(401).body("Incorrect username/email or password");
     }
 
     @PostMapping("/register")
