@@ -38,6 +38,9 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<String> attemptRegistration(@RequestBody RegisterFormDTO request){
+        if(request.getUsername().contains("@")) {
+            return ResponseEntity.status(401).body("Username cannot contain @");
+        }
         User newUser = new User(request.getUsername(), request.getEmail(), request.getPassword());
         String passwordCheck = request.getPasswordVerification();
         if(authenticationService.registerUser(newUser, passwordCheck)) {
