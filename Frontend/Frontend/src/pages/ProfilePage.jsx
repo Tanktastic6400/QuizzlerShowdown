@@ -32,6 +32,7 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
     useEffect(() => {
 
         const username = params.username
+
         const fetchSpecifications = {
             method: "GET",
             }
@@ -85,7 +86,7 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
                 }
         }
          //         },[]);
-           }, [loggedInUser, editMode]); //Why this versus []?
+           }, [loggedInUser, editMode, params]); //Why this versus []?
 
     function EnableEditMode(){
         setEditMode(true)
