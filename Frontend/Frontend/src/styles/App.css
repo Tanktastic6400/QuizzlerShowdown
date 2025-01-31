@@ -27,6 +27,7 @@
 .user-search-container{
   display: flex;
   justify-content: center;
+  overflow: visible;
 }
 
 .search-button{
@@ -45,7 +46,8 @@
   border-bottom: solid;
   border-bottom-width: 2px;
   border-bottom-color: sienna;
-  
+  overflow: visible;
+  max-height: 70px;
 }
 
 .nav-items{
@@ -95,7 +97,7 @@
   width: 300px;
 }
 
-.score-container {
+.top-ten-container {
   position: fixed;
   background-color: darkkhaki;
   border: solid;
@@ -103,6 +105,7 @@
   border-color: goldenrod;
   left: 10px;
   top: 125px;
+  width: 225px;
 }
 
 .friend-container{

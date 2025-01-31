@@ -1,28 +1,24 @@
-.logreg-container{
+/* .logreg-container{
   display: flex; 
+  position: absolute;
+  top: 100px;
+  left: 50%;
   align-items: center; 
   justify-content: center; 
-  height: 50vh;
+  height: 70vh;
   width: 30vw; 
-  background-color: hwb(54 55% 6% / 0.273);
   border-radius: 16px;
   border-style: solid;
   border-width: 4px;
   border-color: gold;
-  background-image: url("../images/Orange_question_mark.svg.png");
   background-size:cover;
-}
+  background-repeat: no-repeat;
+} */
 
 .login-container{
     display: flex;
     align-items: center;
     justify-content: center;
     width: 50%;
-}
-
-.register-container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50%;
+    
 }
