@@ -18,7 +18,7 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
 
     const [pageScore, setPageScore] = useState(0);
 
-    const [pageQuizzesTaken, setQuizzesTaken] = useState(0);
+    const [pageQuizzesTaken, setPageQuizzesTaken] = useState(0);
     const [pageQuestionsAnswered, setPageQuestionsAnswered] = useState(0);
     const [pageTotalCorrectAnswers, setPageTotalCorrectAnswers] = useState(0);
     const [pageCorrectAnswerPercentage, setPageCorrectAnswerPercentage] = useState(0);
@@ -60,6 +60,11 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
             setPageLocation(data.location);
             setPageOccupation(data.occupation);
             setPageScore(data.score);
+
+            setPageQuizzesTaken(data.quizzesTaken);
+            setPageQuestionsAnswered(data.questionsAnswered);
+            setPageTotalCorrectAnswers(data.totalCorrectAnswers);
+            setPageCorrectAnswerPercentage(data.correctAnswerPercentage);
 
             })
 
