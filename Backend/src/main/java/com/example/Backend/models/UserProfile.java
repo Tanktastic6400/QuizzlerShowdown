@@ -22,6 +22,12 @@ public class UserProfile extends AbstractClass {
     private String location ="";
     private String occupation ="";
 
+    private int quizzesTaken = 0;
+    private int questionsAnswered = 0;
+    private int totalCorrectAnswers = 0;
+    private float correctAnswerPercentage = 0;
+
+
     //@JsonBackReference
     @JsonManagedReference
     @OneToMany(mappedBy = "userProfile")
@@ -85,4 +91,35 @@ public class UserProfile extends AbstractClass {
         this.occupation = occupation;
     }
 
+    public int getQuizzesTaken() {
+        return quizzesTaken;
+    }
+
+    public void setQuizzesTaken(int quizzesTaken) {
+        this.quizzesTaken = quizzesTaken;
+    }
+
+    public int getQuestionsAnswered() {
+        return questionsAnswered;
+    }
+
+    public void setQuestionsAnswered(int questionsAnswered) {
+        this.questionsAnswered = questionsAnswered;
+    }
+
+    public int getTotalCorrectAnswers() {
+        return totalCorrectAnswers;
+    }
+
+    public void setTotalCorrectAnswers(int totalCorrectAnswers) {
+        this.totalCorrectAnswers = totalCorrectAnswers;
+    }
+
+    public float getCorrectAnswerPercentage() {
+        return correctAnswerPercentage;
+    }
+
+    public void setCorrectAnswerPercentage(float correctAnswerPercentage) {
+        this.correctAnswerPercentage = correctAnswerPercentage;
+    }
 }

@@ -18,6 +18,11 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
 
     const [pageScore, setPageScore] = useState(0);
 
+    const [pageQuizzesTaken, setPageQuizzesTaken] = useState(0);
+    const [pageQuestionsAnswered, setPageQuestionsAnswered] = useState(0);
+    const [pageTotalCorrectAnswers, setPageTotalCorrectAnswers] = useState(0);
+    const [pageCorrectAnswerPercentage, setPageCorrectAnswerPercentage] = useState(0);
+
     const [pageFriendList, setPageFriendList] = useState([]);
 
     const navigate = useNavigate();
@@ -55,6 +60,11 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
             setPageLocation(data.location);
             setPageOccupation(data.occupation);
             setPageScore(data.score);
+
+            setPageQuizzesTaken(data.quizzesTaken);
+            setPageQuestionsAnswered(data.questionsAnswered);
+            setPageTotalCorrectAnswers(data.totalCorrectAnswers);
+            setPageCorrectAnswerPercentage(data.correctAnswerPercentage);
 
             })
 
@@ -109,6 +119,11 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
              <p> Location: {pageLocation}</p>
              <p> Occupation: {pageOccupation}</p>
              <p> High Score: {pageScore}</p>
+             <p> Quizzes Taken: {pageQuizzesTaken}</p>
+             <p> Questions Answered: {pageQuestionsAnswered}</p>
+             <p> Correctly Answered Questions: {pageTotalCorrectAnswers}</p>
+             <p> Career Percentage Correct: {pageCorrectAnswerPercentage}</p>
+
             <p> Friends </p>
              <ul>
                  {pageFriendList.filter(friend=> friend.status === "ACCEPTED")

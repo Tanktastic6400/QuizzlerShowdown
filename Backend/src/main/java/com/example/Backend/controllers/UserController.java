@@ -67,11 +67,14 @@ public class UserController {
         profileForm.setLocation(profileUser.getUserProfile().getLocation());
         profileForm.setOccupation(profileUser.getUserProfile().getOccupation());
         profileForm.setScore(profileUser.getUserProfile().getScore());
+        profileForm.setQuizzesTaken(profileUser.getUserProfile().getQuizzesTaken());
+        profileForm.setQuestionsAnswered(profileUser.getUserProfile().getQuestionsAnswered());
+        profileForm.setTotalCorrectAnswers(profileUser.getUserProfile().getTotalCorrectAnswers());
+        profileForm.setCorrectAnswerPercentage(profileUser.getUserProfile().getCorrectAnswerPercentage());
         return ResponseEntity.ok(profileForm);
         //return ResponseEntity.ok(testBio);
     }
 
-    //TODO UPDATE TO INCLUDE (ALMOST) ALL PROFILE ATTRIBUTES ONCE FRONT END'S COOL
     @PostMapping("/updateProfile")
     public ResponseEntity<String> attemptUpdateProfile(@RequestBody ProfileFormDTO request){
         Optional <User> tryFindUser = userService.getUserByUsername(request.getUsername());
@@ -88,15 +91,10 @@ public class UserController {
     }
 
     @PostMapping("/updateScore")
-    public ResponseEntity<String> attemptUpdateScore(@RequestParam long  ID, @RequestParam int score, @RequestParam boolean add){
-        int sentScore = score;
+    public ResponseEntity<String> attemptUpdateScore(@RequestParam long  ID, @RequestParam int score, @RequestParam boolean add, @RequestParam int correctAnswers, @RequestParam int numberOfQuestions ){
         User user = userService.getUserByID(ID);
         UserProfile profileToUpdate = user.getUserProfile();
-        if(add){
-            sentScore += profileToUpdate.getScore();
-        }
-        profileToUpdate.setScore(sentScore);
-        userService.updateUserProfile(profileToUpdate);
+        userService.updateStats(profileToUpdate, correctAnswers, numberOfQuestions, score, add);
         return ResponseEntity.ok("Score updated");
     }
 
