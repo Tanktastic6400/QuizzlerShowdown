@@ -21,8 +21,9 @@ function DeleteButton( {getUserInfo} ){
                    alert("Account deleted");
                    getUserInfo();
                    navigate("/");
+                   window.location.reload(); //Reload so everything doesn't explode.
                    return response;
-               })
+               });
        }
 
     return (

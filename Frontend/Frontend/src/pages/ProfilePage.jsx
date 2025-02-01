@@ -126,6 +126,7 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
              </div>
              <div className="statProfile-container">
                  <ul>
+                     <h2> Let's See Where You Stand, Pardner! </h2>
                     <p> High Score: {pageScore}</p>
                     <p> Quizzes Taken: {pageQuizzesTaken}</p>
                     <p> Questions Answered: {pageQuestionsAnswered}</p>
@@ -150,7 +151,7 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
                  ))}
             </ul>
             </div>
-                {ownerPage?(<button type ="button" onClick={EnableEditMode} > Edit Page </button>):<div></div>}
+                {ownerPage?(<button type ="button" className="search-button" onClick={EnableEditMode} > Edit Page </button>):<div></div>}
                 </div>
              }
             {/*}<ProfileView passedUsername={pageUserName}/>*/}
