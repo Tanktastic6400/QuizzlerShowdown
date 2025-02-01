@@ -34,19 +34,13 @@ public class FriendListService {
     public void clearFriends (Long userId) {
         List<FriendList> listToClear = getFriends(userId);
         for (FriendList friend : listToClear) {
-//            System.out.println("IN LOOP");
-//            System.out.println(friend.getUser1().getId());
-//            System.out.println(friend.getUser2().getId());
 //            if (friend.getUser1().getId().equals(userId)) {
-//                System.out.println("FIRST USER");
 //                friend.setUser1(null);
 //            } else {
-//                System.out.println("Second USER");
 //                friend.setUser2(null);
 //            }
 //            friendListRepository.save(friend);
             friendListRepository.deleteById(friend.getId());
-
         }
     }
 

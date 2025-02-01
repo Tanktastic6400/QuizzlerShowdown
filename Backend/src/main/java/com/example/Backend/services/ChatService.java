@@ -32,39 +32,28 @@ public class ChatService {
     public List<Chat> getAllChats(Long id){
         return chatRepository.findChatsWitUser(id);
     }
-    public void nullifyUser(Long toNullify){
+    public void clearChats(Long toNullify){
         List<Chat> listOfChats = getAllChats(toNullify);
 
         for (Chat chat : listOfChats) {
-            System.out.println("IN LOOP");
-            System.out.println(chat.getUser1().getId());
-            System.out.println(chat.getUser2().getId());
-            if(chat.getUser1().getId().equals(toNullify)) {
-                System.out.println("FIRST USER");
-                chat.setUser1(null);
-            } else{
-                System.out.println("Second USER");
-                chat.setUser2(null);
-            }
+            chat.setUser1(null);
+            chat.setUser2(null);
             chatRepository.save(chat);
+            chatRepository.deleteById(chat.getId());
         }
     }
 
-    public void nullifyChats(Long toNullify)
+    public void clearMessages(Long toNullify)
     {
         List <Message> listOfMessages = messageRepository.findChatsWithUsers(toNullify);
         for (Message message : listOfMessages) {
-            System.out.println("IN LOOP");
-            System.out.println(message.getUser1().getId());
-            System.out.println(message.getUser2().getId());
-            if(message.getUser1().getId().equals(toNullify)) {
-                System.out.println("FIRST USER");
-                message.setUser1(null);
-            } else{
-                System.out.println("Second USER");
-                message.setUser2(null);
-            }
-            messageRepository.save(message);
+//            if(message.getUser1().getId().equals(toNullify)) {
+//                message.setUser1(null);
+//            } else{
+//                message.setUser2(null);
+//            }
+//            messageRepository.save(message);
+            messageRepository.deleteById(message.getId());
         }
 
     }

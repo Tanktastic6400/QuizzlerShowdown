@@ -33,21 +33,6 @@ public class ChatController {
     @Autowired
     private MessageRepository messageRepository;
 
-    //TODO COMMENT THIS OUT WHEN SURE SERVICE WORKS
-    @GetMapping("/nullTest")
-    public String nullTester(){
-        long testNull = 5;
-        chatService.nullifyUser(testNull);
-        return "Check MySQL (Chat)";
-    }
-
-    @GetMapping("/nullTest2")
-    public String nullTester2(){
-        long testNull = 5;
-        chatService.nullifyChats(testNull);
-        return "Check MySQL (Messages)";
-    }
-
     @Transactional
     @MessageMapping("/chat.private.{chatId}")
     @SendTo("/topic/private.{chatId}")

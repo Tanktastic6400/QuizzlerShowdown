@@ -5,6 +5,8 @@ import com.example.Backend.models.UserProfile;
 import com.example.Backend.models.data.UserProfileRepository;
 import com.example.Backend.models.data.UserRepository;
 import com.example.Backend.services.AuthenticationService;
+import com.example.Backend.services.ChatService;
+import com.example.Backend.services.FriendListService;
 import com.example.Backend.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,12 @@ public class UserController {
 
     @Autowired
     private AuthenticationService authenticationService;
+
+    @Autowired
+    private FriendListService friendListService;
+
+    @Autowired
+    private ChatService chatService;
 
     @GetMapping("/search/users")
     public List<User> searchUsers(@RequestParam String username) {
@@ -102,6 +110,10 @@ public class UserController {
     @PostMapping("/deleteAccount")
     public ResponseEntity<String> attemptDeletion(HttpSession session){
         User deletedUser = authenticationService.getUserFromSession(session);
+        long id = deletedUser.getId();
+        chatService.clearMessages(id);
+        chatService.clearChats(id);
+        friendListService.clearFriends(id);
         userService.deleteUser(deletedUser);
         session.invalidate();
         return ResponseEntity.ok("Account deleted");
