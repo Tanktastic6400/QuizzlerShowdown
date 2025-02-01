@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../CSS/QuizSelector.css"
 import axios from "axios";
 import throttle from "lodash.throttle";
+
 function QuizSelector({loggedInUser}) {
 
     const [numberOfQuestions, setNumberOfQuestions] = useState('');
@@ -105,13 +106,13 @@ function QuizSelector({loggedInUser}) {
         <div>
             <h1>Please fill out the form, {loggedInUser.username}</h1>
             
-                <div class="parameters">
+                <div className="parameters">
 
                     <label className="labels" htmlFor="amount">Number of Questions: </label>
                     <input className="inputFields" id="amount" type="text" value={numberOfQuestions} onChange={handleAmountChange}></input>
 
                 </div>
-                <div class="parameters">
+                <div className="parameters">
 
                     <label className="labels" htmlFor="Category">Category of Questions: </label>
 
@@ -124,21 +125,21 @@ function QuizSelector({loggedInUser}) {
 
                     </select>
                 </div>
-                <div class="parameters">
+                <div className="parameters">
 
-                    <label class="labels" htmlFor="Type">Type of Questions: </label>
+                    <label className="labels" htmlFor="Type">Type of Questions: </label>
 
-                    <select class="selectorFields" name="type" id="type" onChange={handleTypeChange}>
+                    <select className="selectorFields" name="type" id="type" onChange={handleTypeChange}>
                         <option value="multiple">Multiple Choice</option>
                         <option value="boolean">True or False</option>
                     </select>
                 </div>
 
-                <div class="parameters">
+                <div className="parameters">
 
-                    <label class="labels" htmlFor="Difficulty">Difficulty: </label>
+                    <label className="labels" htmlFor="Difficulty">Difficulty: </label>
 
-                    <select class="selectorFields" name="difficulty" id="difficulty" onChange={handleDifficultyChange}>
+                    <select className="selectorFields" name="difficulty" id="difficulty" onChange={handleDifficultyChange}>
                         <option value="easy">Easy</option>
                         <option value="medium">Medium</option>
                         <option value="hard">Hard</option>

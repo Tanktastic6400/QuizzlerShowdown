@@ -1,9 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/App.css";
-import UserSearch from "../components/UserSearch";
 
-const MainPage = ({ loggedInUser }) => {
+import QuizSelector from "../components/QuizSelector";
+import Scoreboard from "../components/Scoreboard";
+import LogReg from "../components/LogReg";
+import UserBar from "../components/UserBar";
+import ChatContainer from "../components/ChatContainer";
+
+const MainPage = ({ loggedInUser, getUserInfo}) => {
   const navigate = useNavigate();
   const handleReviewButtonClick = () => {
     navigate("/reviews");
@@ -11,7 +16,8 @@ const MainPage = ({ loggedInUser }) => {
   return (
     <>
       <div className="main-page-container">
-        <h1>Welcome to Quizzler Showdown</h1>
+        <Scoreboard loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>
+        
       </div>
     </>
   );

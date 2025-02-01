@@ -35,7 +35,7 @@ function Scoreboard({ loggedInUser, getUserInfo }) {
   }, [loggedInUser, highScores, currentUserScore]);
 
   return (
-    <div>
+    <div className="top-ten-container">
       <h2> Scoreboard </h2>
       <table>
         <thead>
