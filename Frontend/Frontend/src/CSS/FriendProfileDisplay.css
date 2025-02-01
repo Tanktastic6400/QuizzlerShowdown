@@ -2,8 +2,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  left: 50%;
-  height: 30vh;
+  left: 45%;
+  bottom: 33%;
+  height: 35vh;
   width: 15vw;
   background-color: hwb(54 55% 6% / 0.273);
   border-radius: 16px;
@@ -13,7 +14,6 @@
   background-image: url("../images/Orange_question_mark.svg.png");
   background-size:cover;
   position: fixed;
-  z-index: 0; /*shouldn't this make everything else above it?*/
 }
 
 .friendProfile-container{
@@ -27,10 +27,10 @@
   border-style: solid;
   border-width: 4px;
   border-color: gold;
-  background-image: url("../images/Orange_question_mark.svg.png");
+  background-image: url("../images/handshake.png");
   background-size:cover;
   position: fixed;
-  bottom: 40px;
+  bottom: 73px; /*60 seems good for just over the button*/
   right: 20px;
 
 }
@@ -69,4 +69,11 @@
 
 .wrap {
   text-wrap: wrap;
+}
+
+.profileFooter{
+  position: fixed;
+  bottom: 55px;
+  right: 20px;
+
 }

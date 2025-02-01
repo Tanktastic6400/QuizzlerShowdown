@@ -113,17 +113,21 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
                 />
             </div>)
             :
+                <div>
+                 <div className='userProfile-container'>
+                                <ul>
+                                <h2> Username: {params.username} </h2>
+                                 <p> Email: {pageEmail} </p>
+                                 <p> Name: {pageName}</p>
+                                 <p> Bio: {pageBio} </p>
+                                 <p> Location: {pageLocation}</p>
+                                 <p> Occupation: {pageOccupation}</p>
+                                {ownerPage?(<button type ="button" className="search-button" onClick={EnableEditMode} > Edit Page </button>):<div></div>}
+                                 </ul>
+                         </div>
+                </div>
+                         }
             <div>
-                <div className='userProfile-container'>
-                    <ul>
-                    <p> Username: {params.username} </p>
-                     <p> Email: {pageEmail} </p>
-                     <p> Name: {pageName}</p>
-                     <p> Bio: {pageBio} </p>
-                     <p> Location: {pageLocation}</p>
-                     <p> Occupation: {pageOccupation}</p>
-                     </ul>
-             </div>
              <div className="statProfile-container">
                  <ul>
                      <h2> Let's See Where You Stand, Pardner! </h2>
@@ -151,11 +155,12 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
                  ))}
             </ul>
             </div>
-                {ownerPage?(<button type ="button" className="search-button" onClick={EnableEditMode} > Edit Page </button>):<div></div>}
                 </div>
-             }
+
             {/*}<ProfileView passedUsername={pageUserName}/>*/}
+            <footer className="profileFooter">  Handshake designed by <a href={"https://www.freepik.com/"}> Freepik </a> </footer>
         </div>
+
     );
 }
 

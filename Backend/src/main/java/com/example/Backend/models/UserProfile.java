@@ -17,6 +17,7 @@ public class UserProfile extends AbstractClass {
     private int score = 0; //Have score start at 0?
     //private int score;
 
+    //@Column(columnDefinition = "text")
     private String bio = "";
     private String name = "";
     private String location ="";

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import "../CSS/FriendProfileDisplay.css"
 
 function ProfileForm(props){
 
@@ -44,8 +45,8 @@ function ProfileForm(props){
     }
 
     return(
-        <form onSubmit={handleSubmit}>
-
+        <form onSubmit={handleSubmit} className='userProfile-container'>
+            <ul>
                 <div>
                     <label className="form-label">
                       Name:
@@ -110,9 +111,10 @@ function ProfileForm(props){
                   </div>
 
 
-            <button type="submit">
+            <button type="submit" className="search-button">
                 DONE EDITING
             </button>
+            </ul>
         </form>
         );
 }
