@@ -50,6 +50,25 @@ public class ChatService {
         }
     }
 
+    public void nullifyChats(Long toNullify)
+    {
+        List <Message> listOfMessages = messageRepository.findChatsWithUsers(toNullify);
+        for (Message message : listOfMessages) {
+            System.out.println("IN LOOP");
+            System.out.println(message.getUser1().getId());
+            System.out.println(message.getUser2().getId());
+            if(message.getUser1().getId().equals(toNullify)) {
+                System.out.println("FIRST USER");
+                message.setUser1(null);
+            } else{
+                System.out.println("Second USER");
+                message.setUser2(null);
+            }
+            messageRepository.save(message);
+        }
+
+    }
+
     public User getUserById(Long id){
         Optional<User> user = userRepository.findById(id);
         return user.orElseThrow(() -> new RuntimeException("User not found"));

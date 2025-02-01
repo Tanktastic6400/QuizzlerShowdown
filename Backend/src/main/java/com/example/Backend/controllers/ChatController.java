@@ -36,9 +36,16 @@ public class ChatController {
     //TODO COMMENT THIS OUT WHEN SURE SERVICE WORKS
     @GetMapping("/nullTest")
     public String nullTester(){
-        long testNull = 1;
+        long testNull = 4;
         chatService.nullifyUser(testNull);
         return "Check MySQL (Chat)";
+    }
+
+    @GetMapping("/nullTest2")
+    public String nullTester2(){
+        long testNull = 4;
+        chatService.nullifyChats(testNull);
+        return "Check MySQL (Messages)";
     }
 
     @Transactional
