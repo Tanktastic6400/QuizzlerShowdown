@@ -1,44 +1,63 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
 function LoginForm({ getUserInfo }) {
   const [loginMethod, setLoginMethod] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
-  function handleSubmit(e) {
+ async function handleSubmit(e) {
     e.preventDefault();
-
     const LoginFormData = {
       username: loginMethod,
       password: password,
     };
 
-    const fetchSpecifications = {
+    const response = await fetch("http://localhost:8080/authenticationservice/login", {
       method: "POST",
-      credentials: "include", //Needed for cookies
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify(LoginFormData),
-    };
+    });
 
-    fetch(
-      "http://localhost:8080/authenticationservice/login",
-      fetchSpecifications
-    ).then(function (response) {
-      if (!response.ok) {
-        setLoginMethod("");
-        setPassword("");
-        throw new Error("Could not log in");
-      }
-      getUserInfo();
+    if (response.ok) {
+      await getUserInfo(); 
+      navigate("/", { replace: true });
+    setTimeout(() => window.location.reload(), 500);
+      
+    } else {
+      setError("Could not log in"); 
       setLoginMethod("");
       setPassword("");
-      navigate("/");
-      return response;
-    });
-  }
+    }
+    return response;
+}
+  //   const fetchSpecifications = {
+  //     method: "POST",
+  //     credentials: "include", //Needed for cookies
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify(LoginFormData),
+  //   };
+
+  //    fetch(
+  //     "http://localhost:8080/authenticationservice/login",
+  //     fetchSpecifications
+  //   ).then(function (response) {
+  //     if (!response.ok) {
+  //       setLoginMethod("");
+  //       setPassword("");
+  //       throw new Error("Could not log in");
+  //     }
+  //    getUserInfo();
+  //     setLoginMethod("");
+  //     setPassword("");
+  //     navigate("/");
+  //     return response;
+  //   });
+  // }
 
   return (
     <>

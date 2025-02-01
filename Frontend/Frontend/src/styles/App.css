@@ -15,7 +15,9 @@
  .main-page-container {
   position: fixed;
   top: 100px;
-  background-color: burlywood;
+  border-radius: 10px;
+  background-color: #D7B53B;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   margin-top: 0;
   display: flex;
   justify-content: center;
@@ -130,4 +132,40 @@
 
 .chat-toggle-btn:hover {
   background-color: #0056b3;
+}
+
+.main-content {
+  display: flex;
+  justify-content: space-between; 
+  padding-top: 70px;
+  padding: 20px; 
+  height: 100vh;
+  max-width: 1200px;
+}
+
+  .left-side {
+    margin-top: 110px;
+    flex: 1; 
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+  }
+
+   .right-side {
+    margin-top: 20px;
+    flex: 1; 
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+  }
+
+.main-image {
+  width: 80%;
+  height: auto;
+  margin-top: 130px;
+  border-radius: 5px;
+}
+
+.welcome-message {
+  margin-bottom: 20px;
 }

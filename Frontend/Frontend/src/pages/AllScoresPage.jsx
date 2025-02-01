@@ -3,7 +3,7 @@ import UsersScores from '../components/UsersScores';
 
 const AllScoresPage = () => {
   return (
-    <div className="page-container">
+    <div>
       <UsersScores />
     </div>
   );
