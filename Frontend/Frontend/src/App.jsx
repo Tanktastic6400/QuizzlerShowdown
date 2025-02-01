@@ -14,12 +14,13 @@ import Chatbox from "./components/Chatbox";
 import UserBar from "./components/UserBar";
 import ScorePage from "./pages/ScorePage";
 import ChatContainer from "./components/ChatContainer";
-import Scoreboard from "./components/Scoreboard";
 import ProfilePage from "./pages/ProfilePage";
 import LogReg from "./components/LogReg";
 import AnswerDisplay from "./components/AnswerDisplay";
+
 import ErrorPage from "./pages/ErrorPage";
 import AllScoresPage from "./pages/AllScoresPage";
+
 
 function App() {
   const [loggedInUser, setUser] = useState(null);
@@ -56,6 +57,7 @@ function App() {
 
   return (
     <>
+
     <Routes>
       <Route path="/" element={<MainPage loggedInUser={loggedInUser}/>} />
       <Route path="/reviews" element={<ReviewPage />} />
@@ -63,6 +65,9 @@ function App() {
       <Route path="/login" element={<LoginPage getUserInfo={getUserInfo} />} />
       <Route path="/quizdisplay" element={<QuizDisplay loggedInUser={loggedInUser} />} />
       <Route path="/quizselector" element={<QuizSelector loggedInUser={loggedInUser} />}/>
+
+      <Route path="/answerDisplay" element={<AnswerDisplay/>}/>
+
       <Route path="/all-scores" element={<AllScoresPage />} />
 
 
@@ -70,11 +75,11 @@ function App() {
 
       <Route path="/error" element={<ErrorPage />} />
 
-
       <Route path="/scores" element={<ScorePage loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>} />
       <Route path="/chat" element={<Chatbox loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>} />
       <Route path="profile/:username" element={<ProfilePage loggedInUser={loggedInUser} getUserInfo={getUserInfo} />} />
     </Routes>
+
     {loggedInUser?(<MainPage loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>) : (<LogReg getUserInfo={getUserInfo}/> )}
     <UserBar loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>
     {/* <Scoreboard loggedInUser={loggedInUser}/> */}

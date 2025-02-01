@@ -1,28 +1,33 @@
-.logreg-container{
+.logincontainer{
   display: flex; 
+  flex-direction: column;
+  position: absolute;
+  top: 100px;
+  left: 50%;
   align-items: center; 
   justify-content: center; 
-  height: 50vh;
-  width: 30vw; 
-  background-color: hwb(54 55% 6% / 0.273);
+  height: 70vh;
+  width: 40vw; 
+  max-width: 30vw;
   border-radius: 16px;
   border-style: solid;
   border-width: 4px;
   border-color: gold;
-  background-image: url("../images/Orange_question_mark.svg.png");
-  background-size:cover;
+  background-image: url("./src/images/QuizzlerCowboy.jpg");
+  background-blend-mode: overlay;
+  background-color: gainsboro;
+  background-size: cover;
 }
 
 .login-container{
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 50%;
+    width: auto;
+    height: auto;
+    position: relative;
 }
 
-.register-container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50%;
+.logintext{
+  font-size: x-large;
 }

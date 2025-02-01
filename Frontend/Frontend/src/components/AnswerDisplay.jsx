@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
+
 import "../CSS/AnswerDisplay.css"
 
 // function AnswerDisplay({loggedInUser, numberOfQuestions, score}){
 function AnswerDisplay() {
 
     const location = useLocation();
+     const navigate = useNavigate();
 
     const {
         questionData,

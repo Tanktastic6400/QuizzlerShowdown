@@ -6,8 +6,12 @@
 
 }
 
+input[type=text] {
+  background-color: rgb(135, 86, 1);
+}
+
 .modalheader{
-  background-color: brown;
+  background-color: rgb(128, 74, 0);
   justify-content: center;
   text-align: center;
 }
@@ -27,6 +31,8 @@
 .user-search-container{
   display: flex;
   justify-content: center;
+  overflow: visible;
+  max-height: 50px;
 }
 
 .search-button{
@@ -45,7 +51,7 @@
   border-bottom: solid;
   border-bottom-width: 2px;
   border-bottom-color: sienna;
-  
+  background-color: white;
 }
 
 .nav-items{
@@ -53,7 +59,6 @@
   margin: 0;
 }
 
-.nav
 
 .review-button{
   padding-left: 10px;
@@ -95,7 +100,7 @@
   width: 300px;
 }
 
-.score-container {
+.top-ten-container {
   position: fixed;
   background-color: darkkhaki;
   border: solid;
@@ -103,6 +108,7 @@
   border-color: goldenrod;
   left: 10px;
   top: 125px;
+  width: 225px;
 }
 
 .friend-container{

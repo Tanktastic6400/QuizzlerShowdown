@@ -58,16 +58,19 @@ function UserSearch({ loggedInUser }) {
         value={username}
         onChange={handleChange}
       />
-      <button className="search-button" onClick={usersSearch}>Search</button>
+      <Button className="search-button" variant="warning" size="small" onClick={usersSearch}>Search</Button>
       <ul>
         {users.map((foundUser, index) => (
           <li key={foundUser.id}>
+
+            {foundUser.username}{" "}
+            <Button className="search-button" size="small" variant="outline-warning" onClick={() => handleSendRequest(index)}>Send Request</Button>
+
             <a href="#" onClick={() => handleNavigation(foundUser.username)}>
               {foundUser.username}
             </a>
             {" "}
             {/* {foundUser.username}{" "} */}
-            <Button className="search-button" onClick={() => handleSendRequest(index)}>Send Request</Button>
 
           </li>
         ))}

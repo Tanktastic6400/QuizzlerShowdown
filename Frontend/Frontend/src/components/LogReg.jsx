@@ -3,15 +3,19 @@ import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import "../CSS/logreg.css";
 
-const LogReg = () => {
+const LogReg = ({getUserInfo}) => {
   return (
-    <div className="logreg-container">
+    <div className="logincontainer">
+      <p className="logintext">
+       Howdy partner, welcome to Quizzler Showdown - the wildest quiz challenge in the west!
+       Saddle up and test your knowledge across a variety of categories.
+       Face off against friends, rise to the top of the leaderboard, and claim the title of Ultimate Quiz Gunslinger
+       Ready for a showdown? Let's get this rodeo started!
+      </p>
       <div className="login-container">
-        <LoginForm />
+      <LoginForm getUserInfo={getUserInfo}/>
       </div>
-      <div className="register-container">
-        <RegisterForm />
-      </div>
+      
     </div>
   );
 };
