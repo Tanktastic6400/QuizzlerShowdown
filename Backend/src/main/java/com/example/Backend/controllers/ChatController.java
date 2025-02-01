@@ -33,6 +33,7 @@ public class ChatController {
     @Autowired
     private MessageRepository messageRepository;
 
+    //TODO COMMENT THIS OUT WHEN SURE SERVICE WORKS
     @GetMapping("/nullTest")
     public String nullTester(){
         long testNull = 1;

@@ -32,14 +32,14 @@ public class ChatService {
     public List<Chat> getAllChats(Long id){
         return chatRepository.findChatsWitUser(id);
     }
-    public void nullifyUser(Long testNull){
-        List<Chat> listOfChats = getAllChats(testNull);
+    public void nullifyUser(Long toNullify){
+        List<Chat> listOfChats = getAllChats(toNullify);
 
         for (Chat chat : listOfChats) {
             System.out.println("IN LOOP");
             System.out.println(chat.getUser1().getId());
             System.out.println(chat.getUser2().getId());
-            if(chat.getUser1().getId().equals(testNull)) {
+            if(chat.getUser1().getId().equals(toNullify)) {
                 System.out.println("FIRST USER");
                 chat.setUser1(null);
             } else{
