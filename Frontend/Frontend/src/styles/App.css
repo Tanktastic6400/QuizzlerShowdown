@@ -42,7 +42,6 @@ input[type=text] {
   border-radius: 16px;
   background-color: rgba(208, 177, 0, 0.733);
   color:black;
-  
 }
 
 .navbar {
@@ -53,8 +52,6 @@ input[type=text] {
   border-bottom-width: 2px;
   border-bottom-color: sienna;
   background-color: white;
-  /* overflow: visible;
-  max-height: 70px; */
 }
 
 .nav-items{

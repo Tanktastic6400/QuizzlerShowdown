@@ -14,10 +14,10 @@ import Chatbox from "./components/Chatbox";
 import UserBar from "./components/UserBar";
 import ScorePage from "./pages/ScorePage";
 import ChatContainer from "./components/ChatContainer";
-import Scoreboard from "./components/Scoreboard";
 import ProfilePage from "./pages/ProfilePage";
 import LogReg from "./components/LogReg";
 import AnswerDisplay from "./components/AnswerDisplay";
+
 
 function App() {
   const [loggedInUser, setUser] = useState(null);
@@ -54,6 +54,7 @@ function App() {
 
   return (
     <>
+
     <Routes>
       <Route path="/" element={<MainPage loggedInUser={loggedInUser}/>} />
       <Route path="/reviews" element={<ReviewPage />} />
@@ -66,9 +67,10 @@ function App() {
       <Route path="/chat" element={<Chatbox loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>} />
       <Route path="profile/:username" element={<ProfilePage loggedInUser={loggedInUser} getUserInfo={getUserInfo} />} />
     </Routes>
+
     {loggedInUser?(<MainPage loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>) : (<LogReg getUserInfo={getUserInfo}/> )}
     <UserBar loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>
-    
+    {/* <Scoreboard loggedInUser={loggedInUser}/> */}
     {loggedInUser?(<ChatContainer loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>):<div></div>}
     </>
   );
