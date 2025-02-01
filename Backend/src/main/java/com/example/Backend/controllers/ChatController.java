@@ -38,7 +38,7 @@ public class ChatController {
     public String nullTester(){
         long testNull = 1;
         chatService.nullifyUser(testNull);
-        return "Check MySQL";
+        return "Check MySQL (Chat)";
     }
 
     @Transactional

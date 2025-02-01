@@ -13,12 +13,12 @@ public class FriendList extends AbstractClass {
 
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "user1_id", nullable = false)
+    @JoinColumn(name = "user1_id", nullable = true)
     private User user1;
 
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "user2_id", nullable = false)
+    @JoinColumn(name = "user2_id", nullable = true)
     private User user2;
 
     @Enumerated(EnumType.STRING)

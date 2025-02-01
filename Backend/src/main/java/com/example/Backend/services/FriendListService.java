@@ -1,6 +1,7 @@
 package com.example.Backend.services;
 
 import com.example.Backend.DTO.UserInfoDTO;
+import com.example.Backend.models.Chat;
 import com.example.Backend.models.FriendList;
 import com.example.Backend.models.FriendStatus;
 import com.example.Backend.models.User;
@@ -28,6 +29,23 @@ public class FriendListService {
         Long id = user.get().getId();
 
         return friendListRepository.findByUser1IdOrUser2Id(id, id);
+    }
+
+    public void clearFriends (Long userId) {
+        List<FriendList> listToClear = getFriends(userId);
+        for (FriendList friend : listToClear) {
+            System.out.println("IN LOOP");
+            System.out.println(friend.getUser1().getId());
+            System.out.println(friend.getUser2().getId());
+            if (friend.getUser1().getId().equals(userId)) {
+                System.out.println("FIRST USER");
+                friend.setUser1(null);
+            } else {
+                System.out.println("Second USER");
+                friend.setUser2(null);
+            }
+            friendListRepository.save(friend);
+        }
     }
 
     public void sendFriendRequest(Long userId, Long friendId) {

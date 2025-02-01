@@ -26,6 +26,13 @@ public class FriendListController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/nullTest")
+    public String nullTester(){
+        long testNull = 1;
+        friendListService.clearFriends(testNull);
+        return("Check my SQL (Friend List)");
+    }
+
     @GetMapping("username")
     public List<FriendList>fetchFriendsFromName(@RequestParam String username){
         Optional<User> tryFindUser = userService.getUserByUsername(username);
