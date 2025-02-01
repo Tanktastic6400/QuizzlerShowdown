@@ -45,11 +45,21 @@ public class ScoreController {
         return userProfileRepository.findAllSortedByScoreDTO(PageRequest.of(0, topX));
     }
 
-    @GetMapping("/getAllScores")
-    public List <UserProfile> getAllScores(){
-        return userProfileRepository.findAllSortedByScore(); //This displays all user profiles as sorted by score
-    }
+//    @GetMapping("/getAllScores")
+//    public List <UserProfile> getAllScores(){
+//        return userProfileRepository.findAllSortedByScore(); //This displays all user profiles as sorted by score
+//    }
 
+    @GetMapping("/getAllScores")
+    public ResponseEntity<List<ScoreInfoDTO>> getAllScores(){
+        // Define the page size or limit if required, or fetch all records if pagination is not necessary
+        PageRequest pageRequest = PageRequest.of(0, Integer.MAX_VALUE); // Example to fetch a large set of records
+        List<ScoreInfoDTO> scores = userProfileRepository.findAllSortedByScoreDTO(pageRequest);
+        if (scores.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(scores);
+    }
 
 
 }

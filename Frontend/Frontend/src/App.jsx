@@ -19,6 +19,7 @@ import ProfilePage from "./pages/ProfilePage";
 import LogReg from "./components/LogReg";
 import AnswerDisplay from "./components/AnswerDisplay";
 import ErrorPage from "./pages/ErrorPage";
+import AllScoresPage from "./pages/AllScoresPage";
 
 function App() {
   const [loggedInUser, setUser] = useState(null);
@@ -62,6 +63,8 @@ function App() {
       <Route path="/login" element={<LoginPage getUserInfo={getUserInfo} />} />
       <Route path="/quizdisplay" element={<QuizDisplay loggedInUser={loggedInUser} />} />
       <Route path="/quizselector" element={<QuizSelector loggedInUser={loggedInUser} />}/>
+      <Route path="/all-scores" element={<AllScoresPage />} />
+
 
       <Route path="/answerDisplay" element={<AnswerDisplay/>}/>
 
