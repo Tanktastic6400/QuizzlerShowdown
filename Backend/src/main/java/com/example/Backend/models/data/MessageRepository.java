@@ -14,5 +14,8 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
     @Query("SELECT m FROM Message m WHERE (m.user2.id = :user2 AND m.user1.id = :user1) OR (m.user2.id = :user1 AND m.user1.id = :user2)")
     List<Message> findChatsBetweenUsers(@Param("user1")Long user1, @Param("user2")Long user2);
 
+    @Query("SELECT m FROM Message m WHERE (m.user2.id = :user1 OR m.user1.id = :user1)")
+    List<Message> findChatsWithUsers(@Param("user1")Long user1);
+
     List<Message> findByChatId(String chatId);
 }

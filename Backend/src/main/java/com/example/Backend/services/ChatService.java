@@ -29,6 +29,35 @@ public class ChatService {
         return chatRepository.existsByChatId(chatId);
     }
 
+    public List<Chat> getAllChats(Long id){
+        return chatRepository.findChatsWitUser(id);
+    }
+    public void clearChats(Long toNullify){
+        List<Chat> listOfChats = getAllChats(toNullify);
+
+        for (Chat chat : listOfChats) {
+            chat.setUser1(null);
+            chat.setUser2(null);
+            chatRepository.save(chat);
+            chatRepository.deleteById(chat.getId());
+        }
+    }
+
+    public void clearMessages(Long toNullify)
+    {
+        List <Message> listOfMessages = messageRepository.findChatsWithUsers(toNullify);
+        for (Message message : listOfMessages) {
+//            if(message.getUser1().getId().equals(toNullify)) {
+//                message.setUser1(null);
+//            } else{
+//                message.setUser2(null);
+//            }
+//            messageRepository.save(message);
+            messageRepository.deleteById(message.getId());
+        }
+
+    }
+
     public User getUserById(Long id){
         Optional<User> user = userRepository.findById(id);
         return user.orElseThrow(() -> new RuntimeException("User not found"));

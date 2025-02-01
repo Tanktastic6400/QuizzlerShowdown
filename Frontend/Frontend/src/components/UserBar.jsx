@@ -10,10 +10,10 @@ import UserSearch from "./UserSearch";
 import { Button } from "react-bootstrap";
 
 function UserBar({ loggedInUser, getUserInfo }) {
-const navigate = useNavigate();
-    const handleReviewButtonClick = () => {
-        navigate('/reviews');
-    }
+  const navigate = useNavigate();
+  const handleReviewButtonClick = () => {
+    navigate('/reviews');
+  }
 
   return (
     <Navbar fixed="top" className="navbar">
@@ -22,13 +22,14 @@ const navigate = useNavigate();
           <Nav.Link as={Link} to="/">
             Home
           </Nav.Link>
-          <Nav.Link as={Link} to="/reviews">Reviews</Nav.Link>
+          {/* <Nav.Link as={Link} to="/reviews">Reviews</Nav.Link> */}
+          <Nav.Link as={Link} to="/all-scores">All Scores</Nav.Link>
           <Nav.Link as={Link} to="/quizselector">
             Create Quiz
           </Nav.Link>
         </Nav>
         <Nav>
-          <UserSearch loggedInUser={loggedInUser} /> 
+          <UserSearch loggedInUser={loggedInUser} />
           {loggedInUser ? (
             <div className="d-flex align-items-center">
               <Dropdown autoClose={false}>
@@ -58,17 +59,19 @@ const navigate = useNavigate();
           )}
         </Nav>
         <div className="review-button">
-            <Button
-                variant="primary"
-                onClick={handleReviewButtonClick}
-             >
-                <span className="me-2">Reviews</span>
-                <span className="text-warning">★★★★★</span>
-            </Button>
-            </div>
-            
+
+          <Button
+            variant="primary"
+            onClick={handleReviewButtonClick}
+          >
+            <span className="me-2">Reviews</span>
+            <span className="text-warning">★★★★★</span>
+          </Button>
+        </div>
+        {/* {loggedInUser?(<LogoutButton loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>) : <></>} */}
+
       </Container>
-      
+
     </Navbar>
   );
 }

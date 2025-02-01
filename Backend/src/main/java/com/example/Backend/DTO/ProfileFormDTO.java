@@ -10,6 +10,43 @@ public class ProfileFormDTO {
     private String occupation;
     private int score;
 
+    private int quizzesTaken;
+    private int questionsAnswered;
+    private int totalCorrectAnswers;
+    private float correctAnswerPercentage;
+
+    public float getCorrectAnswerPercentage() {
+        return correctAnswerPercentage;
+    }
+
+    public void setCorrectAnswerPercentage(float correctAnswerPercentage) {
+        this.correctAnswerPercentage = correctAnswerPercentage;
+    }
+
+    public int getTotalCorrectAnswers() {
+        return totalCorrectAnswers;
+    }
+
+    public void setTotalCorrectAnswers(int totalCorrectAnswers) {
+        this.totalCorrectAnswers = totalCorrectAnswers;
+    }
+
+    public int getQuizzesTaken() {
+        return quizzesTaken;
+    }
+
+    public void setQuizzesTaken(int quizzesTaken) {
+        this.quizzesTaken = quizzesTaken;
+    }
+
+    public int getQuestionsAnswered() {
+        return questionsAnswered;
+    }
+
+    public void setQuestionsAnswered(int questionsAnswered) {
+        this.questionsAnswered = questionsAnswered;
+    }
+
     public int getScore() {
         return score;
     }

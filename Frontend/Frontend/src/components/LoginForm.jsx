@@ -3,8 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
 function LoginForm({ getUserInfo }) {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
+  const [loginMethod, setLoginMethod] = useState("");
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
@@ -13,9 +12,8 @@ function LoginForm({ getUserInfo }) {
     e.preventDefault();
 
     const LoginFormData = {
-      username: username,
+      username: loginMethod,
       password: password,
-      email: email,
     };
 
     const fetchSpecifications = {
@@ -30,14 +28,12 @@ function LoginForm({ getUserInfo }) {
       fetchSpecifications
     ).then(function (response) {
       if (!response.ok) {
-        setUsername("");
-        setEmail("");
+        setLoginMethod("");
         setPassword("");
         throw new Error("Could not log in");
       }
       getUserInfo();
-      setUsername("");
-      setEmail("");
+      setLoginMethod("");
       setPassword("");
       navigate("/");
       return response;
@@ -50,19 +46,12 @@ function LoginForm({ getUserInfo }) {
     <form onSubmit={handleSubmit}>
       <input
         type="text"
-        value={username}
+        value={loginMethod}
         onChange={function (e) {
-          setUsername(e.target.value);
+          setLoginMethod(e.target.value);
         }}
-        placeholder="Account Name"
-      />
-      <input
-        type="email"
-        value={email}
-        onChange={function (e) {
-          setEmail(e.target.value);
-        }}
-        placeholder="Email"
+        placeholder="Account Name or email"
+        required
       />
       <input
         type="password"

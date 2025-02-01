@@ -5,6 +5,8 @@ import com.example.Backend.models.UserProfile;
 import com.example.Backend.models.data.UserProfileRepository;
 import com.example.Backend.models.data.UserRepository;
 import com.example.Backend.services.AuthenticationService;
+import com.example.Backend.services.ChatService;
+import com.example.Backend.services.FriendListService;
 import com.example.Backend.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,12 @@ public class UserController {
     @Autowired
     private AuthenticationService authenticationService;
 
+    @Autowired
+    private FriendListService friendListService;
+
+    @Autowired
+    private ChatService chatService;
+
     @GetMapping("/search/users")
     public List<User> searchUsers(@RequestParam String username) {
         return userRepository.findByUsernameContaining(username);
@@ -67,11 +75,14 @@ public class UserController {
         profileForm.setLocation(profileUser.getUserProfile().getLocation());
         profileForm.setOccupation(profileUser.getUserProfile().getOccupation());
         profileForm.setScore(profileUser.getUserProfile().getScore());
+        profileForm.setQuizzesTaken(profileUser.getUserProfile().getQuizzesTaken());
+        profileForm.setQuestionsAnswered(profileUser.getUserProfile().getQuestionsAnswered());
+        profileForm.setTotalCorrectAnswers(profileUser.getUserProfile().getTotalCorrectAnswers());
+        profileForm.setCorrectAnswerPercentage(profileUser.getUserProfile().getCorrectAnswerPercentage());
         return ResponseEntity.ok(profileForm);
         //return ResponseEntity.ok(testBio);
     }
 
-    //TODO UPDATE TO INCLUDE (ALMOST) ALL PROFILE ATTRIBUTES ONCE FRONT END'S COOL
     @PostMapping("/updateProfile")
     public ResponseEntity<String> attemptUpdateProfile(@RequestBody ProfileFormDTO request){
         Optional <User> tryFindUser = userService.getUserByUsername(request.getUsername());
@@ -88,15 +99,10 @@ public class UserController {
     }
 
     @PostMapping("/updateScore")
-    public ResponseEntity<String> attemptUpdateScore(@RequestParam long  ID, @RequestParam int score, @RequestParam boolean add){
-        int sentScore = score;
+    public ResponseEntity<String> attemptUpdateScore(@RequestParam long  ID, @RequestParam int score, @RequestParam boolean add, @RequestParam int correctAnswers, @RequestParam int numberOfQuestions ){
         User user = userService.getUserByID(ID);
         UserProfile profileToUpdate = user.getUserProfile();
-        if(add){
-            sentScore += profileToUpdate.getScore();
-        }
-        profileToUpdate.setScore(sentScore);
-        userService.updateUserProfile(profileToUpdate);
+        userService.updateStats(profileToUpdate, correctAnswers, numberOfQuestions, score, add);
         return ResponseEntity.ok("Score updated");
     }
 
@@ -104,6 +110,10 @@ public class UserController {
     @PostMapping("/deleteAccount")
     public ResponseEntity<String> attemptDeletion(HttpSession session){
         User deletedUser = authenticationService.getUserFromSession(session);
+        long id = deletedUser.getId();
+        chatService.clearMessages(id);
+        chatService.clearChats(id);
+        friendListService.clearFriends(id);
         userService.deleteUser(deletedUser);
         session.invalidate();
         return ResponseEntity.ok("Account deleted");
