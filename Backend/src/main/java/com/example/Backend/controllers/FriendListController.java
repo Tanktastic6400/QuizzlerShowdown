@@ -28,7 +28,7 @@ public class FriendListController {
 
     @GetMapping("/nullTest")
     public String nullTester(){
-        long testNull = 4;
+        long testNull = 5;
         friendListService.clearFriends(testNull);
         return("Check my SQL (Friend List)");
     }
