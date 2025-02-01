@@ -8,6 +8,7 @@ import LogoutButton from "../components/LogoutButton";
 import DeleteButton from "../components/DeleteButton";
 import UserSearch from "./UserSearch";
 import { Button } from "react-bootstrap";
+import Navbarpicture from "../images/Navbarpicture.jpg"
 
 function UserBar({ loggedInUser, getUserInfo }) {
   const navigate = useNavigate();
@@ -16,6 +17,10 @@ function UserBar({ loggedInUser, getUserInfo }) {
   }
 
   return (
+    <>
+    <div className="navbar-image-container">
+        <img src={Navbarpicture} alt="Navbarepicture" className="navbar-image" />
+      </div>
     <Navbar fixed="top" className="navbar">
       <Container className="nav-items">
         <Nav className="me-auto">
@@ -73,6 +78,7 @@ function UserBar({ loggedInUser, getUserInfo }) {
       </Container>
 
     </Navbar>
+    </>
   );
 }
 
