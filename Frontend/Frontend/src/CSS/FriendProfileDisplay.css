@@ -1,9 +1,9 @@
-.friendProfile-container{
+.userProfile-container{
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 50vh;
-  width: 30vw;
+  height: 30vh;
+  width: 15vw;
   background-color: hwb(54 55% 6% / 0.273);
   border-radius: 16px;
   border-style: solid;
@@ -11,6 +11,44 @@
   border-color: gold;
   background-image: url("../images/Orange_question_mark.svg.png");
   background-size:cover;
+  position: fixed;
+}
+
+.friendProfile-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30vh;
+  width: 15vw;
+  background-color: hwb(54 55% 6% / 0.273);
+  border-radius: 16px;
+  border-style: solid;
+  border-width: 4px;
+  border-color: gold;
+  background-image: url("../images/Orange_question_mark.svg.png");
+  background-size:cover;
+  position: fixed;
+  bottom: 40px;
+  right: 20px;
+
+}
+
+.statProfile-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30vh;
+  width: 15vw;
+  background-color: hwb(54 55% 6% / 0.273);
+  border-radius: 16px;
+  border-style: solid;
+  border-width: 4px;
+  border-color: gold;
+  background-image: url("../images/Orange_question_mark.svg.png");
+  background-size:cover;
+  position: fixed;
+  bottom: 40px;
+  left: 20px;
 }
 
 .login-container{
@@ -25,4 +63,8 @@
     align-items: center;
     justify-content: center;
     width: 50%;
+}
+
+.wrap {
+  text-wrap: wrap;
 }

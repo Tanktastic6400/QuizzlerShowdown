@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams  } from 'react-router-dom';
 import ProfileView from "../components/ProfileView";
 import ProfileForm from "../components/ProfileForm";
+import "../CSS/FriendProfileDisplay.css"
 
 function ProfilePage ( { loggedInUser, getUserInfo } ) {
 
@@ -113,20 +114,28 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
             </div>)
             :
             <div>
-            <p> Username: {params.username} </p>
-             <p> Email: {pageEmail} </p>
-             <p> Name: {pageName}</p>
-             <p> Bio: {pageBio} </p>
-             <p> Location: {pageLocation}</p>
-             <p> Occupation: {pageOccupation}</p>
-             <p> High Score: {pageScore}</p>
-             <p> Quizzes Taken: {pageQuizzesTaken}</p>
-             <p> Questions Answered: {pageQuestionsAnswered}</p>
-             <p> Correctly Answered Questions: {pageTotalCorrectAnswers}</p>
-             <p> Career Percentage Correct: {pageCorrectAnswerPercentage}</p>
-
-            <p> Friends </p>
+                <div className='userProfile-container'>
+                    <ul>
+                    <p> Username: {params.username} </p>
+                     <p> Email: {pageEmail} </p>
+                     <p> Name: {pageName}</p>
+                     <p> Bio: {pageBio} </p>
+                     <p> Location: {pageLocation}</p>
+                     <p> Occupation: {pageOccupation}</p>
+                     </ul>
+             </div>
+             <div className="statProfile-container">
+                 <ul>
+                    <p> High Score: {pageScore}</p>
+                    <p> Quizzes Taken: {pageQuizzesTaken}</p>
+                    <p> Questions Answered: {pageQuestionsAnswered}</p>
+                    <p> Correctly Answered Questions: {pageTotalCorrectAnswers}</p>
+                    <p> Career Percentage Correct: {pageCorrectAnswerPercentage}</p>
+                </ul>
+             </div>
+            <div className="friendProfile-container">
              <ul>
+                 <h1> Friend List </h1>
                  {pageFriendList.filter(friend=> friend.status === "ACCEPTED")
                      .map( (friend) => (
                          <li key={friend.id}>
@@ -140,6 +149,7 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
                     </li>
                  ))}
             </ul>
+            </div>
                 {ownerPage?(<button type ="button" onClick={EnableEditMode} > Edit Page </button>):<div></div>}
                 </div>
              }
