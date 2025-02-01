@@ -6,8 +6,12 @@
 
 }
 
+input[type=text] {
+  background-color: rgb(135, 86, 1);
+}
+
 .modalheader{
-  background-color: brown;
+  background-color: rgb(128, 74, 0);
   justify-content: center;
   text-align: center;
 }
@@ -28,6 +32,7 @@
   display: flex;
   justify-content: center;
   overflow: visible;
+  max-height: 50px;
 }
 
 .search-button{
@@ -37,6 +42,7 @@
   border-radius: 16px;
   background-color: rgba(208, 177, 0, 0.733);
   color:black;
+  
 }
 
 .navbar {
@@ -46,8 +52,9 @@
   border-bottom: solid;
   border-bottom-width: 2px;
   border-bottom-color: sienna;
-  overflow: visible;
-  max-height: 70px;
+  background-color: white;
+  /* overflow: visible;
+  max-height: 70px; */
 }
 
 .nav-items{
@@ -55,7 +62,6 @@
   margin: 0;
 }
 
-.nav
 
 .review-button{
   padding-left: 10px;

@@ -18,15 +18,6 @@ const navigate = useNavigate();
   return (
     <Navbar fixed="top" className="navbar">
       <Container className="nav-items">
-        <Navbar.Brand as={Link} to="/">
-          <img
-            src="../src/images/Navbarpictire.jpg"
-            width="50"
-            height="50"
-            className="d-inline-block align-top"
-            alt="React Bootstrap logo"
-          />
-        </Navbar.Brand>
         <Nav className="me-auto">
           <Nav.Link as={Link} to="/">
             Home
@@ -55,24 +46,27 @@ const navigate = useNavigate();
               </Dropdown>
             </div>
           ) : (
+            <>
             <Nav.Link as={Link} to="/login">
               Login
             </Nav.Link>
-          )}
+          
           <Nav.Link as={Link} to="/register">
             Register
           </Nav.Link>
+          </>
+          )}
         </Nav>
         <div className="review-button">
             <Button
                 variant="primary"
                 onClick={handleReviewButtonClick}
-            >
+             >
                 <span className="me-2">Reviews</span>
                 <span className="text-warning">★★★★★</span>
             </Button>
             </div>
-            {/* {loggedInUser?(<LogoutButton loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>) : <></>} */}
+            
       </Container>
       
     </Navbar>

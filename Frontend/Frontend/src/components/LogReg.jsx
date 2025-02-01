@@ -5,14 +5,15 @@ import "../CSS/logreg.css";
 
 const LogReg = () => {
   return (
-    <div className="container-fluid" >
-      <img src="./src/images/QuizzlerCowboy.jpg" className="img-fluid w-50" alt="background image" />
+    <div className="logincontainer">
+      <img src="./src/images/QuizzlerCowboy.jpg" className="loginimage" alt="background image" />
+      <LoginForm />
       <p>
       
       </p>
       
       <div className="login-container">
-        <LoginForm />
+        
       </div>
       
     </div>
