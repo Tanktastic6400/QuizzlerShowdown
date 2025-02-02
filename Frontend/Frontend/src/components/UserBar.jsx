@@ -48,13 +48,13 @@ function UserBar({ loggedInUser, getUserInfo }) {
             </div>
           ) : (
             <>
-            <Nav.Link as={Link} to="/login">
+            {/* <Nav.Link as={Link} to="/login">
               Login
             </Nav.Link>
           
           <Nav.Link as={Link} to="/register">
             Register
-          </Nav.Link>
+          </Nav.Link> */}
           </>
           )}
         </Nav>
