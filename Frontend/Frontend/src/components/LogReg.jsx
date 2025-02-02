@@ -6,6 +6,10 @@ import "../CSS/logreg.css";
 const LogReg = ({ getUserInfo }) => {
   return (
     <>
+      <div className="header-container">
+        <h1 className="header-text">HELLO COWPOKE!</h1>
+      </div>
+
       <div className="centerMass">
         <div className="largeColmn">
           <div className="logincontainer">
