@@ -1,9 +1,18 @@
-import React, { useState } from "react";
 
-function ReviewForm(props) {
+import React, { useState, useEffect } from "react";
+
+function ReviewForm({ onReviewSubmitted, currentUser }) {
   const [reviewDescription, setReviewDescription] = useState("");
   const [rating, setRating] = useState(0);
   const [username, setUsername] = useState("");
+
+
+  useEffect(() => {
+    if (currentUser) {
+      setUsername(currentUser.username);
+    }
+  }, [currentUser]);
+
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -13,13 +22,14 @@ function ReviewForm(props) {
     const reviewData = {
       reviewDescription: reviewDescription,
       rating: rating,
-      username: username || "Anonymous",
+      username: currentUser ? currentUser.username : "Anonymous",
       createdAt: currentDate,
     };
 
     fetch("http://localhost:8080/api/reviews", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify(reviewData),
     })
       .then(function (response) {
@@ -28,12 +38,12 @@ function ReviewForm(props) {
         }
         return response.json();
       })
-      .then(function (savedReview) {
-        props.onReviewSubmitted(savedReview);
+      .then((savedReview) => {
+        onReviewSubmitted(savedReview);  
         setReviewDescription("");
         setRating(0);
-        setUsername("");
       })
+     
       .catch(function (error) {
         console.error("Error submitting review:", error);
       });
@@ -41,20 +51,23 @@ function ReviewForm(props) {
 
   return (
     <form onSubmit={handleSubmit} className="mt-4">
-      <div className="mb-3">
-        <label htmlFor="username" className="form-label">
-          Your Name (Optional)
-        </label>
-        <input
-          type="text"
-          className="form-control"
-          value={username}
-          onChange={function (e) {
-            setUsername(e.target.value);
-          }}
-          placeholder="Your Name"
-        />
-      </div>
+      {currentUser ? (<p>Logged in as: <strong>{currentUser.username}</strong></p>)
+        : (
+          <div className="mb-3">
+            <label htmlFor="username" className="form-label">
+              Your Name (Optional)
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              value={username}
+              onChange={function (e) {
+                setUsername(e.target.value);
+              }}
+              placeholder="Your Name"
+            />
+          </div>
+        )}
 
       <div className="mb-3">
         <label htmlFor="reviewDescription" className="form-label">
@@ -63,9 +76,7 @@ function ReviewForm(props) {
         <textarea
           className="form-control"
           value={reviewDescription}
-          onChange={function (e) {
-            setReviewDescription(e.target.value);
-          }}
+          onChange={function (e) { setReviewDescription(e.target.value); }}
           placeholder="Write your review"
           required
         ></textarea>
@@ -78,9 +89,7 @@ function ReviewForm(props) {
         <select
           className="form-select"
           value={rating}
-          onChange={function (e) {
-            setRating(parseInt(e.target.value));
-          }}
+          onChange={function (e) { setRating(parseInt(e.target.value)); }}
           required
         >
           <option value="0">0 - Bad</option>
