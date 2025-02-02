@@ -47,15 +47,8 @@ public class ChatService {
     {
         List <Message> listOfMessages = messageRepository.findChatsWithUsers(toNullify);
         for (Message message : listOfMessages) {
-//            if(message.getUser1().getId().equals(toNullify)) {
-//                message.setUser1(null);
-//            } else{
-//                message.setUser2(null);
-//            }
-//            messageRepository.save(message);
             messageRepository.deleteById(message.getId());
         }
-
     }
 
     public User getUserById(Long id){
