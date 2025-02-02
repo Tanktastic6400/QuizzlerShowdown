@@ -43,8 +43,14 @@ public class AuthenticationController {
         }
         User newUser = new User(request.getUsername(), request.getEmail(), request.getPassword());
         String passwordCheck = request.getPasswordVerification();
+        if(!authenticationService.checkUsername(newUser)){
+            return ResponseEntity.status(401).body("Username already in use");
+        }
+        if(!authenticationService.checkEmail(newUser)) {
+            return ResponseEntity.status(401).body("Email already in use");
+        }
         if(authenticationService.registerUser(newUser, passwordCheck)) {
-            return ResponseEntity.ok("Sucessfully registered");
+            return ResponseEntity.ok("Successfully registered");
         }
         return ResponseEntity.status(401).body("Incorrect registration information");
     }
