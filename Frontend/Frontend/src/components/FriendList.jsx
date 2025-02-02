@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Button } from "react-bootstrap";
 
 const FriendList = ({ loggedInUser, getUserInfo, onOpenChat }) => {
   const [friendList, setFriendList] = useState([]);
@@ -97,6 +98,7 @@ const FriendList = ({ loggedInUser, getUserInfo, onOpenChat }) => {
                   <button onClick={() => friendClicked(friend.id)}>
                     {displayedUsername}
                   </button>
+                  <Button variant="danger" onClick={() => handleDecline(friend.requestId)}>Remove</Button>
                 </div>
               )}
               {friend.status === "PENDING" &&
