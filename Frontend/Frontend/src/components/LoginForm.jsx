@@ -12,8 +12,10 @@ function LoginForm({ getUserInfo }) {
   function handleSubmit(e) {
     e.preventDefault();
 
+    const trimmedLoginMethod = loginMethod.trim();
+
     const LoginFormData = {
-      username: loginMethod,
+      username: trimmedLoginMethod,
       password: password,
     };
 

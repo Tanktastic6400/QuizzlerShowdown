@@ -48,36 +48,8 @@ function RegisterForm(props) {
       fetchSpecifications
 
     ).then(function (response) {
-      /*if (!response.ok) {
-        //  console.log(response.text());
-        const errorMessage = response.text();
-        console.log(errorMessage);
-        setUsername("");
-        setEmail("");
-        setPassword("");
-        setConfirmedPassword("");
-        throw new Error("Could not submit registration information");
-        //positiveResponse = false;
-        console.log("BAD");
-        setPositiveResponse(false);
-        console.log(positiveResponse);
-      }
-        else{
-            //positiveResponse = true;
-            console.log("GOOD");
-            setPositiveResponse(true)
-            console.log(positiveResponse);
-            }
-      alert("Account Registered");
-      setUsername("");
-      setEmail("");
-      setPassword("");
-      setConfirmedPassword("");
-      navigate("/login");
-      return response;*/
-      return response.text()})
-    //});
-    .then(function (data){
+      return response.text()}
+    ).then(function (data){
         console.log(data);
         if(data==="Username already in use"){
                     setUsername("");
