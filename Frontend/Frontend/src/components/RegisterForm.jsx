@@ -67,7 +67,7 @@ function RegisterForm(props) {
         setConfirmedPassword("");
         if (data==="Successfully registered"){
             alert(data);
-            navigate("/login");
+            navigate("/");
         }
         else{
             alert(data)
