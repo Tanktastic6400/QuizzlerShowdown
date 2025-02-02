@@ -55,14 +55,12 @@ public class UserService {
 
     public void updateUserProfile(UserProfile userProfile){
         userProfileRepository.save(userProfile);
-        //userProfileRepository.
     }
 
     public void updateUser(User user) {
         userRepository.save(user);
     }
 
-    //I feel like there should be some kind of check here to make sure the user exists.
     public void deleteUser(User user){
         userRepository.deleteById(user.getId());
     }

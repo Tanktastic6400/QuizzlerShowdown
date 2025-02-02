@@ -61,13 +61,6 @@ public class AuthenticationService {
     }
 
     public boolean registerUser(User newUser, String passwordVerification){
-//        Optional <User> oldUserName = userService.getUserByUsername(newUser.getUsername());
-//        Optional <User> oldUserEmail = userService.getUserByEmail(newUser.getEmail());
-//
-//        if(oldUserName.isPresent()|| oldUserEmail.isPresent()){
-//            return false;
-//        }
-
         if(!newUser.checkMatchingPasswords(passwordVerification)){
             return false;
         }

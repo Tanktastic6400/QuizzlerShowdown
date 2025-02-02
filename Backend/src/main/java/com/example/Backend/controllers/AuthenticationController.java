@@ -27,12 +27,9 @@ public class AuthenticationController {
     public ResponseEntity<String> attemptLogin(@RequestBody LoginFormDTO request, HttpSession session){
         String typedLoginMethod = request.getUsername();
         String typedPassword = request.getPassword();
-        //String typedEmail = request.getEmail();
-        //System.out.println(typedEmail.contains("@"));
         if(authenticationService.loginUser(typedLoginMethod, typedPassword, session)){
             return ResponseEntity.ok("Sucessfully logged in");
         }
-        //setUserInSession(request.getSession(), theUser);
         return ResponseEntity.status(401).body("Incorrect username/email or password");
     }
 
@@ -70,7 +67,7 @@ public class AuthenticationController {
         UserInfoDTO userInfo = new UserInfoDTO();
 
         if(currentUser == null){
-            //Return the empty DTO, but since the error code is 401 it won't never be used?
+            //Return the empty DTO, but since the error code is 401 it won't actually be used
             return ResponseEntity.status(401).body(userInfo);
         }
         String currentUsername = currentUser.getUsername();
