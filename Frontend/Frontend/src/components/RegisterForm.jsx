@@ -18,11 +18,13 @@ function RegisterForm(props) {
     const testConfirmedPassword = confirmedPassword;
 
     if(testUsername.includes("@")){
+        alert("Username may not contain @")
         setUsername("");
         throw new Error("Username may not contain @");
     }
 
     if(testConfirmedPassword != password){
+        alert("Passwords do not match");
         setPassword("");
         setConfirmedPassword("");
         throw new Error ("Passwords do not match");
