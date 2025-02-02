@@ -31,6 +31,7 @@ function LoginForm({ getUserInfo }) {
       if (!response.ok) {
         setLoginMethod("");
         setPassword("");
+        alert("Your user information or password were incorrect.");
         throw new Error("Could not log in");
       }
       getUserInfo();

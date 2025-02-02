@@ -8,23 +8,32 @@ function RegisterForm(props) {
   const [password, setPassword] = useState("");
   const [confirmedPassword, setConfirmedPassword] = useState("");
 
+  //let positiveResponse = true;
+
+
   const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    const testUsername = username
+    const testUsername = username.trim();
+    const testPassword = password;
+    const testConfirmedPassword = confirmedPassword;
+
 
     if(testUsername.includes("@")){
         setUsername("");
-        setEmail("");
-        setPassword("");
-        setConfirmedPassword("");
         throw new Error("Username may not contain @");
     }
 
+    if(testConfirmedPassword != password){
+        setPassword("");
+        setConfirmedPassword("");
+        throw new Error ("Passwords do not match");
+    }
+
     const registerFormData = {
-      username: username,
+      username: testUsername,
       password: password,
       email: email,
       passwordVerification: confirmedPassword,
@@ -36,29 +45,66 @@ function RegisterForm(props) {
       body: JSON.stringify(registerFormData),
     };
 
-    //"http://localhost:8080/register"
-    //"http://localhost:8080/authenticationservice/register"
+
     fetch(
       "http://localhost:8080/authenticationservice/register",
       fetchSpecifications
 
-      //FINISH UP HERE!!!
     ).then(function (response) {
-      if (!response.ok) {
+      /*if (!response.ok) {
+        //  console.log(response.text());
+        const errorMessage = response.text();
+        console.log(errorMessage);
         setUsername("");
         setEmail("");
         setPassword("");
         setConfirmedPassword("");
         throw new Error("Could not submit registration information");
+        //positiveResponse = false;
+        console.log("BAD");
+        setPositiveResponse(false);
+        console.log(positiveResponse);
       }
-      alert("Form submitted");
+        else{
+            //positiveResponse = true;
+            console.log("GOOD");
+            setPositiveResponse(true)
+            console.log(positiveResponse);
+            }
+      alert("Account Registered");
       setUsername("");
       setEmail("");
       setPassword("");
       setConfirmedPassword("");
       navigate("/login");
-      return response;
-    });
+      return response;*/
+      return response.text()})
+    //});
+    .then(function (data){
+        console.log(data);
+        if(data==="Username already in use"){
+                    setUsername("");
+                    alert(data);
+                    throw new Error(data);
+            }
+        else if (data==="Email already in use"){
+            setEmail("");
+            alert(data);
+            throw new Error(data);
+            }
+        setUsername("");
+        setEmail("");
+        setPassword("");
+        setConfirmedPassword("");
+        if (data==="Successfully registered"){
+            alert(data);
+            navigate("/login");
+        }
+        else{
+            alert(data)
+            throw new Error(data);
+            }
+        });
   }
 
   return (
