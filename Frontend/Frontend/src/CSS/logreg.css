@@ -26,7 +26,7 @@
 }
 
 .login-container {
-  position: absolute;
+  /* position: absolute; */
   bottom: 275px;
   display: flex;
   flex-direction: column; 
@@ -45,12 +45,12 @@
 }
 
 .logintext{
-  font-size: x-large;
+  font-size: large;
   font-family: 'Times New Roman', Times, serif;
   margin: 6%;
 }
 
 .loginPicture{
-  width: 500px;
+  width: auto;
   height: 600px;
 }
