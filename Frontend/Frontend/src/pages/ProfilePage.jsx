@@ -119,12 +119,24 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
                                 <h2> Username: {params.username} </h2>
                                  <p> Email: {pageEmail} </p>
                                  <p> Name: {pageName}</p>
-                                 <p> Bio: {pageBio} </p>
                                  <p> Location: {pageLocation}</p>
                                  <p> Occupation: {pageOccupation}</p>
                                 {ownerPage?(<button type ="button" className="search-button" onClick={EnableEditMode} > Edit Page </button>):<div></div>}
                                  </ul>
                          </div>
+                  <div className="bio-container">
+                      <ul>
+                      <h2>User Biography</h2>
+                      <p> {pageBio} </p>
+                       {/*}<textarea
+                                      className="form-control"
+                                      value={pageBio}
+                                    placeholder={pageBio}
+                                    required
+                                    disabled
+                                      ></textarea>*/}
+                      </ul>
+                      </div>
                 </div>
                          }
             <div>
@@ -158,7 +170,9 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
                 </div>
 
             {/*}<ProfileView passedUsername={pageUserName}/>*/}
-            <footer className="profileFooter">  Handshake designed by <a href={"https://www.freepik.com/"}> Freepik </a> </footer>
+            <footer className="profileFooterRight">  Handshake designed by <a href={"https://www.freepik.com/"}> Freepik </a> </footer>
+                        <footer className="profileFooterLeft">  Trophy designed by <a href={"https://www.freepik.com/"}> Freepik </a> </footer>
+
         </div>
 
     );

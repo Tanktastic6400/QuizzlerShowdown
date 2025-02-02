@@ -45,11 +45,12 @@ function ProfileForm(props){
     }
 
     return(
-        <form onSubmit={handleSubmit} className='userProfile-container'>
+        <form onSubmit={handleSubmit}>
+            <div className='userProfile-container'>
             <ul>
                 <div>
                     <label className="form-label">
-                      Name:
+                      Name
                     </label>
                     <input
                       type="text"
@@ -63,7 +64,7 @@ function ProfileForm(props){
                     />
                   </div>
 
-            <div>
+{/*            <div>
                 <label>
                     Bio
                 </label>
@@ -76,11 +77,11 @@ function ProfileForm(props){
               placeholder={formBio}
               required
                 ></textarea>
-            </div>
+            </div> */}
 
              <div>
                     <label className="form-label">
-                      Location:
+                      Location
                     </label>
                     <input
                       type="text"
@@ -96,7 +97,7 @@ function ProfileForm(props){
 
                 <div>
                     <label className="form-label">
-                      Occupation:
+                      Occupation
                     </label>
                     <input
                       type="text"
@@ -115,6 +116,28 @@ function ProfileForm(props){
                 DONE EDITING
             </button>
             </ul>
+
+            </div>
+
+            <div className="bio-container">
+                            <ul>
+
+                                <label>
+                                    <h2>User Biography</h2>
+                                </label>
+
+                                <textarea
+                                className="bio-text-area"
+                                value={formBio}
+                                onChange={function (e) {
+                                    setFormBio(e.target.value);
+                                  }}
+                              placeholder={formBio}
+                              required
+                                ></textarea>
+                                </ul>
+                </div>
+
         </form>
         );
 }
