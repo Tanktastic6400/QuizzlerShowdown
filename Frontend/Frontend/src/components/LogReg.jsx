@@ -19,6 +19,7 @@ const LogReg = ({ getUserInfo }) => {
             <div className="login-container">
               <LoginForm getUserInfo={getUserInfo} />
             </div>
+            <p>If you do not have an account yet, sign up <a href="/register">here</a></p>
           </div>
         </div>
         <div className="loginPicture">
