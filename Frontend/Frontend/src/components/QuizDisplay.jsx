@@ -70,10 +70,10 @@ function QuizDisplay({ loggedInUser }) {
     const checkAnswers = () => {
 
         let numberOfCorrectAnswers = 0;
-        let temp = 0;
+        let totalQuestions = 0;
 
         Object.keys(correctAnswers).forEach((index) => {
-            temp++;
+            totalQuestions++;
             if (selectedAnswers[index] === correctAnswers[index]) {
 
                 numberOfCorrectAnswers = numberOfCorrectAnswers + 1;
@@ -82,8 +82,8 @@ function QuizDisplay({ loggedInUser }) {
 
 
 
-        setThreshold(temp / 2);
-        setNumberOfQuestions(temp);
+        setThreshold(totalQuestions / 2);
+        setNumberOfQuestions(totalQuestions);
 
         setNumberOfCorrectAnswers(numberOfCorrectAnswers);
 
@@ -106,9 +106,6 @@ function QuizDisplay({ loggedInUser }) {
     const handleSubmit = () => {
 
         checkAnswers();
-
-
-
     };
 
     
@@ -118,8 +115,7 @@ function QuizDisplay({ loggedInUser }) {
                 params: {
                     ID: userid, score: score, add: add, correctAnswers: numberOfCorrectAnswers, numberOfQuestions: numberOfQuestions
                 }
-            }).then(response => {
-                
+            }).then(response => {                
                 // This ensures navigation happens only after the score is updated
     
             }).catch(error => {
@@ -164,7 +160,7 @@ function QuizDisplay({ loggedInUser }) {
                         <tr key={questionIndex}>
                             <td class="questionStats">Number: {questionIndex + 1}</td>
                             <td class="questionStats">{question.difficulty}</td>
-                            <td class="questionStats">{question.category}</td>
+                            <td class="questionStats" dangerouslySetInnerHTML={{ __html: question.category}}></td>
                             <td class="questionStats" dangerouslySetInnerHTML={{ __html: question.question }} />
                             <td class="questionStats">{mixAnswers(question, questionIndex).map((answers, answersIndex) => (
 

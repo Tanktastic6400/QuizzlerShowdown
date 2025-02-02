@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams  } from 'react-router-dom';
 import ProfileView from "../components/ProfileView";
 import ProfileForm from "../components/ProfileForm";
+import "../CSS/FriendProfileDisplay.css"
 
 function ProfilePage ( { loggedInUser, getUserInfo } ) {
 
@@ -112,21 +113,46 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
                 />
             </div>)
             :
+                <div>
+                 <div className='userProfile-container'>
+                                <ul>
+                                <h2> Username: {params.username} </h2>
+                                 <p> Email: {pageEmail} </p>
+                                 <p> Name: {pageName}</p>
+                                 <p> Location: {pageLocation}</p>
+                                 <p> Occupation: {pageOccupation}</p>
+                                {ownerPage?(<button type ="button" className="search-button" onClick={EnableEditMode} > Edit Page </button>):<div></div>}
+                                 </ul>
+                         </div>
+                  <div className="bio-container">
+                      <ul>
+                      <h2>User Biography</h2>
+                      <p> {pageBio} </p>
+                       {/*}<textarea
+                                      className="form-control"
+                                      value={pageBio}
+                                    placeholder={pageBio}
+                                    required
+                                    disabled
+                                      ></textarea>*/}
+                      </ul>
+                      </div>
+                </div>
+                         }
             <div>
-            <p> Username: {params.username} </p>
-             <p> Email: {pageEmail} </p>
-             <p> Name: {pageName}</p>
-             <p> Bio: {pageBio} </p>
-             <p> Location: {pageLocation}</p>
-             <p> Occupation: {pageOccupation}</p>
-             <p> High Score: {pageScore}</p>
-             <p> Quizzes Taken: {pageQuizzesTaken}</p>
-             <p> Questions Answered: {pageQuestionsAnswered}</p>
-             <p> Correctly Answered Questions: {pageTotalCorrectAnswers}</p>
-             <p> Career Percentage Correct: {pageCorrectAnswerPercentage}</p>
-
-            <p> Friends </p>
+             <div className="statProfile-container">
+                 <ul>
+                     <h2> Let's See Where You Stand, Pardner! </h2>
+                    <p> High Score: {pageScore}</p>
+                    <p> Quizzes Taken: {pageQuizzesTaken}</p>
+                    <p> Questions Answered: {pageQuestionsAnswered}</p>
+                    <p> Correctly Answered Questions: {pageTotalCorrectAnswers}</p>
+                    <p> Career Percentage Correct: {pageCorrectAnswerPercentage}</p>
+                </ul>
+             </div>
+            <div className="friendProfile-container">
              <ul>
+                 <h1> Friend List </h1>
                  {pageFriendList.filter(friend=> friend.status === "ACCEPTED")
                      .map( (friend) => (
                          <li key={friend.id}>
@@ -140,11 +166,15 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
                     </li>
                  ))}
             </ul>
-                {ownerPage?(<button type ="button" onClick={EnableEditMode} > Edit Page </button>):<div></div>}
+            </div>
                 </div>
-             }
+
             {/*}<ProfileView passedUsername={pageUserName}/>*/}
+            <footer className="profileFooterRight">  Handshake designed by <a href={"https://www.freepik.com/"}> Freepik </a> </footer>
+                        <footer className="profileFooterLeft">  Trophy designed by <a href={"https://www.freepik.com/"}> Freepik </a> </footer>
+
         </div>
+
     );
 }
 

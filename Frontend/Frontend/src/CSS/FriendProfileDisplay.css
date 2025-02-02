@@ -1,0 +1,110 @@
+.userProfile-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 45%;
+  bottom: 33%;
+  height: 35vh;
+  width: 15vw;
+  background-color: hwb(54 55% 6% / 0.273);
+  border-radius: 16px;
+  border-style: solid;
+  border-width: 4px;
+  border-color: gold;
+  background-image: url("../images/Orange_question_mark.svg.png");
+  background-size:cover;
+  position: fixed;
+}
+
+.friendProfile-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30vh;
+  width: 15vw;
+  background-color: hwb(54 55% 6% / 0.273);
+  border-radius: 16px;
+  border-style: solid;
+  border-width: 4px;
+  border-color: gold;
+  background-image: url("../images/handshake.png");
+  background-size:cover;
+  position: fixed;
+  bottom: 73px; /*60 seems good for just over the button*/
+  right: 20px;
+
+}
+
+.statProfile-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40vh;
+  width: 20vw;
+  background-color: hwb(54 55% 6% / 0.273);
+  border-radius: 16px;
+  border-style: solid;
+  border-width: 4px;
+  border-color: gold;
+  background-image: url("../images/trophy.png");
+  background-size:cover;
+  position: fixed;
+  bottom: 40px;
+  left: 20px;
+}
+
+.login-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+}
+
+.register-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+}
+
+.wrap {
+  text-wrap: wrap;
+}
+
+.profileFooterRight{
+  position: fixed;
+  bottom: 55px;
+  right: 20px;
+}
+
+.profileFooterLeft{
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+}
+
+.left-Label{
+    text-align: left;
+    display: inline-block;
+}
+
+.bio-container {
+  display: flex;
+    align-items: center;
+    justify-content: center;
+    left: 30%;
+    bottom: 33%;
+    height: 35vh;
+    width: 15vw;
+    background-color: hwb(54 55% 6% / 0.273);
+    border-radius: 16px;
+    border-style: solid;
+    border-width: 4px;
+    border-color: gold;
+    background-size:cover;
+    position: fixed;
+}
+
+.bio-text-area{
+  background-color: hwb(54 55% 6% / 0.273);
+}
