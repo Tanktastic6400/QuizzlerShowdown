@@ -1,0 +1,56 @@
+.answerRadio {
+  margin-bottom: 5px;
+}
+
+
+.answerLabel {
+  margin-bottom: 5px;
+  margin-right: 50px;
+  display: flex;
+  font-family: cursive;
+  font-size: large;
+
+}
+
+.questionStats {
+  padding: 5px;
+  margin-right: 5px;
+  font-family: cursive;
+  font-size: large;
+}
+
+table {
+  width: 100%;
+  background-color: darkgoldenrod;
+
+}
+
+tr {
+  border: 1px solid black;
+}
+
+.answerLabel {
+  margin-bottom: 5px;
+  margin-right: 50px;
+  display: flex;
+}
+
+.questionStats {
+  padding: 5px;
+  margin-right: 5px;
+}
+
+.table {
+  width: 100%;
+  padding-bottom: 5px;
+}
+
+.tableSurround {
+  padding-top: 20%;
+
+
+}
+
+.submitButton {
+  padding-top: 5px;
+}

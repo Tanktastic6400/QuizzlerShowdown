@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
 function RegisterForm(props) {
   const [username, setUsername] = useState("");
@@ -11,6 +12,16 @@ function RegisterForm(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
+
+    const testUsername = username
+
+    if(testUsername.includes("@")){
+        setUsername("");
+        setEmail("");
+        setPassword("");
+        setConfirmedPassword("");
+        throw new Error("Username may not contain @");
+    }
 
     const registerFormData = {
       username: username,
@@ -84,7 +95,7 @@ function RegisterForm(props) {
         }}
         placeholder="Confirm Password"
       />
-      <button type="submit">Register User</button>
+      <Button variant="primary" type="submit">Register</Button>
     </form>
   );
 }

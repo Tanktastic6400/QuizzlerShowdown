@@ -1,32 +1,26 @@
 import React from "react";
-import { useNavigate } from 'react-router-dom';
-import '../styles/App.css'
-import UserSearch from "../components/UserSearch";
+import { useNavigate } from "react-router-dom";
+import "../styles/App.css";
 
-const MainPage = ({loggedInUser}) => {
-    const navigate = useNavigate();
-    const handleReviewButtonClick = () => {
-        navigate('/reviews');
-    }
-    return (
+import QuizSelector from "../components/QuizSelector";
+import Scoreboard from "../components/Scoreboard";
+import LogReg from "../components/LogReg";
+import UserBar from "../components/UserBar";
+import ChatContainer from "../components/ChatContainer";
 
-        // <div className="main-page-container">
-        //         <h1>Welcome to Quizzler Showdown</h1>
-        //         <div className="position-fixed top-0 end-0 p-3">
-        <div>
-            <UserSearch loggedInUser={loggedInUser}/>
-            <button
-                className="btn btn-primary d-flex align-items-center"
-                onClick={handleReviewButtonClick}
-            >
-                <span className="me-2">Reviews</span>
-                <span className="text-warning">★★★★★</span>
-            </button>
-        </div>
-
-
-        //  </div>
-    );
+const MainPage = ({ loggedInUser, getUserInfo}) => {
+  const navigate = useNavigate();
+  const handleReviewButtonClick = () => {
+    navigate("/reviews");
+  };
+  return (
+    <>
+      <div className="main-page-container">
+        <Scoreboard loggedInUser={loggedInUser} getUserInfo={getUserInfo}/>
+        
+      </div>
+    </>
+  );
 };
 
 export default MainPage;

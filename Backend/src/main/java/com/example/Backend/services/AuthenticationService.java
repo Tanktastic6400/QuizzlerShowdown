@@ -20,6 +20,9 @@ public class AuthenticationService {
     @Autowired
     private UserProfileRepository userProfileRepository;
 
+    @Autowired
+    private UserService userService;
+
     private static final String userSessionKey = "user";
 
     public User getUserFromSession(HttpSession session) {
@@ -40,25 +43,41 @@ public class AuthenticationService {
         session.setAttribute(userSessionKey, user.getId());
     }
 
-    public boolean loginUser(String typedUsername, String typedPassword, HttpSession session){
-        User attemptedUser = userRepository.findByUsername(typedUsername);
-        if(attemptedUser == null){
+    //TODO Maybe actually do something with the email. ^^;
+    public boolean loginUser(String typedLoginMethod, String typedPassword, HttpSession session){
+
+        Optional<User> attemptedUser;
+
+        if(typedLoginMethod.contains("@")) {
+            attemptedUser = userService.getUserByEmail(typedLoginMethod);
+        }
+        else {
+           attemptedUser = userService.getUserByUsername(typedLoginMethod);
+        }
+
+        if(attemptedUser.isEmpty()){
             return false;
         }
 
-        if(!attemptedUser.checkMatchingPasswords(typedPassword)){
+        User attemptedUserPassCheck = attemptedUser.get();
+
+        if(!attemptedUserPassCheck.checkMatchingPasswords(typedPassword)){
             return false;
         }
 
-        setUserInSession(session, attemptedUser);
+        //if(!attemptedUserPassCheck.getEmail().equals(typedEmail)) {
+        //    return false;
+        //}
+
+        setUserInSession(session, attemptedUserPassCheck);
         return true;
     }
 
     public boolean registerUser(User newUser, String passwordVerification){
-        User oldUserName = userRepository.findByUsername(newUser.getUsername());
-        User oldUserEmail = userRepository.findByEmail(newUser.getEmail());
+        Optional <User> oldUserName = userService.getUserByUsername(newUser.getUsername());
+        Optional <User> oldUserEmail = userService.getUserByEmail(newUser.getEmail());
 
-        if(oldUserName != null || oldUserEmail != null){
+        if(oldUserName.isPresent()|| oldUserEmail.isPresent()){
             return false;
         }
 
@@ -68,15 +87,6 @@ public class AuthenticationService {
 
         userRepository.save(newUser);
 
-        //System.out.println(newUser.getId());
-        //newUser.getUserProfile().setScore(1000); //Score didn't update in database when I did that.
-        //System.out.println(newUser.getUserProfile().getScore()); //but it did update here.
-        //System.out.println("SHOULD SEE PROFILE ABOVE");
-
-        //UserProfile newUserProfile = new UserProfile();
-        //System.out.println(newUserProfile.getScore());
-        //System.out.println("SHOULD SEE SCORE ABOVE");
-        //userProfileRepository.save(newUserProfile);
         return true;
     }
 

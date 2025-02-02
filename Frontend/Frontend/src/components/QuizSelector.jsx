@@ -1,21 +1,28 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import "../CSS/QuizSelector.css"
 import axios from "axios";
+import throttle from "lodash.throttle";
 
-function QuizSelector() {
+function QuizSelector({loggedInUser}) {
 
-    const [value, setValue] = useState('');
+    const [numberOfQuestions, setNumberOfQuestions] = useState('');
     const [isValid, setIsValid] = useState(true);
     const [categoryData, setCategoryData] = useState(null);
-    const [category, setCategory] = useState('19');
+    const [category, setCategory] = useState('9');
     const [type, setType] = useState('multiple');
     const [difficulty, setDifficulty] = useState('easy');
+    const navigate = useNavigate();
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+
 
     const handleAmountChange = (event) => {
         let inputValue = event.target.value;
 
         let isNumber = !isNaN(inputValue && inputValue !== '');
 
-        setValue(inputValue);
+        setNumberOfQuestions(inputValue);
         setIsValid(isNumber);
     }
 
@@ -29,30 +36,36 @@ function QuizSelector() {
         setDifficulty(event.target.value);
     }
 
-    const handleSubmit = () => {
+    const throttledSubmit = throttle(async (quizData) => {
+        try {
+          await axios.post("http://localhost:8080/set-questions", quizData);
+          navigate("/quizdisplay");
+        } catch (error) {
+          console.error(
+            "There was an issue submitting quiz customization data",
+            error
+          );
+        }finally{setIsSubmitting(false);}
+      }, 2000);
 
-        // if (isValid && value) {
-        //     const requestData = {
-        //         amount: value,
-        //     }
-        if (isValid && value) {
-            axios.post('http://localhost:8080/questions', {
-                amount: value,
-                valueOfCategory: category,
-                type: type,
-                difficulty: difficulty
-            })
-                .then(response => {
-                    // alert(response.data);
-                })
-                .catch(error => {
-                    console.error("There was an issue submitting quiz customization data", error);
-                });
+    const handleSubmit = () => {
+        if(isSubmitting){return;}
+        if (isValid && numberOfQuestions) {
+            const quizData = {
+              amount: numberOfQuestions,
+              valueOfCategory: category,
+              type: type,
+              difficulty: difficulty,
+            };
             
-        }else{
-            alert("Please enter desired amount of questions!");
-        }
-    };
+            setIsSubmitting(true);
+            throttledSubmit(quizData);
+          } else {
+            alert("Please enter a valid number of questions!");
+          }
+        };
+
+
 
 
     useEffect(() => {
@@ -72,61 +85,53 @@ function QuizSelector() {
 
     return (
         <div>
-            <label htmlFor="amount">Number of Questions </label>
-            <input id="amount" type="text" value={value} onChange={handleAmountChange}></input>
+            <h1>Please fill out the form, {loggedInUser.username}</h1>
+            
+                <div className="parameters">
 
-            <label htmlFor="Category">Category of Questions </label>
-            <select name="category" id="category" onChange={() => handleCategoryChange}>
-                {categoryData && categoryData.trivia_categories.map((category, index) => (
-                    <option key = {category.id} value={category.id}>{category.name}</option>
+                    <label className="labels" htmlFor="amount">Number of Questions: </label>
+                    <input className="inputFields" id="amount" type="text" value={numberOfQuestions} onChange={handleAmountChange}></input>
 
+                </div>
+                <div className="parameters">
 
-                ))}
-            </select>
+                    <label className="labels" htmlFor="Category">Category of Questions: </label>
 
-            <label htmlFor="Type">Type of Questions </label>
-            <select name="type" id="type" onChange={() => handleTypeChange}>
-                <option value="multiple">Multiple Choice</option>
-                <option value="boolean">True or False</option>
-            </select>
+                    <select className="selectorFields" name="category" id="category" onChange={handleCategoryChange}>
+                        {categoryData && categoryData.trivia_categories.map((category, index) => (
+                            <option key={category.id} value={category.id}>{category.name}</option> ))}
+                          
+                        
+                        
 
-            <label htmlFor="Difficulty">Difficulty </label>
-            <select name="difficulty" id="difficulty" onChange={() => handleDifficultyChange}>
-                <option value="easy">Easy</option>
-                <option value="medium">Medium</option>
-                <option value="hard">Hard</option>
-            </select>
-            <button id="submit" onClick={handleSubmit}>Submit</button>
-            {/* <input id="submit" type="submit" onSubmit={handleSubmit}/> */}
+                    </select>
+                </div>
+                <div className="parameters">
 
+                    <label className="labels" htmlFor="Type">Type of Questions: </label>
+
+                    <select className="selectorFields" name="type" id="type" onChange={handleTypeChange}>
+                        <option value="multiple">Multiple Choice</option>
+                        <option value="boolean">True or False</option>
+                    </select>
+                </div>
+
+                <div className="parameters">
+
+                    <label className="labels" htmlFor="Difficulty">Difficulty: </label>
+
+                    <select className="selectorFields" name="difficulty" id="difficulty" onChange={handleDifficultyChange}>
+                        <option value="easy">Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                </div>
+
+                <button id="submit" onClick={handleSubmit}>Submit</button>
+                {/* <input id="submit" type="submit" onSubmit={handleSubmit}/> */}
+            
         </div>
     );
 }
 
 export default QuizSelector;
-{
-  /* <option value="9">General Knowledge</option>
-<option value="10">Books</option>
-<option value="11">Film</option>
-<option value="12">Music</option>
-<option value="13">Musicals & Theatres</option>
-<option value="14">Television</option>
-<option value="15">Video Games</option>
-<option value="16">Board Games</option>
-<option value="17">Science & Nature</option>
-<option value="18">Computers</option>
-<option value="19">Mathematics</option>
-<option value="20">Mythology</option>
-<option value="21">Sports</option>
-<option value="22">Geography</option>
-<option value="23">History</option>
-<option value="24">Politics</option>
-<option value="25">Art</option>
-<option value="26">Celebrities</option>
-<option value="27">Animals</option>
-<option value="28">Vehicles</option>
-<option value="29">Comics</option>
-<option value="30">Gadgets</option>
-<option value="31">Japanese Anime & Manga</option>
-<option value="32">Cartoon & Animations</option> */
-}

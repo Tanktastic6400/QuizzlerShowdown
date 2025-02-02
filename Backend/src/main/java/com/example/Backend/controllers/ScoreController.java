@@ -6,6 +6,7 @@ import com.example.Backend.models.User;
 import com.example.Backend.models.UserProfile;
 import com.example.Backend.models.data.UserProfileRepository;
 import com.example.Backend.models.data.UserRepository;
+import com.example.Backend.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -26,13 +27,16 @@ public class ScoreController {
     @Autowired
     private UserProfileRepository userProfileRepository;
 
-    //WiP
-    @PostMapping("/getScore")
-    public ResponseEntity<String> getScore(HttpSession session, @RequestBody UserInfoDTO request){
-        //Get the given user from the database via their ID
-        Optional<User> scoreUser = userRepository.findById(request.getId());
+    @Autowired
+    private UserService userService;
+
+    //@PostMapping("/getScore/{id}")
+    @GetMapping("/getScore/{id}")
+    public ResponseEntity<Integer> getScore(HttpSession session, @PathVariable long id){
+        //int scoreUser = userRepository.findById(id).getUserProfile().getScore();
+        int scoreUser = userService.getUserByID(id).getUserProfile().getScore(); //Invalid???
         //userProfileRepository
-        return ResponseEntity.ok("FILLER");
+        return ResponseEntity.ok(scoreUser);
     }
 
     @GetMapping("/getTopScores")
@@ -41,11 +45,21 @@ public class ScoreController {
         return userProfileRepository.findAllSortedByScoreDTO(PageRequest.of(0, topX));
     }
 
-    @GetMapping("/getAllScores")
-    public List <UserProfile> getAllScores(){
-        return userProfileRepository.findAllSortedByScore(); //This displays all user profiles as sorted by score
-    }
+//    @GetMapping("/getAllScores")
+//    public List <UserProfile> getAllScores(){
+//        return userProfileRepository.findAllSortedByScore(); //This displays all user profiles as sorted by score
+//    }
 
+    @GetMapping("/getAllScores")
+    public ResponseEntity<List<ScoreInfoDTO>> getAllScores(){
+        // Define the page size or limit if required, or fetch all records if pagination is not necessary
+        PageRequest pageRequest = PageRequest.of(0, Integer.MAX_VALUE); // Example to fetch a large set of records
+        List<ScoreInfoDTO> scores = userProfileRepository.findAllSortedByScoreDTO(pageRequest);
+        if (scores.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(scores);
+    }
 
 
 }

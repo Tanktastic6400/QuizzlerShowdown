@@ -11,11 +11,11 @@ public class Chat extends AbstractClass {
     private String chatId;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "sender_id", nullable = false)
+    @JoinColumn(name = "sender_id", nullable = true)
     private User user1;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "receiver_id", nullable = false)
+    @JoinColumn(name = "receiver_id", nullable = true)
     private User user2;
 
     @Column(nullable = false)

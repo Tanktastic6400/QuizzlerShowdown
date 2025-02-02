@@ -6,12 +6,16 @@ import com.example.Backend.models.FriendList;
 import com.example.Backend.models.FriendStatus;
 import com.example.Backend.models.User;
 import com.example.Backend.services.FriendListService;
+import com.example.Backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.persistence.EntityNotFoundException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/friendlist")
@@ -19,17 +23,35 @@ public class FriendListController {
     @Autowired
     private FriendListService friendListService;
 
-    @GetMapping("/{userId}")
-    public List<FriendList> getFriends(@PathVariable Long userId) {
+    @Autowired
+    private UserService userService;
+
+    @GetMapping("username")
+    public List<FriendList>fetchFriendsFromName(@RequestParam String username){
+        Optional<User> tryFindUser = userService.getUserByUsername(username);
+        if(tryFindUser.isEmpty()) {
+            try {
+                throw new RuntimeException();
+            } catch (RuntimeException e) {
+                e.printStackTrace();
+            }
+        }
+        long userId = tryFindUser.get().getId();
+        return friendListService.getFriends(userId);
+    }
+
+    @GetMapping("/currentuser")
+    public List<FriendList> fetchFriends(@RequestParam Long userId) {
+
         return friendListService.getFriends(userId);
     }
 
     @PostMapping("/send-request")
     public void sendFriendRequest(@RequestBody FriendRequestDTO request) {
-        Long userId = request.getUserId();
-        Long friendId = request.getFriendId();
-        System.out.println("FriendDTO info - userId: " + userId + "friendId: " + friendId);
-        friendListService.sendFriendRequest(userId, friendId);
+        Long user1Id = request.getUser1Id();
+        Long user2Id = request.getUser2Id();
+
+        friendListService.sendFriendRequest(user1Id, user2Id);
     }
 
     @PostMapping("/respond-request")
@@ -45,7 +67,6 @@ public class FriendListController {
             } catch (IllegalArgumentException e) {
                 return ResponseEntity.badRequest().body("Invalid status: " + status);
             }
-            System.out.println("friendshipid: " + request.getRequestId());
 
             friendListService.respondToRequest(requestId, friendshipStatus);
             return ResponseEntity.ok("Friend request updated successfully.");
@@ -56,20 +77,6 @@ public class FriendListController {
         }
     }
 
-    @GetMapping("/findfriends")
-    public ResponseEntity<List<User>> findFriends(@RequestParam String username) {
 
-        try {
-            List<User> friends = friendListService.findUser(username);
-            if (friends.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(Collections.emptyList());
-            }
-            return ResponseEntity.ok(friends);
-        } catch (Exception e) {
-            System.err.println("Error in finding friends: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Collections.emptyList());
-        }
-    }
+
 }

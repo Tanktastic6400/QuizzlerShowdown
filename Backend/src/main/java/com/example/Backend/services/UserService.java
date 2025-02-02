@@ -7,7 +7,11 @@ import com.example.Backend.models.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
+
+import java.util.Optional;
+
 
 @Service
 public class UserService {
@@ -17,6 +21,37 @@ public class UserService {
 
     @Autowired
     private UserProfileRepository userProfileRepository;
+
+
+    public User getUserByID(long id) {
+        Optional<User> user = userRepository.findById(id);
+        return user.orElseThrow(() -> new RuntimeException("No user with ID found"));
+    }
+
+    public void updateStats(UserProfile statProfile, int correctAnswers, int numberOfQuestions, int newScore, boolean add){
+        int quizzesTaken = statProfile.getQuizzesTaken()+1;
+        int totalCorrect = statProfile.getTotalCorrectAnswers()+correctAnswers;
+        int totalAnswered = statProfile.getQuestionsAnswered()+numberOfQuestions;
+        float correctAnswerPercentage = ( (float) totalCorrect / totalAnswered)*100;
+        int currentScore = statProfile.getScore();
+        if(add){
+            currentScore+= newScore;
+        }
+        statProfile.setScore(currentScore);
+        statProfile.setQuizzesTaken(quizzesTaken);
+        statProfile.setTotalCorrectAnswers(totalCorrect);
+        statProfile.setQuestionsAnswered(totalAnswered);
+        statProfile.setCorrectAnswerPercentage(correctAnswerPercentage);
+        userProfileRepository.save(statProfile);
+    }
+
+    public Optional<User> getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public Optional<User> getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
 
     public void updateUserProfile(UserProfile userProfile){
         userProfileRepository.save(userProfile);
