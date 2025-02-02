@@ -47,7 +47,6 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
         //}
         .then((data) =>
         {
-            //console.log(data);
             setPageUserName(data.username);
             setPageEmail(data.email);
 
@@ -86,8 +85,7 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
                 setOwnerPage(false);
                 }
         }
-         //         },[]);
-           }, [loggedInUser, editMode, params]); //Why this versus []?
+           }, [loggedInUser, editMode, params]);
 
     function EnableEditMode(){
         setEditMode(true)
@@ -98,11 +96,8 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
         setEditMode(false)
         }
 
-    //THIS IS OUTDATED! And possibly not even doing anything?
     function handleEdit(profileData){
         DisableEditMode();
-        //setPageBio(profileData);     //Update to be more than just bio
-        //Try to get this to update "in real time" rather than a refresh.
         }
 
     return (
@@ -128,13 +123,6 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
                       <ul>
                       <h2>User Biography</h2>
                       <p> {pageBio} </p>
-                       {/*}<textarea
-                                      className="form-control"
-                                      value={pageBio}
-                                    placeholder={pageBio}
-                                    required
-                                    disabled
-                                      ></textarea>*/}
                       </ul>
                       </div>
                 </div>
@@ -169,7 +157,6 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
             </div>
                 </div>
 
-            {/*}<ProfileView passedUsername={pageUserName}/>*/}
             <footer className="profileFooterRight">  Handshake designed by <a href={"https://www.freepik.com/"}> Freepik </a> </footer>
                         <footer className="profileFooterLeft">  Trophy designed by <a href={"https://www.freepik.com/"}> Freepik </a> </footer>
 

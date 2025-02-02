@@ -64,7 +64,7 @@ function LoginForm({ getUserInfo }) {
               setPassword(e.target.value);
             }}
             placeholder="Password"
-            required //Added for obvious reasons
+            required
           />
           <Button variant="primary" type="submit">Login</Button>
         </form>

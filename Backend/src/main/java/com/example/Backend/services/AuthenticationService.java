@@ -1,7 +1,6 @@
 package com.example.Backend.services;
 
 import com.example.Backend.models.User;
-import com.example.Backend.models.UserProfile;
 import com.example.Backend.models.data.UserProfileRepository;
 import com.example.Backend.models.data.UserRepository;
 import jakarta.servlet.http.HttpSession;

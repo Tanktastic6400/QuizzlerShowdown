@@ -36,12 +36,6 @@ function ProfileForm(props){
             //return data;
             //console.log(data);
             })
-
-
-        //setFormBio(""); //This just for testing for now.
-        //props.onEditSubmitted(formBio); //This just formBio for now for testing
-
-
     }
 
     return(
@@ -63,21 +57,6 @@ function ProfileForm(props){
                       required
                     />
                   </div>
-
-{/*            <div>
-                <label>
-                    Bio
-                </label>
-                <textarea
-                className="form-control"
-                value={formBio}
-                onChange={function (e) {
-                    setFormBio(e.target.value);
-                  }}
-              placeholder={formBio}
-              required
-                ></textarea>
-            </div> */}
 
              <div>
                     <label className="form-label">

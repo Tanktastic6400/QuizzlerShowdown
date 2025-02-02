@@ -8,9 +8,6 @@ function RegisterForm(props) {
   const [password, setPassword] = useState("");
   const [confirmedPassword, setConfirmedPassword] = useState("");
 
-  //let positiveResponse = true;
-
-
   const navigate = useNavigate();
 
   function handleSubmit(e) {
@@ -19,7 +16,6 @@ function RegisterForm(props) {
     const testUsername = username.trim();
     const testPassword = password;
     const testConfirmedPassword = confirmedPassword;
-
 
     if(testUsername.includes("@")){
         setUsername("");
@@ -44,7 +40,6 @@ function RegisterForm(props) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(registerFormData),
     };
-
 
     fetch(
       "http://localhost:8080/authenticationservice/register",
