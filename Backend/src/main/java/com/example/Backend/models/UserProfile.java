@@ -14,10 +14,7 @@ public class UserProfile extends AbstractClass {
     @JsonBackReference //Avoid infinite recursion
     private User user;
 
-    private int score = 0; //Have score start at 0?
-    //private int score;
-
-    //@Column(columnDefinition = "text")
+    private int score = 0;
     private String bio = "";
     private String name = "";
     private String location ="";
@@ -27,9 +24,8 @@ public class UserProfile extends AbstractClass {
     private int questionsAnswered = 0;
     private int totalCorrectAnswers = 0;
     private float correctAnswerPercentage = 0;
+    private int level =  1;
 
-
-    //@JsonBackReference
     @JsonManagedReference
     @OneToMany(mappedBy = "userProfile")
     private List<AnsweredQuestion> answeredQuestions;
@@ -122,5 +118,13 @@ public class UserProfile extends AbstractClass {
 
     public void setCorrectAnswerPercentage(float correctAnswerPercentage) {
         this.correctAnswerPercentage = correctAnswerPercentage;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 }

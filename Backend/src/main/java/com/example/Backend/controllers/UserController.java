@@ -79,6 +79,7 @@ public class UserController {
         profileForm.setQuestionsAnswered(profileUser.getUserProfile().getQuestionsAnswered());
         profileForm.setTotalCorrectAnswers(profileUser.getUserProfile().getTotalCorrectAnswers());
         profileForm.setCorrectAnswerPercentage(profileUser.getUserProfile().getCorrectAnswerPercentage());
+        profileForm.setLevel(profileUser.getUserProfile().getLevel());
         return ResponseEntity.ok(profileForm);
         //return ResponseEntity.ok(testBio);
     }

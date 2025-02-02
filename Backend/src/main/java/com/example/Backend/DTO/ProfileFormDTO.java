@@ -14,6 +14,15 @@ public class ProfileFormDTO {
     private int questionsAnswered;
     private int totalCorrectAnswers;
     private float correctAnswerPercentage;
+    private int level;
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
 
     public float getCorrectAnswerPercentage() {
         return correctAnswerPercentage;
