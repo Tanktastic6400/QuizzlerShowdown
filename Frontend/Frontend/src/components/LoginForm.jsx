@@ -39,7 +39,7 @@ function LoginForm({ getUserInfo }) {
       getUserInfo();
       setLoginMethod("");
       setPassword("");
-      navigate("/");
+      navigate("/quizselector");
       return response;
     });
   }
