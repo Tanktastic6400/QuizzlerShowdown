@@ -43,6 +43,19 @@ public class UserService {
         statProfile.setQuestionsAnswered(totalAnswered);
         statProfile.setCorrectAnswerPercentage(correctAnswerPercentage);
         userProfileRepository.save(statProfile);
+        determineLevel(statProfile, currentScore, quizzesTaken, totalCorrect, totalAnswered, correctAnswerPercentage);
+    }
+
+    public void determineLevel(UserProfile statProfile, int score, int quizzesTaken, int totalCorrect, int totalAnswered, float correctAnswerPercentage)
+    {
+        int currentLevel = statProfile.getLevel();
+        if(currentLevel == 10){
+            return;
+        }
+        if(score >= currentLevel*200 && quizzesTaken >=5*currentLevel && totalCorrect >= 25*currentLevel && totalAnswered >= 50*currentLevel && correctAnswerPercentage >= (40.00+5.0*currentLevel)){
+            statProfile.setLevel(currentLevel+1);
+            userProfileRepository.save(statProfile);
+        }
     }
 
     public Optional<User> getUserByEmail(String email) {

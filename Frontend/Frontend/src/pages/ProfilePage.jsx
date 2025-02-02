@@ -23,6 +23,7 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
     const [pageQuestionsAnswered, setPageQuestionsAnswered] = useState(0);
     const [pageTotalCorrectAnswers, setPageTotalCorrectAnswers] = useState(0);
     const [pageCorrectAnswerPercentage, setPageCorrectAnswerPercentage] = useState(0);
+    const [pageLevel, setPageLevel] = useState(1);
 
     const [pageFriendList, setPageFriendList] = useState([]);
 
@@ -60,13 +61,13 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
             setPageName(data.name);
             setPageLocation(data.location);
             setPageOccupation(data.occupation);
-            setPageScore(data.score);
 
+            setPageScore(data.score);
             setPageQuizzesTaken(data.quizzesTaken);
             setPageQuestionsAnswered(data.questionsAnswered);
             setPageTotalCorrectAnswers(data.totalCorrectAnswers);
             setPageCorrectAnswerPercentage(data.correctAnswerPercentage);
-
+            setPageLevel(data.level);
             })
 
     ;
@@ -132,6 +133,7 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
                  <ul>
                      <h2> Let's See Where You Stand, Pardner! </h2>
                     <p> High Score: {pageScore}</p>
+                    <p> Level: {pageLevel} </p>
                     <p> Quizzes Taken: {pageQuizzesTaken}</p>
                     <p> Questions Answered: {pageQuestionsAnswered}</p>
                     <p> Correctly Answered Questions: {pageTotalCorrectAnswers}</p>
