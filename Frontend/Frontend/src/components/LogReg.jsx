@@ -7,7 +7,7 @@ const LogReg = ({ getUserInfo }) => {
   return (
     <>
       <div className="header-container">
-        <h1 className="header-text">HELLO COWBOY!</h1>
+        <h1 className="header-text">HELLO COWPOKE!</h1>
       </div>
 
       <div className="centerMass">
