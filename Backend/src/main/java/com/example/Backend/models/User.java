@@ -2,6 +2,8 @@ package com.example.Backend.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
@@ -9,6 +11,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class User extends AbstractClass {
     private String username;
     private String email;
+    @Size(min =8, max = 72)
+    @NotNull
     private String password;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -37,7 +41,6 @@ public class User extends AbstractClass {
         return username;
     }
 
-    //Do we need a setter for this? Want folks to be able to change their account's username?
     public void setUsername(String username) {
         this.username = username;
     }
@@ -46,7 +49,6 @@ public class User extends AbstractClass {
         return email;
     }
 
-    //See comment about setUsername.
     public void setEmail(String email) {
         this.email = email;
     }

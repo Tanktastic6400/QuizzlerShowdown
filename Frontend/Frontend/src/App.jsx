@@ -71,7 +71,7 @@ function App() {
         <Route path="/all-scores" element={<AllScoresPage />} />
         <Route path="/answerDisplay" element={<AnswerDisplay />} />
         <Route path="/error" element={<ErrorPage />} />
-        <Route path="/scores" element={<ScorePage loggedInUser={loggedInUser} getUserInfo={getUserInfo} />} />
+        {/* <Route path="/scores" element={<ScorePage loggedInUser={loggedInUser} getUserInfo={getUserInfo} />} /> */}
         <Route path="/chat" element={<Chatbox loggedInUser={loggedInUser} getUserInfo={getUserInfo} />} />
         <Route path="profile/:username" element={<ProfilePage loggedInUser={loggedInUser} getUserInfo={getUserInfo} />} />
       </Routes>

@@ -51,7 +51,6 @@ public class UserController {
         return userRepository.findByUsernameContaining(username);
     }
 
-    //AS IS THIS IS GET USER INFO BUT BY PROFILE NAME INSTEAD OF JUST THE LOGGED-IN USER VIA SESSION
     @GetMapping("/findUser")
     public ResponseEntity<UserInfoDTO> attemptFindUser(@RequestParam String username){
         UserInfoDTO userInfo = new UserInfoDTO();
@@ -81,7 +80,6 @@ public class UserController {
         profileForm.setCorrectAnswerPercentage(profileUser.getUserProfile().getCorrectAnswerPercentage());
         profileForm.setLevel(profileUser.getUserProfile().getLevel());
         return ResponseEntity.ok(profileForm);
-        //return ResponseEntity.ok(testBio);
     }
 
     @PostMapping("/updateProfile")

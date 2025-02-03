@@ -18,10 +18,17 @@ function RegisterForm(props) {
     const testConfirmedPassword = confirmedPassword;
 
     if(testUsername.includes("@")){
-        alert("Username may not contain @")
+        alert("Username may not contain @");
         setUsername("");
         throw new Error("Username may not contain @");
     }
+
+    if(testPassword.length < 8 || testPassword.length > 72){
+        alert("Password must be between 8 and 64 characters long");
+        setPassword("")
+        setConfirmedPassword("")
+        throw new Error("Password must be between 8 and 72 characters long");
+        }
 
     if(testConfirmedPassword != password){
         alert("Passwords do not match");

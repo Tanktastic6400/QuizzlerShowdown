@@ -54,7 +54,6 @@ public class AuthenticationController {
 
     @PostMapping("/logout")
     public ResponseEntity<String> attemptLogout(HttpSession session) {
-        //System.out.println("GOT IN HERE");
         session.invalidate();
         return ResponseEntity.ok("Successfully logged out");
     }

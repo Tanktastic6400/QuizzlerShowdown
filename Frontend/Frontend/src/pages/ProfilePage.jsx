@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams  } from 'react-router-dom';
-import ProfileView from "../components/ProfileView";
 import ProfileForm from "../components/ProfileForm";
 import "../CSS/FriendProfileDisplay.css"
 
