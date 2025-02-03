@@ -79,14 +79,14 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
     ;
 
         if (loggedInUser) {
-            if(loggedInUser.username === pageUserName){
+            if(loggedInUser.username === username){
                 setOwnerPage(true);
                 }
             else{
                 setOwnerPage(false);
                 }
         }
-           }, [loggedInUser, editMode, params]);
+           }, [loggedInUser, editMode, params, ownerPage]);
 
     function EnableEditMode(){
         setEditMode(true)
