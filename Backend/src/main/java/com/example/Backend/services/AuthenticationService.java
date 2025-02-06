@@ -1,7 +1,6 @@
 package com.example.Backend.services;
 
 import com.example.Backend.models.User;
-import com.example.Backend.models.UserProfile;
 import com.example.Backend.models.data.UserProfileRepository;
 import com.example.Backend.models.data.UserRepository;
 import jakarta.servlet.http.HttpSession;
@@ -43,44 +42,25 @@ public class AuthenticationService {
         session.setAttribute(userSessionKey, user.getId());
     }
 
-    //TODO Maybe actually do something with the email. ^^;
     public boolean loginUser(String typedLoginMethod, String typedPassword, HttpSession session){
-
         Optional<User> attemptedUser;
-
         if(typedLoginMethod.contains("@")) {
             attemptedUser = userService.getUserByEmail(typedLoginMethod);
-        }
-        else {
+        } else {
            attemptedUser = userService.getUserByUsername(typedLoginMethod);
         }
-
         if(attemptedUser.isEmpty()){
             return false;
         }
-
         User attemptedUserPassCheck = attemptedUser.get();
-
         if(!attemptedUserPassCheck.checkMatchingPasswords(typedPassword)){
             return false;
         }
-
-        //if(!attemptedUserPassCheck.getEmail().equals(typedEmail)) {
-        //    return false;
-        //}
-
         setUserInSession(session, attemptedUserPassCheck);
         return true;
     }
 
     public boolean registerUser(User newUser, String passwordVerification){
-        Optional <User> oldUserName = userService.getUserByUsername(newUser.getUsername());
-        Optional <User> oldUserEmail = userService.getUserByEmail(newUser.getEmail());
-
-        if(oldUserName.isPresent()|| oldUserEmail.isPresent()){
-            return false;
-        }
-
         if(!newUser.checkMatchingPasswords(passwordVerification)){
             return false;
         }
@@ -88,6 +68,16 @@ public class AuthenticationService {
         userRepository.save(newUser);
 
         return true;
+    }
+
+    public boolean checkUsername(User newUser){
+        Optional <User> oldUserName = userService.getUserByUsername(newUser.getUsername());
+        return oldUserName.isEmpty();
+    }
+
+    public boolean checkEmail(User newUser){
+        Optional <User> oldUserEmail = userService.getUserByEmail(newUser.getEmail());
+        return oldUserEmail.isEmpty();
     }
 
 }

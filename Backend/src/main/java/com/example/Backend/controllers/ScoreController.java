@@ -30,12 +30,9 @@ public class ScoreController {
     @Autowired
     private UserService userService;
 
-    //@PostMapping("/getScore/{id}")
     @GetMapping("/getScore/{id}")
     public ResponseEntity<Integer> getScore(HttpSession session, @PathVariable long id){
-        //int scoreUser = userRepository.findById(id).getUserProfile().getScore();
-        int scoreUser = userService.getUserByID(id).getUserProfile().getScore(); //Invalid???
-        //userProfileRepository
+        int scoreUser = userService.getUserByID(id).getUserProfile().getScore();
         return ResponseEntity.ok(scoreUser);
     }
 
@@ -44,11 +41,6 @@ public class ScoreController {
         int topX = 10;
         return userProfileRepository.findAllSortedByScoreDTO(PageRequest.of(0, topX));
     }
-
-//    @GetMapping("/getAllScores")
-//    public List <UserProfile> getAllScores(){
-//        return userProfileRepository.findAllSortedByScore(); //This displays all user profiles as sorted by score
-//    }
 
     @GetMapping("/getAllScores")
     public ResponseEntity<List<ScoreInfoDTO>> getAllScores(){

@@ -12,8 +12,10 @@ function LoginForm({ getUserInfo }) {
   function handleSubmit(e) {
     e.preventDefault();
 
+    const trimmedLoginMethod = loginMethod.trim();
+
     const LoginFormData = {
-      username: loginMethod,
+      username: trimmedLoginMethod,
       password: password,
     };
 
@@ -31,12 +33,13 @@ function LoginForm({ getUserInfo }) {
       if (!response.ok) {
         setLoginMethod("");
         setPassword("");
+        alert("Your user information or password were incorrect.");
         throw new Error("Could not log in");
       }
       getUserInfo();
       setLoginMethod("");
       setPassword("");
-      navigate("/");
+      navigate("/quizselector");
       return response;
     });
   }
@@ -63,7 +66,7 @@ function LoginForm({ getUserInfo }) {
               setPassword(e.target.value);
             }}
             placeholder="Password"
-            required //Added for obvious reasons
+            required
           />
           <Button variant="primary" type="submit">Login</Button>
         </form>

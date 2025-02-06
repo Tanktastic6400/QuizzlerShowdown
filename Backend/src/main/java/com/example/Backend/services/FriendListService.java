@@ -34,12 +34,6 @@ public class FriendListService {
     public void clearFriends (Long userId) {
         List<FriendList> listToClear = getFriends(userId);
         for (FriendList friend : listToClear) {
-//            if (friend.getUser1().getId().equals(userId)) {
-//                friend.setUser1(null);
-//            } else {
-//                friend.setUser2(null);
-//            }
-//            friendListRepository.save(friend);
             friendListRepository.deleteById(friend.getId());
         }
     }

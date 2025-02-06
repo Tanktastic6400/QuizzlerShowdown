@@ -23,6 +23,7 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
     const [pageQuestionsAnswered, setPageQuestionsAnswered] = useState(0);
     const [pageTotalCorrectAnswers, setPageTotalCorrectAnswers] = useState(0);
     const [pageCorrectAnswerPercentage, setPageCorrectAnswerPercentage] = useState(0);
+    const [pageLevel, setPageLevel] = useState(1);
 
     const [pageFriendList, setPageFriendList] = useState([]);
 
@@ -47,7 +48,6 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
         //}
         .then((data) =>
         {
-            //console.log(data);
             setPageUserName(data.username);
             setPageEmail(data.email);
 
@@ -61,13 +61,13 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
             setPageName(data.name);
             setPageLocation(data.location);
             setPageOccupation(data.occupation);
-            setPageScore(data.score);
 
+            setPageScore(data.score);
             setPageQuizzesTaken(data.quizzesTaken);
             setPageQuestionsAnswered(data.questionsAnswered);
             setPageTotalCorrectAnswers(data.totalCorrectAnswers);
             setPageCorrectAnswerPercentage(data.correctAnswerPercentage);
-
+            setPageLevel(data.level);
             })
 
     ;
@@ -79,15 +79,14 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
     ;
 
         if (loggedInUser) {
-            if(loggedInUser.username === pageUserName){
+            if(loggedInUser.username === username){
                 setOwnerPage(true);
                 }
             else{
                 setOwnerPage(false);
                 }
         }
-         //         },[]);
-           }, [loggedInUser, editMode, params]); //Why this versus []?
+           }, [loggedInUser, editMode, params, ownerPage]);
 
     function EnableEditMode(){
         setEditMode(true)
@@ -98,11 +97,8 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
         setEditMode(false)
         }
 
-    //THIS IS OUTDATED! And possibly not even doing anything?
     function handleEdit(profileData){
         DisableEditMode();
-        //setPageBio(profileData);     //Update to be more than just bio
-        //Try to get this to update "in real time" rather than a refresh.
         }
 
     return (
@@ -128,13 +124,6 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
                       <ul>
                       <h2>User Biography</h2>
                       <p> {pageBio} </p>
-                       {/*}<textarea
-                                      className="form-control"
-                                      value={pageBio}
-                                    placeholder={pageBio}
-                                    required
-                                    disabled
-                                      ></textarea>*/}
                       </ul>
                       </div>
                 </div>
@@ -144,6 +133,7 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
                  <ul>
                      <h2> Let's See Where You Stand, Pardner! </h2>
                     <p> High Score: {pageScore}</p>
+                    <p> Level: {pageLevel} </p>
                     <p> Quizzes Taken: {pageQuizzesTaken}</p>
                     <p> Questions Answered: {pageQuestionsAnswered}</p>
                     <p> Correctly Answered Questions: {pageTotalCorrectAnswers}</p>
@@ -169,7 +159,6 @@ function ProfilePage ( { loggedInUser, getUserInfo } ) {
             </div>
                 </div>
 
-            {/*}<ProfileView passedUsername={pageUserName}/>*/}
             <footer className="profileFooterRight">  Handshake designed by <a href={"https://www.freepik.com/"}> Freepik </a> </footer>
                         <footer className="profileFooterLeft">  Trophy designed by <a href={"https://www.freepik.com/"}> Freepik </a> </footer>
 

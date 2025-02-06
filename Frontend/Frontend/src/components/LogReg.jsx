@@ -6,13 +6,17 @@ import "../CSS/logreg.css";
 const LogReg = ({ getUserInfo }) => {
   return (
     <>
+      <div className="header-container">
+        <h1 className="header-text">HELLO COWPOKE!</h1>
+      </div>
+
       <div className="centerMass">
         <div className="largeColmn">
           <div className="logincontainer">
             <p className="logintext">
               Howdy partner, welcome to Quizzler Showdown - the wildest quiz challenge in the west!
               Saddle up and test your knowledge across a variety of categories.
-              Face off against friends, rise to the top of the leaderboard, and claim the title of Ultimate Quiz Gunslinger
+              Face off against friends, rise to the top of the leaderboard, and claim the title of Ultimate Quiz Gunslinger!
               Ready for a showdown? Let's get this rodeo started!
             </p>
 

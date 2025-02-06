@@ -13,18 +13,25 @@ function RegisterForm(props) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    const testUsername = username
+    const testUsername = username.trim();
+    const testPassword = password;
+    const testConfirmedPassword = confirmedPassword;
 
     if(testUsername.includes("@")){
+        alert("Username may not contain @")
         setUsername("");
-        setEmail("");
-        setPassword("");
-        setConfirmedPassword("");
         throw new Error("Username may not contain @");
     }
 
+    if(testConfirmedPassword != password){
+        alert("Passwords do not match");
+        setPassword("");
+        setConfirmedPassword("");
+        throw new Error ("Passwords do not match");
+    }
+
     const registerFormData = {
-      username: username,
+      username: testUsername,
       password: password,
       email: email,
       passwordVerification: confirmedPassword,
@@ -36,29 +43,37 @@ function RegisterForm(props) {
       body: JSON.stringify(registerFormData),
     };
 
-    //"http://localhost:8080/register"
-    //"http://localhost:8080/authenticationservice/register"
     fetch(
       "http://localhost:8080/authenticationservice/register",
       fetchSpecifications
 
-      //FINISH UP HERE!!!
     ).then(function (response) {
-      if (!response.ok) {
+      return response.text()}
+    ).then(function (data){
+        console.log(data);
+        if(data==="Username already in use"){
+                    setUsername("");
+                    alert(data);
+                    throw new Error(data);
+            }
+        else if (data==="Email already in use"){
+            setEmail("");
+            alert(data);
+            throw new Error(data);
+            }
         setUsername("");
         setEmail("");
         setPassword("");
         setConfirmedPassword("");
-        throw new Error("Could not submit registration information");
-      }
-      alert("Form submitted");
-      setUsername("");
-      setEmail("");
-      setPassword("");
-      setConfirmedPassword("");
-      navigate("/login");
-      return response;
-    });
+        if (data==="Successfully registered"){
+            alert(data);
+            navigate("/");
+        }
+        else{
+            alert(data)
+            throw new Error(data);
+            }
+        });
   }
 
   return (

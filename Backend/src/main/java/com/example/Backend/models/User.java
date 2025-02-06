@@ -1,10 +1,7 @@
 package com.example.Backend.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
@@ -15,11 +12,8 @@ public class User extends AbstractClass {
     private String password;
 
     @OneToOne(cascade = CascadeType.ALL)
-    //@JsonManagedReference
     @JsonBackReference
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
-    //@NotNull
-    //@Valid  //WILL THESE TWO ANNOTATIONS FIX IT?
     private UserProfile userProfile;
 
     //Added encoder

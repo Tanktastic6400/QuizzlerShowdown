@@ -26,22 +26,13 @@ function ProfileForm(props){
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(profileFormData),
-        })           //CHANGE TO JSON STRINGIFY WHEN MORE THAN ONE?
+        })
         .then((response) => response.text())
         .then((data) =>
         {
             props.onEditSubmitted(data);
             return formBio; //*Do* I need to return this/everything later?
-            //setFormBio(data);
-            //return data;
-            //console.log(data);
             })
-
-
-        //setFormBio(""); //This just for testing for now.
-        //props.onEditSubmitted(formBio); //This just formBio for now for testing
-
-
     }
 
     return(
@@ -63,21 +54,6 @@ function ProfileForm(props){
                       required
                     />
                   </div>
-
-{/*            <div>
-                <label>
-                    Bio
-                </label>
-                <textarea
-                className="form-control"
-                value={formBio}
-                onChange={function (e) {
-                    setFormBio(e.target.value);
-                  }}
-              placeholder={formBio}
-              required
-                ></textarea>
-            </div> */}
 
              <div>
                     <label className="form-label">
