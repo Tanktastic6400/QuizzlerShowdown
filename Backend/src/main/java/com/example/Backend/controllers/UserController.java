@@ -97,6 +97,7 @@ public class UserController {
         return ResponseEntity.ok("Profile fields updated");
     }
 
+    //TODO account for login streak modifiers.
     @PostMapping("/updateScore")
     public ResponseEntity<String> attemptUpdateScore(@RequestParam long  ID, @RequestParam int score, @RequestParam boolean add, @RequestParam int correctAnswers, @RequestParam int numberOfQuestions ){
         User user = userService.getUserByID(ID);

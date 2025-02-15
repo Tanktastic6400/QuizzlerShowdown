@@ -20,6 +20,9 @@ public class User extends AbstractClass {
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
     private UserProfile userProfile;
 
+    //TODO change this to some kind of date format later.
+    private int lastLogin;
+
     //Added encoder
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
