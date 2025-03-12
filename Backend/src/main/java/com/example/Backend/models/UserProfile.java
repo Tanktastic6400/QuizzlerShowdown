@@ -26,6 +26,8 @@ public class UserProfile extends AbstractClass {
     private float correctAnswerPercentage = 0;
     private int level =  1;
 
+    private int loginStreak = 0;
+
     @JsonManagedReference
     @OneToMany(mappedBy = "userProfile")
     private List<AnsweredQuestion> answeredQuestions;
@@ -126,5 +128,13 @@ public class UserProfile extends AbstractClass {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public int getLoginStreak() {
+        return loginStreak;
+    }
+
+    public void setLoginStreak(int loginStreak) {
+        this.loginStreak = loginStreak;
     }
 }
