@@ -62,7 +62,7 @@ input[type=text] {
 .navbar-image-container {
   position: absolute;  
   top: 5px;  
-  left: 170px;  
+  left: 10px;  
   z-index: 1050;  
 }
 
