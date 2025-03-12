@@ -1,6 +1,9 @@
 package com.example.Backend.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
@@ -8,9 +11,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class User extends AbstractClass {
     private String username;
     private String email;
+    @Size(min =8, max = 72)
+    @NotNull
     private String password;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JsonBackReference
+    @JoinColumn(name = "profile_id", referencedColumnName = "id")
     private UserProfile userProfile;
 
     //Added encoder
@@ -22,9 +29,8 @@ public class User extends AbstractClass {
         
         this.username = username;
         this.email = email;
-        //changed it so user's given password is encoded
-        //this.password = password;
         this.password = encoder.encode(password);
+        this.userProfile = new UserProfile();
     }
 
     public User(Long senderId) {
@@ -35,7 +41,6 @@ public class User extends AbstractClass {
         return username;
     }
 
-    //Do we need a setter for this? Want folks to be able to change their accounts username?
     public void setUsername(String username) {
         this.username = username;
     }
@@ -44,7 +49,6 @@ public class User extends AbstractClass {
         return email;
     }
 
-    //See comment about setUsername.
     public void setEmail(String email) {
         this.email = email;
     }
@@ -54,5 +58,11 @@ public class User extends AbstractClass {
         return encoder.matches(password, this.password);
     }
 
-    //Deleted getter and setter for password. Don't want them.
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
+
+    public void setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
+    }
 }

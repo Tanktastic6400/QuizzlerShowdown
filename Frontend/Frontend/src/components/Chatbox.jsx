@@ -1,144 +1,173 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
+import { Modal, Button } from "react-bootstrap";
 import { Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
-import Toast from 'react-bootstrap/Toast';
-import Button from 'react-bootstrap/Button';
-import ToastContainer from 'react-bootstrap/ToastContainer';
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import DropdownHeader from 'react-bootstrap/DropdownHeader'
-import ToastHeader from "react-bootstrap/esm/ToastHeader";
-import DropdownItem from "react-bootstrap/esm/DropdownItem";
-import DropdownDivider from "react-bootstrap/esm/DropdownDivider";
 
-const Chatbox = () => {
+const Chatbox = ({ loggedInUser, chatId, onClose }) => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
-  const [showChat, setShowChat] = useState(true);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [messageReceiver, setMessageReceiver] = useState({});
+  const [messageSender, setMessageSender] = useState({});
 
-  const toggleShowChat = () => setShowChat(!showChat);
-
-  // Use useRef to store stompClient so it persists across renders
   const stompClient = useRef(null);
-
-  //this will be set by userids of sender and receiver
-  const getChatId = () => {
-    return "1234";
-  };
-
-  const chatId = getChatId();
+  const scrollContainerRef = useRef(null);
 
   const getMessages = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/chat/messages?chatId=${chatId}`);
+      const response = await fetch(
+        `http://localhost:8080/chat/messages?chatId=${chatId}`
+      );
       if (!response.ok) {
-          throw new Error(`Error fetching chat messages: ${response.statusText}`);
+        throw new Error(`Error fetching chat messages: ${response.statusText}`);
       }
       const data = await response.json();
       setMessages(data);
-  } catch (err) {
+    } catch (err) {
       setError(err.message);
-  } finally {
+    } finally {
       setLoading(false);
-  }
-  console.log(messages);
-  }
+    }
+  };
 
   useEffect(() => {
-    // Connect to the WebSocket server
+    getChatInfo(chatId);
+    console.log("Initializing WebSocket connection...");
     const socket = new SockJS("http://localhost:8080/ws");
     stompClient.current = Stomp.over(socket);
 
-    stompClient.current.connect({}, () => {
-      console.log("Connected to WebSocket");
-      stompClient.current.subscribe(`/topic/private.${chatId}`, (message) => {
-        console.log(chatId);
-        const receivedMessage = JSON.parse(message.body);
-        console.log("Received message:", receivedMessage);
-        setMessages((prevMessages) => [...prevMessages, receivedMessage]);
-      });
-      getMessages();
-    });
+    stompClient.current.connect(
+      {},
+      () => {
+        console.log("WebSocket connected successfully");
+        stompClient.current.subscribe(`/topic/private.${chatId}`, (message) => {
+          const receivedMessage = JSON.parse(message.body);
+          console.log("Received message: ", receivedMessage);
+          setMessages((prevMessages) => [...prevMessages, receivedMessage]);
+        });
+
+        getMessages();
+      },
+      (error) => {
+        console.error("WebSocket connection failed:", error);
+      }
+    );
 
     return () => {
       if (stompClient.current) {
+        console.log("Disconnecting WebSocket...");
         stompClient.current.disconnect();
       }
     };
-  }, []);
+  }, [chatId]);
+
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop =
+        scrollContainerRef.current.scrollHeight;
+    }
+  }, [messages]);
+
+  const getChatInfo = async (chatId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/chat/chatinfo?chatid=${chatId}`
+      );
+      if (!response.ok) {
+        throw new Error(
+          `Failed to get chat information: ${response.statusText}`
+        );
+      }
+      const info = await response.json();
+      setMessageSender(loggedInUser);
+      const receiver =
+        loggedInUser.id === info.user1.id ? info.user2 : info.user1;
+      setMessageReceiver(receiver);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const sendMessage = () => {
     if (message.trim() !== "") {
       const messageObj = {
-        sender: 1,
-        recipient: 2, // Replace with dynamic user data
+        user1: loggedInUser,
+        user2: messageReceiver,
         content: message.trim(),
       };
-      console.log("Sending message:", messageObj);
-      if (stompClient.current && stompClient.current.send) {
-        stompClient.current.send(
-          `/app/chat.private.${chatId}`,
-          {},
-          JSON.stringify(messageObj)
-        );
-      } else {
-        console.error("STOMP client is not initialized or connected.");
-      }
+      stompClient.current.send(
+        `/app/chat.private.${chatId}`,
+        {},
+        JSON.stringify(messageObj)
+      );
       setMessage("");
     }
   };
 
   return (
-    <>
-      <Dropdown>
-        <DropdownButton drop="up-centered" variant="warning" title="Messages">
-          <Dropdown.Item>
-            <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
-            {messages.map((message) => (
-          <div className="card-body" key={message.id}>
-            <div>
-              Sent at:{message.timestamp} User:{message.username}:{" "}
-              {message.content}
+    <Modal show={true} onHide={onClose} centered>
+      <Modal.Header  closeButton className="modalheader">
+        {loading ? (
+          <Modal.Title>Loading...</Modal.Title>
+        ) : (
+          <Modal.Title>{messageReceiver.username}</Modal.Title>
+        )}
+      </Modal.Header>
+
+      <Modal.Body>
+        <div
+          style={{ maxHeight: "300px", overflowY: "auto" }}
+          ref={scrollContainerRef}
+        >
+          {messages.map((message) => (
+            <div
+              key={message.id}
+              style={{
+                display: "flex",
+                justifyContent:
+                  message.user1.id === loggedInUser.id
+                    ? "flex-start"
+                    : "flex-end",
+                margin: "10px 0",
+              }}
+            >
+              <div
+                style={{
+                  maxWidth: "70%",
+                  padding: "10px",
+                  borderRadius: "10px",
+                  backgroundColor:
+                    message.user1.id === loggedInUser.id
+                      ? "#ffc107"
+                      : "#f1f0f0",
+                }}
+              >
+                <strong>
+                  {message.user1.id === loggedInUser.id
+                    ? loggedInUser.username
+                    : messageReceiver?.username}
+                </strong>
+                <p className="time">{message.timestamp}</p>
+                <div>{message.content}</div>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
         </div>
-        </Dropdown.Item>
-        <DropdownDivider />
+      </Modal.Body>
+      <Modal.Footer>
         <input
           type="text"
+          className="form-control"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          placeholder="Type your message"
+          placeholder="Type a message"
         />
-        <button onClick={sendMessage}>Send</button>
-        </DropdownButton>
-      </Dropdown>
-      
-{/* <Button onClick={toggleShowChat} className="mb-2">Username</Button>
-        <Toast bg="secondary" onClose={toggleShowChat} show={showChat} animation={false} position="bottom-end">
-          <ToastHeader>Header</ToastHeader>
-          <Toast.Body style={{ maxHeight: "150px", overflowY: "auto" }}>
-          {messages.map((message) => (
-          <div className="card-body" key={message.id}>
-            <div>
-              Sent at:{message.timestamp} User:{message.username}:{" "}
-              {message.content}
-            </div>
-          </div>
-        ))}
-          </Toast.Body>
-          <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="Type your message"
-        />
-        <button onClick={sendMessage}>Send</button>
-        </Toast> */}
-  </>
+        <Button onClick={sendMessage}>Send</Button>
+      </Modal.Footer>
+    </Modal>
   );
 };
 

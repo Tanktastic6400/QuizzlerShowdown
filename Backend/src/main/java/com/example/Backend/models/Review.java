@@ -8,10 +8,6 @@ import java.time.LocalDateTime;
 @Table(name = "reviews")
 public class Review extends AbstractClass {
 
-//    @ManyToOne
-//    @JoinColumn(name = "user_id", nullable = false)
-//    private User user;
-
     @Column(nullable = false)
     private String reviewDescription;
 
@@ -26,14 +22,6 @@ public class Review extends AbstractClass {
 
 
     public Review() {}
-
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
 
     public String getReviewDescription() {
         return reviewDescription;

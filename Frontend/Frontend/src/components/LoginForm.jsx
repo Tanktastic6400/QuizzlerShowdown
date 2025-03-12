@@ -1,77 +1,78 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Button } from "react-bootstrap";
+import "../CSS/LoginForm.css";
 
-function LoginForm(props){
+function LoginForm({ getUserInfo }) {
+  const [loginMethod, setLoginMethod] = useState("");
+  const [password, setPassword] = useState("");
 
-    const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    //const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
+  function handleSubmit(e) {
+    e.preventDefault();
 
-    function handleSubmit(e){
-        e.preventDefault();
+    const trimmedLoginMethod = loginMethod.trim();
 
-        const LoginFormData = {
-            "username": username,
-            "password": password,
-            "email": email
-        }
+    const LoginFormData = {
+      username: trimmedLoginMethod,
+      password: password,
+    };
 
-        const fetchSpecifications = {
-            method: "POST",
-            credentials: "include", //Needed for cookies
-            headers: { "Content-Type": "application/json"},
-            body: JSON.stringify(LoginFormData),
-        }
+    const fetchSpecifications = {
+      method: "POST",
+      credentials: "include", //Needed for cookies
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(LoginFormData),
+    };
 
-        //"http://localhost:8080/login"
-        //"http://localhost:8080/authenticationservice/login"
-        fetch("http://localhost:8080/authenticationservice/login", fetchSpecifications
-            //FINISH UP HERE!!!
-        ).then(function (response) {
-            if (!response.ok) {
-                setUsername("");
-                setEmail("");
-                setPassword("");
-                throw new Error("Could not log in");
-            }
-            alert("Succesfully logged in.")
-            setUsername("");
-            setEmail("");
-            setPassword("");
-            navigate("/");
-            return response
-        })
+    fetch(
+      "http://localhost:8080/authenticationservice/login",
+      fetchSpecifications
+    ).then(function (response) {
+      if (!response.ok) {
+        setLoginMethod("");
+        setPassword("");
+        alert("Your user information or password were incorrect.");
+        throw new Error("Could not log in");
+      }
+      getUserInfo();
+      setLoginMethod("");
+      setPassword("");
+      navigate("/quizselector");
+      return response;
+    });
+  }
 
-
-    }
-
-    return (
+  return (
+    <>
+      <div className="loginFields">
         <form onSubmit={handleSubmit}>
-            <input
+          <input
+            className="username"
             type="text"
-            value={username}
-            onChange={function(e) { setUsername(e.target.value); }}
-            placeholder ="Account Name"
-            />
-             <input
-            type="email"
-            value={email}
-            onChange={function(e) { setEmail(e.target.value); }}
-            placeholder ="Email"
-            />
-            <input
+            value={loginMethod}
+            onChange={function (e) {
+              setLoginMethod(e.target.value);
+            }}
+            placeholder="Account Name or email"
+            required
+          />
+          <input
+            className="password"
             type="password"
             value={password}
-            onChange={function(e) { setPassword(e.target.value); }}
-            placeholder ="Password"
-            required //Added for obvious reasons
-            />
-            <button type="submit">Login</button>
+            onChange={function (e) {
+              setPassword(e.target.value);
+            }}
+            placeholder="Password"
+            required
+          />
+          <Button variant="primary" type="submit">Login</Button>
         </form>
-    );
+      </div>
+    </>
+  );
 }
 
-export default LoginForm
+export default LoginForm;

@@ -10,42 +10,40 @@ public class Chat extends AbstractClass {
 
     private String chatId;
 
-
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "sender_id", nullable = true)
+    private User user1;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "sender_id", nullable = false)
-    private User sender;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "receiver_id", nullable = false)
-    private User receiver;
+    @JoinColumn(name = "receiver_id", nullable = true)
+    private User user2;
 
     @Column(nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    public Chat(User sender, User receiver, LocalDateTime createdAt, String chatId) {
-        this.sender = sender;
-        this.receiver = receiver;
+    public Chat(User user1, User user2, LocalDateTime createdAt, String chatId) {
+        this.user1 = user1;
+        this.user2 = user2;
         this.createdAt = createdAt;
         this.chatId = chatId;
     }
 
     public Chat() {}
 
-    public User getSender() {
-        return sender;
+    public User getUser1() {
+        return user1;
     }
 
-    public void setSender(User sender) {
-        this.sender = sender;
+    public void setUser1(User user1) {
+        this.user1 = user1;
     }
 
-    public User getReceiver() {
-        return receiver;
+    public User getUser2() {
+        return user2;
     }
 
-    public void setReceiver(User receiver) {
-        this.receiver = receiver;
+    public void setUser2(User user2) {
+        this.user2 = user2;
     }
 
     public LocalDateTime getCreatedAt() {

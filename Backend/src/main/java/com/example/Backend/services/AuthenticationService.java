@@ -1,6 +1,7 @@
 package com.example.Backend.services;
 
 import com.example.Backend.models.User;
+import com.example.Backend.models.data.UserProfileRepository;
 import com.example.Backend.models.data.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +16,18 @@ public class AuthenticationService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserProfileRepository userProfileRepository;
+
+    @Autowired
+    private UserService userService;
+
     private static final String userSessionKey = "user";
 
     public User getUserFromSession(HttpSession session) {
 
         Long userId = (Long) session.getAttribute(userSessionKey);
+
         if (userId == null) {
             return null;
         }
@@ -34,41 +42,42 @@ public class AuthenticationService {
         session.setAttribute(userSessionKey, user.getId());
     }
 
-    public boolean loginUser(String typedUsername, String typedPassword, HttpSession session){
-        User attemptedUser = userRepository.findByUsername(typedUsername);
-        if(attemptedUser == null){
-            return false;
-            //throw new RuntimeException("User does not exist");
+    public boolean loginUser(String typedLoginMethod, String typedPassword, HttpSession session){
+        Optional<User> attemptedUser;
+        if(typedLoginMethod.contains("@")) {
+            attemptedUser = userService.getUserByEmail(typedLoginMethod);
+        } else {
+           attemptedUser = userService.getUserByUsername(typedLoginMethod);
         }
-
-        if(!attemptedUser.checkMatchingPasswords(typedPassword)){
+        if(attemptedUser.isEmpty()){
             return false;
-            //throw new RuntimeException("Passwords do not match");
         }
-
-        //System.out.println(attemptedUser.getUsername());
-        setUserInSession(session, attemptedUser);
-        //session.invalidate(); //This is just for testing
-        //System.out.println(getUserFromSession(session).getUsername());
+        User attemptedUserPassCheck = attemptedUser.get();
+        if(!attemptedUserPassCheck.checkMatchingPasswords(typedPassword)){
+            return false;
+        }
+        setUserInSession(session, attemptedUserPassCheck);
         return true;
     }
 
     public boolean registerUser(User newUser, String passwordVerification){
-        User oldUserName = userRepository.findByUsername(newUser.getUsername());
-        User oldUserEmail = userRepository.findByEmail(newUser.getEmail());
-
-        if(oldUserName != null || oldUserEmail != null){
-            return false;
-            //throw new RuntimeException("User already exists");
-        }
-
         if(!newUser.checkMatchingPasswords(passwordVerification)){
             return false;
-            //throw new RuntimeException("Passwords do not match");
         }
 
         userRepository.save(newUser);
+
         return true;
+    }
+
+    public boolean checkUsername(User newUser){
+        Optional <User> oldUserName = userService.getUserByUsername(newUser.getUsername());
+        return oldUserName.isEmpty();
+    }
+
+    public boolean checkEmail(User newUser){
+        Optional <User> oldUserEmail = userService.getUserByEmail(newUser.getEmail());
+        return oldUserEmail.isEmpty();
     }
 
 }
